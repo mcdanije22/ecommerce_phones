@@ -1,0 +1,20 @@
+.home-header{
+    text-align:center;
+    margin: 1rem 0rem;
+    font-weight: lighter;
+    font-size:1.5rem;
+    color:gray;
+}
+
+#brands-wrapper{
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: center;
+        .brand-item{
+            // margin:1rem;
+    }
+}
+.brand-item:nth-child(odd){
+    margin:1rem;
+}
+

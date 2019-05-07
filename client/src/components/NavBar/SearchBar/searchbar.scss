@@ -1,0 +1,17 @@
+#searchBar-wrapper{
+    display: flex;
+    justify-content: center;
+        #searchBar{
+            width:19rem;
+            // border-radius: .3rem;
+            text-align: center;
+            height:2.5rem;
+            font-size:1.5rem;
+        }
+        #searchBar-button{
+            background-color:#ECEEF0;
+            font-size:1.5rem;
+            height: 2.5rem;
+            border:none;
+        }
+}

@@ -10,11 +10,11 @@
     display:flex;
     flex-wrap: wrap;
     justify-content: center;
-        .brand-item{
-            // margin:1rem;
-    }
-}
-.brand-item:nth-child(odd){
-    margin:1rem;
+        a:nth-child(odd){
+            margin:0 .5rem 1rem 0;
+        }
+        a:nth-child(even){
+            margin:0 0 1rem .5rem;
+        }
 }
 

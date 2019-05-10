@@ -1,0 +1,30 @@
+#nav-menu{
+    background-color:white;
+    height: 100vh;
+    width:80%;
+    z-index:999;
+    position: fixed;
+        #menu-exit{
+            font-size:2rem;
+            margin-left:20rem;
+            margin-top:1rem;
+            color:white;
+        }
+        #menu-options{
+            list-style: none;
+            font-size:3rem;
+            margin:2rem;
+        }
+}
+#menu-background{
+    background-color:black;
+    height: 100vh;
+    width:100%;
+    position: fixed;
+    z-index: 99;
+    opacity: .7;
+}
+body{
+    // locks screen for nav menu
+    overflow: hidden;
+}

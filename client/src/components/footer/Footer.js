@@ -1,5 +1,7 @@
 import React from 'react';
 import './footer.scss';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCopyright } from '@fortawesome/free-solid-svg-icons';
 
 const Footer = () =>{
     return(
@@ -23,6 +25,9 @@ const Footer = () =>{
                     <li>Sign in</li>
                     <li>Cart</li>
                 </ul>
+            </div>
+            <div id='footer-bottom'>
+                <p><FontAwesomeIcon icon={faCopyright} id='footer-copyright'/> All rights reserved 2019</p>
             </div>
         </div>
     )

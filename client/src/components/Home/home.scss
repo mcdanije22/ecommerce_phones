@@ -5,7 +5,6 @@
     font-size:1.5rem;
     color:gray;
 }
-
 #brands-wrapper{
     display:flex;
     flex-wrap: wrap;
@@ -16,5 +15,8 @@
         a:nth-child(even){
             margin:0 0 1rem .5rem;
         }
+}
+#test{
+    z-index:1;
 }
 

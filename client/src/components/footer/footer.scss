@@ -1,7 +1,10 @@
 #footer{
+    height: 25vh;
+    background-color:black;
+    bottom:0;
         #footer-button{
             border: 1px solid gray;
-            background-color:transparent;
+            background-color:white;
             width:100%;
             height:5vh;
         }
@@ -9,14 +12,19 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 25vh;
-            background-color:black;
-            bottom:0;
             color:white;
+            margin-top:.5rem;
                 #row-one, #row-two, #row-three{
                     list-style: none;
                     margin:1rem;
                 } 
+        }
+        #footer-bottom{
+            color:gray;
+            text-align: center;
+                #footer-copyright{
+                    font-size:1rem;
+                }
         }
 
 }

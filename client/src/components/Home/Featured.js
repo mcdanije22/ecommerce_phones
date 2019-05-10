@@ -1,5 +1,6 @@
 import React from 'react';
 import { UncontrolledCarousel } from 'reactstrap';
+import './home.scss';
 
 const items = [
     {
@@ -24,7 +25,7 @@ const items = [
 
   const Featured = () =>{
       return(
-        <UncontrolledCarousel items={items} />
+        <UncontrolledCarousel id='test' items={items} />
       )
   };
   export default Featured;

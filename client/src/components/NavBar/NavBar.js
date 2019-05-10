@@ -18,18 +18,20 @@ class NavBar extends Component{
     toggleNavbarMenu = ()=>{
         this.setState({
             menuIsOpen:this.state.menuIsOpen?false:true
+        },()=>{
+            const bodyElement = document.querySelector('body');
+            this.state.menuIsOpen?bodyElement.style.overflow = 'hidden':bodyElement.style.overflow = 'scroll';
         })
     }
     render(){
         return(
         <div id='navbar'>
-            {/* <NavbarMenu />   */}
             <div id = 'navbar-wrapper'>
                 <div id='top-row-navbar'>
                     <div id= 'navbar-icon-group1'>
                         <FontAwesomeIcon id='navbar-logo' icon={faAdjust} />
                         {/* <p>PhoneOutlet</p> */}
-                        <FontAwesomeIcon id='navbar-menu' icon={faBars} />
+                        <FontAwesomeIcon id='navbar-menu' icon={faBars} onClick={this.toggleNavbarMenu}/>
                     </div>
                     <div id= 'navbar-icon-group2'>
                         <FontAwesomeIcon id='navbar-user' icon={faUserCircle} />
@@ -39,37 +41,14 @@ class NavBar extends Component{
                 <SearchBar />
             </div>
             <NavbarMenu 
-            menuIsOpen={this.state.menuIsOpen} 
-            toggleNavbarMenu={this.toggleNavbarMenu}
+                menuIsOpen={this.state.menuIsOpen} 
+                toggleNavbarMenu={this.toggleNavbarMenu}
             />
 
-            </div>
+        </div>
         )
     }
 }
 export default NavBar;
 
 
-// const NavBar = ()=>{
-//     return(
-//     <div id='navbar'>
-//         {/* <NavbarMenu />   */}
-//         <div id = 'navbar-wrapper'>
-//             <div id='top-row-navbar'>
-//                 <div id= 'navbar-icon-group1'>
-//                     <FontAwesomeIcon id='navbar-logo' icon={faAdjust} />
-//                     {/* <p>PhoneOutlet</p> */}
-//                     <FontAwesomeIcon id='navbar-menu' icon={faBars} />
-//                 </div>
-//                 <div id= 'navbar-icon-group2'>
-//                     <FontAwesomeIcon id='navbar-user' icon={faUserCircle} />
-//                     <FontAwesomeIcon id='navbar-cart' icon={faShoppingCart} />
-//                 </div>
-//             </div>
-//             <SearchBar />
-//         </div>
-//         <NavbarMenu />
-
-//         </div>
-//     )
-// }

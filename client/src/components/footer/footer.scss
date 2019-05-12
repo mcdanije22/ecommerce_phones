@@ -1,6 +1,6 @@
 #footer{
-    height: 25vh;
-    background-color:black;
+    height: 42vh;
+    background-color:  #252F3C;
     bottom:0;
         #footer-button{
             border: 1px solid gray;
@@ -8,23 +8,42 @@
             width:100%;
             height:5vh;
         }
-        #footer-content{
+        #footer-middle{
             display: flex;
             justify-content: center;
             align-items: center;
             color:white;
-            margin-top:.5rem;
+            margin-top:2.5rem;
                 #row-one, #row-two, #row-three{
                     list-style: none;
                     margin:1rem;
+                    font-size:1.3rem;
                 } 
         }
         #footer-bottom{
             color:gray;
             text-align: center;
-                #footer-copyright{
-                    font-size:1rem;
+            margin-top:1rem;
+                #footer-paragraph{
+                    font-size:.8rem;
                 }
+            #footer-social{
+                display:flex;
+                justify-content: center;
+                list-style: none;
+                    .footer-socailButton{
+                        font-size:1.5rem;
+                        margin:0rem .5rem;
+                        color:white;
+                        text-align: center;
+                    }
+            }       
         }
-
+    #footer-paragraph{
+        font-size:.8rem;
+        color:gray;
+        text-align: center;
+        margin-top:2rem;
+    }
 }
+   

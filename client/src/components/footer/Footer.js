@@ -1,6 +1,7 @@
 import React from 'react';
 import './footer.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { fab, faFacebook, faInstagram, faTwitter, faYoutube} from '@fortawesome/free-brands-svg-icons'
 import { faCopyright } from '@fortawesome/free-solid-svg-icons';
 
 const Footer = () =>{
@@ -9,7 +10,24 @@ const Footer = () =>{
             <button type='submit' id='footer-button'>
                 Back to top
             </button>
-            <div id='footer-content'>
+            <div id='footer-bottom'>
+                <ul id='footer-social'>
+                    <li>
+                        <FontAwesomeIcon icon={faFacebook} className='footer-socailButton'/>
+                    </li>
+                    <li>
+                        <FontAwesomeIcon icon={faInstagram} className='footer-socailButton'/>
+                    </li>
+                    <li>
+                        <FontAwesomeIcon icon={faTwitter} className='footer-socailButton'/>
+                    </li>
+                    <li>
+                        <FontAwesomeIcon icon={faYoutube} className='footer-socailButton'/>
+                    </li>
+                </ul>
+          
+            </div>
+            <div id='footer-middle'>
                 <ul id='row-one'>
                     <li>Apple</li>
                     <li>Samsung</li>
@@ -25,10 +43,10 @@ const Footer = () =>{
                     <li>Sign in</li>
                     <li>Cart</li>
                 </ul>
+                
             </div>
-            <div id='footer-bottom'>
-                <p><FontAwesomeIcon icon={faCopyright} id='footer-copyright'/> All rights reserved 2019</p>
-            </div>
+            <p id='footer-paragraph'><FontAwesomeIcon icon={faCopyright} id='footer-copyright'/> All rights reserved 2019
+            <br/>1234 N. Main st New York, Ny 11124 USA</p>
         </div>
     )
 };

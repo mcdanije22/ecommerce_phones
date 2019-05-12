@@ -11,8 +11,8 @@ const NavbarMenu = ({
                 <div style={{display:menuIsOpen?'block':'none'}}>
                     <div id='nav-menu'>
                         <ul id='menu-options'>
-                        <Link to={'/'} onClick={toggleNavbarMenu} className='navList'>Home</Link>
-                        <li>Account</li> 
+                        <li><Link to={'/'} onClick={toggleNavbarMenu} className='navList'>Home</Link></li>
+                        <li><Link to={'/account'} onClick={toggleNavbarMenu} className='navList'>Account</Link></li> 
                         <li>Deals</li> 
                         <li>Phones</li> 
                         <li>Accessories</li> 

@@ -7,9 +7,9 @@ import { faCopyright } from '@fortawesome/free-solid-svg-icons';
 const Footer = () =>{
     return(
         <div id='footer'>
-            <button type='submit' id='footer-button'>
+           <a href ='#'><button type='submit' id='footer-button'>
                 Back to top
-            </button>
+            </button></a>
             <div id='footer-bottom'>
                 <ul id='footer-social'>
                     <li>

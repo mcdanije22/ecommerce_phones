@@ -5,7 +5,7 @@ import { faBoxOpen, faHome, faCreditCard, faLock, faSignOutAlt, faChevronRight }
 
 class AccountPage extends Component{
     constructor(){
-        super()
+        super();
     }
     render(){
         return(

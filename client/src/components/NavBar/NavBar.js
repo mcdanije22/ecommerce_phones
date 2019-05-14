@@ -25,6 +25,7 @@ class NavBar extends Component{
         })
     }
     render(){
+        console.log(this.props.onSearchChange)
         return(
         <div id='navbar'>
             <div id = 'navbar-wrapper'>
@@ -39,7 +40,7 @@ class NavBar extends Component{
                         <FontAwesomeIcon id='navbar-cart' icon={faShoppingCart} />
                     </div>
                 </div>
-                <SearchBar />
+                <SearchBar onSearchChange={this.props.onSearchChange} />
             </div>
             <NavbarMenu 
                 menuIsOpen={this.state.menuIsOpen} 

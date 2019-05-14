@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import './App.css';
+import { connect } from 'react-redux';
 import {Button, Container, Row, Col} from 'reactstrap';
 import axios from 'axios';
 import { Route, Switch } from 'react-router-dom'
@@ -10,17 +11,21 @@ import Footer from './components/footer/Footer';
 import SearchPage from './components/SearchPage/SearchPage';
 import ProductPage from './components/ProductPage/ProductPage';
 
+import { setSearchField } from './actions/searchAction';
+
 
 
 class App extends Component{
   constructor(props){
     super(props);
-
   }
+ 
   render(){
+    const {searchField , onSearchChange} = this.props;
+    console.log(onSearchChange)
   return (
       <div className="App">
-        <NavBar />
+        <NavBar searchChange = {onSearchChange}/>
           <Switch>
             <Route exact path='/' component={Home} />
             <Route path='/account' component={AccountPage} />
@@ -32,4 +37,17 @@ class App extends Component{
   );
   }
 }
-export default App;
+
+const mapStateToProps = state => {
+  return {
+    searchField: state.searchField
+  }
+}
+
+const mapDispatchToProps = (dispatch) =>{
+  return{
+    onSearchChange: (event) => dispatch(setSearchField(event.target.value))
+  }
+} 
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

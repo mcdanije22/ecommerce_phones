@@ -12,11 +12,19 @@ const db = Knex({
       database : 'ecommerce'
     }
   });
-
 const app = express();
 const port = 3000;
 
 app.use(bodyParser.json());
 app.use(cors());
+
+app.get('/', (req,res)=>{
+  // res.send(db.products)
+  db.select('*').from('products')
+  .then(data=>{
+    res.send(data);
+  })
+});
+
 
 app.listen(port, ()=> console.log('server started successfully'))

@@ -1,11 +1,18 @@
-import React from 'react';
+import React,{Component} from 'react';
 import './searchpage.scss';
 import {Button} from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 
+import { connect } from 'react-redux';
 
-const SearchPage = () =>{
+class SearchPage extends Component{
+    constructor(){
+        super();
+    }
+    render(){
+        const { searchField } = this.props;
+        console.log(searchField)
     return(
         <div id='searchPage'>
             <p id='search-header'>9999 results found for "Apple"</p>
@@ -90,5 +97,11 @@ const SearchPage = () =>{
             </div>
         </div>
     );
+    }
 }
-export default SearchPage;
+const mapStateToProps = state => {
+    return {
+      searchField: state.search.searchField
+    }
+  }
+export default  connect(mapStateToProps, null)(SearchPage);

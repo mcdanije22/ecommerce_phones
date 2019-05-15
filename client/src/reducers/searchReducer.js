@@ -4,8 +4,7 @@ const intialState = {
     searchField: ''
 };
 
-export const searchItems = ( state=intialState, action={} )=>{
-    console.log(action.type)
+ const searchItems = ( state=intialState, action={} )=>{
     switch(action.type){
         case CHANGE_SEARCH_FIELD:
         return {
@@ -16,3 +15,4 @@ export const searchItems = ( state=intialState, action={} )=>{
             return state
     }
 }
+export default searchItems;

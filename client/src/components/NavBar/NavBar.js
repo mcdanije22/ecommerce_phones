@@ -6,6 +6,10 @@ import { faBars,faUserCircle, faShoppingCart,faAdjust } from '@fortawesome/free-
 import SearchBar from './SearchBar/SearchBar';
 import NavbarMenu from './NavbarMenu';
 
+import { setSearchField } from '../../actions/searchAction'
+import { connect } from 'react-redux';
+
+
 
 
 
@@ -25,7 +29,7 @@ class NavBar extends Component{
         })
     }
     render(){
-        console.log(this.props.onSearchChange)
+        const {searchField , onSearchChange} = this.props;
         return(
         <div id='navbar'>
             <div id = 'navbar-wrapper'>
@@ -40,7 +44,7 @@ class NavBar extends Component{
                         <FontAwesomeIcon id='navbar-cart' icon={faShoppingCart} />
                     </div>
                 </div>
-                <SearchBar onSearchChange={this.props.onSearchChange} />
+                <SearchBar onSearchChange={onSearchChange} searchField={searchField} />
             </div>
             <NavbarMenu 
                 menuIsOpen={this.state.menuIsOpen} 
@@ -51,6 +55,19 @@ class NavBar extends Component{
         )
     }
 }
-export default NavBar;
+
+const mapStateToProps = state => {
+    return {
+      searchField: state.search.searchField
+    }
+  }
+  
+  const mapDispatchToProps = (dispatch) =>{
+    return{
+      onSearchChange: (event) => dispatch(setSearchField(event.target.value))
+    }
+  } 
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
 
 

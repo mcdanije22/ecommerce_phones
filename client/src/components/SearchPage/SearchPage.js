@@ -7,12 +7,12 @@ import { faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons
 import { connect } from 'react-redux';
 
 class SearchPage extends Component{
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
     }
     render(){
         const { searchField } = this.props;
-        console.log(searchField)
+        console.log(this.props.match.params.search)
     return(
         <div id='searchPage'>
             <p id='search-header'>9999 results found for "Apple"</p>

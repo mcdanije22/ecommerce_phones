@@ -19,11 +19,17 @@ app.use(bodyParser.json());
 app.use(cors());
 
 app.get('/', (req,res)=>{
-  // res.send(db.products)
   db.select('*').from('products')
   .then(data=>{
     res.send(data);
   })
+});
+
+app.get('/search/:search', (req,res)=>{
+  const searchQuery = req.params;
+  db('products')
+  .where('brand','Apple')
+  .then(res.json())
 });
 
 

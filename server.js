@@ -30,11 +30,31 @@ app.get('/', (req,res)=>{
 
 app.get('/search/:search', (req,res)=>{
   const search = req.params.search;
-  db('products')
-  .where('brand',search)
-  .then(data=>{
-    res.send(data)
-  })
+  if(search == 'deals'){
+    db('products')
+    .whereNotNull('sale_discount')
+    .then(data=>{
+      res.send(data);
+    })
+  }else if(search == 'phone'){
+    db('products')
+    .where('product_type', 'ilike', search)
+    .then(data=>{
+      res.send(data)
+    })
+  }else if(search == 'accessory'){
+    db('products')
+    .where('product_type', 'ilike', search)
+    .then(data=>{
+      res.send(data)
+    })
+  }else{
+    db('products')
+    .where('brand', 'ilike', search)
+    .then(data=>{
+      res.send(data)
+    })
+  }
 });
 
 

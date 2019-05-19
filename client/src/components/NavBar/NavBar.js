@@ -11,8 +11,6 @@ import { connect } from 'react-redux';
 
 
 
-
-
 class NavBar extends Component{
     constructor(props){
         super(props);
@@ -35,7 +33,7 @@ class NavBar extends Component{
             <div id = 'navbar-wrapper'>
                 <div id='top-row-navbar'>
                     <div id= 'navbar-icon-group1'>
-                        <Link to={'/'} ><FontAwesomeIcon id='navbar-logo' icon={faAdjust} /></Link> 
+                        <Link to={'/'} ><FontAwesomeIcon id='navbar-logo'  icon={faAdjust} /></Link> 
                         {/* <p>PhoneOutlet</p> */}
                         <FontAwesomeIcon id='navbar-menu' icon={faBars} onClick={this.toggleNavbarMenu}/>
                     </div>

@@ -14,7 +14,7 @@ class SearchPage extends Component{
             searchResults:[]
         }
     }
-    componentDidMount(){
+    componentWillMount(){
         const searchResults = this.props.match.params.search; //from link 
         axios.get(`http://localhost:3000/search/${searchResults}`)
         .then(res=>{
@@ -22,14 +22,24 @@ class SearchPage extends Component{
             console.log('brand filtered list', this.state.searchResults)
           })
   }
+    componentDidUpdate(){
+        const searchResults = this.props.match.params.search; //from link 
+        axios.get(`http://localhost:3000/search/${searchResults}`)
+        .then(res=>{
+            if(this.state.searchResults === res.data){
+                console.log('new', res.data)
+                console.log('old state', this.state.searchResults)
+                // this.setState({searchResults:res.data})
+                    //WORK ON THIS
+            }
+          })
+    }
     render(){
         const { searchField } = this.props;
         const searchResultAmounts = this.state.searchResults.length;
         const searchTerm = this.props.match.params.search;
         
         const {searchResults} = this.state;
-        console.log('list', this.state.searchResults)
-
         console.log(this.props) //from link 
 
     return(
@@ -37,9 +47,10 @@ class SearchPage extends Component{
             <p id='search-header'>{searchResultAmounts} results found for "{searchTerm}"</p>
             <hr style={{marginBottom: searchResultAmounts === 0?'20rem':''}} /> {/*handles empty page results for footer spacing*/}
             <ul id='searchResults'>
-            {searchResults.map(item=>{
+
+            {searchResults.map((item,i)=>{
                 return(
-                    <li className='result-item'>
+                    <li className='result-item' key={i}>
                     <img src='https://via.placeholder.com/80x120' className='search-img'/>
                     <div className='search-item-info'>
                         <p>
@@ -53,19 +64,6 @@ class SearchPage extends Component{
                 </li>
                 );
             })}
-
-            {/* <li className='result-item'>
-                    <img src='https://via.placeholder.com/80x120' className='search-img'/>
-                    <div className='search-item-info'>
-                        <p>
-                        Iphone XS max
-                        <br/>
-                        By Apple
-                        </p>
-                        <h3>$900</h3>
-                    </div>
-                </li>
-                <hr className='float-clear'/> */}
 
             </ul>
             <div id='search-buttons' style={{display: searchResultAmounts ===0? 'none': 'flex', marginBottom: searchResultAmounts === 1? '15rem':''}}>

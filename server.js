@@ -25,11 +25,16 @@ app.get('/', (req,res)=>{
   })
 });
 
+// db.query('SELECT * FROM products')
+
+
 app.get('/search/:search', (req,res)=>{
-  const searchQuery = req.params;
+  const search = req.params.search;
   db('products')
-  .where('brand','Apple')
-  .then(res.json())
+  .where('brand',search)
+  .then(data=>{
+    res.send(data)
+  })
 });
 
 

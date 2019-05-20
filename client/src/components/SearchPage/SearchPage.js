@@ -11,37 +11,24 @@ class SearchPage extends Component{
     constructor(props){
         super(props);
         this.state={
-            searchResults:[]
+            searchResults:[],
+            currentSearch:''
         }
     }
     componentWillMount(){
-        const searchResults = this.props.match.params.search; //from link 
-        axios.get(`http://localhost:3000/search/${searchResults}`)
+        const searchParam = this.props.match.params.search; //from link 
+        axios.get(`http://localhost:3000/search/${searchParam}`)
         .then(res=>{
-            this.setState({searchResults:res.data})
-            console.log('brand filtered list', this.state.searchResults)
+            this.setState({searchResults:res.data, currentSearch:this.props.match.params.search})
           })
   }
-    componentDidUpdate(){
-        const searchResults = this.props.match.params.search; //from link 
-        axios.get(`http://localhost:3000/search/${searchResults}`)
-        .then(res=>{
-            if(this.state.searchResults === res.data){
-                console.log('new', res.data)
-                console.log('old state', this.state.searchResults)
-                // this.setState({searchResults:res.data})
-                    //WORK ON THIS
-            }
-          })
-    }
     render(){
         const { searchField } = this.props;
         const searchResultAmounts = this.state.searchResults.length;
         const searchTerm = this.props.match.params.search;
         
         const {searchResults} = this.state;
-        console.log(this.props) //from link 
-
+        console.log(this.props) //from link
     return(
         <div id='searchPage'>
             <p id='search-header'>{searchResultAmounts} results found for "{searchTerm}"</p>

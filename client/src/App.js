@@ -30,7 +30,10 @@ class App extends Component{
           <Switch>
             <Route exact path='/' component={Home} />
             <Route path='/account' component={AccountPage} />
-            <Route path='/search/:search' component={SearchPage} />
+            {/* <Route path='/search/:search' component={SearchPage} /> */}
+            <Route path='/search/:search' render={(props)=>(
+              <SearchPage key={props.match.params.search} {...props} />
+            )}/>
             <Route path='/deals' component={SearchPage} />
             <Route path='/product' component={ProductPage} />
           </Switch>

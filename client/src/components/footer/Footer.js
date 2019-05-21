@@ -3,6 +3,8 @@ import './footer.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { fab, faFacebook, faInstagram, faTwitter, faYoutube} from '@fortawesome/free-brands-svg-icons'
 import { faCopyright } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
+import SearchPage from '..//SearchPage/SearchPage';
 
 const Footer = () =>{
     return(
@@ -27,11 +29,11 @@ const Footer = () =>{
                 </ul>
           
             </div>
-            <div id='footer-middle'>
-                <ul id='row-one'>
-                    <li>Apple</li>
-                    <li>Samsung</li>
-                    <li>LG</li>
+            <div id='footer-middle' >
+                <ul id='row-one' >
+                    <li ><Link to={`/search/Apple`} style={{color:'white', textDecoration:'none'}} component={SearchPage}>Apple</Link></li>
+                    <li ><Link to={`/search/Samsung`} style={{color:'white', textDecoration:'none'}} component={SearchPage}>Samsung</Link></li>
+                    <li ><Link to={`/search/Lg`} style={{color:'white', textDecoration:'none'}} component={SearchPage}>Lg</Link></li>
                 </ul>
                 <ul id='row-two'>
                     <li>Contact us</li>

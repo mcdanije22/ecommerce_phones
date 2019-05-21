@@ -48,7 +48,6 @@ class NavBar extends Component{
                 menuIsOpen={this.state.menuIsOpen} 
                 toggleNavbarMenu={this.toggleNavbarMenu}
             />
-
         </div>
         )
     }

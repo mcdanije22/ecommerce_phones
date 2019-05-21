@@ -22,7 +22,6 @@ class App extends Component{
       console.log('all products', res.data)
     })
   }
- 
   render(){
   return (
       <div className="App">
@@ -32,7 +31,7 @@ class App extends Component{
             <Route path='/account' component={AccountPage} />
             {/* <Route path='/search/:search' component={SearchPage} /> */}
             <Route path='/search/:search' render={(props)=>(
-              <SearchPage key={props.match.params.search} {...props} />
+              <SearchPage key={props.location.key} {...props} />
             )}/>
             <Route path='/deals' component={SearchPage} />
             <Route path='/product' component={ProductPage} />

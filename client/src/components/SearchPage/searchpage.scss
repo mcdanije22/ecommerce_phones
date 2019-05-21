@@ -1,5 +1,7 @@
 #search-header{
     margin:1rem;
+    background-color:transparent;
+    border:none;
 }
 .result-item{
     list-style: none;
@@ -8,9 +10,6 @@
        .search-img{
            float:left;
            margin-right:3rem;
-       }
-       .search-item-info{
-
        }
        .float-clear{
         clear:left; 

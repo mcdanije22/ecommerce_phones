@@ -22,6 +22,10 @@ class SearchPage extends Component{
             this.setState({searchResults:res.data, currentSearch:this.props.match.params.search})
           })
   }
+  
+    backHistory=()=>{
+        this.props.history.goBack();
+    }
     render(){
         const { searchField } = this.props;
         const searchResultAmounts = this.state.searchResults.length;
@@ -31,6 +35,7 @@ class SearchPage extends Component{
         console.log(this.props) //from link
     return(
         <div id='searchPage'>
+            <button onClick={this.backHistory} id='search-header'><FontAwesomeIcon icon={faChevronLeft}/> Back</button>
             <p id='search-header'>{searchResultAmounts} results found for "{searchTerm}"</p>
             <hr style={{marginBottom: searchResultAmounts === 0?'20rem':''}} /> {/*handles empty page results for footer spacing*/}
             <ul id='searchResults'>

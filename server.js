@@ -48,16 +48,7 @@ app.get('/search/:search', (req,res)=>{
     .then(data=>{
       res.send(data)
     })
-  }
-  // else if(search === 'apple'||'samsung'||'lg'||'google'||'motorola'){
-  //   db('products')
-  //   .where('brand', 'ilike', search)
-  //   .where('product_type', 'Phone')
-  //   .then(data=>{
-  //     res.send(data)
-  //   })
-  // }
-  else{
+  }else{
     db('products')
     .where('product_name', 'ilike', `%${search}%`)
     .orWhere('brand', 'ilike', search)    
@@ -67,5 +58,13 @@ app.get('/search/:search', (req,res)=>{
   }
 });
 
+app.get('/product/:id', (req,res)=>{
+  const id = req.params.id;
+  db('products')
+  .where('product_id', id)
+  .then(data=>{
+    res.send(data)
+  })
+});
 
 app.listen(port, ()=> console.log('server started successfully'))

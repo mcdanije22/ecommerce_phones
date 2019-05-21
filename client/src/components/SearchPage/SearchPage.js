@@ -4,6 +4,8 @@ import {Button} from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
+import ProductPage from '../ProductPage/ProductPage';
 
 import { connect } from 'react-redux';
 
@@ -11,15 +13,14 @@ class SearchPage extends Component{
     constructor(props){
         super(props);
         this.state={
-            searchResults:[],
-            currentSearch:''
+            searchResults:[]
         }
     }
     componentWillMount(){
         const searchParam = this.props.match.params.search; //from link 
         axios.get(`http://localhost:3000/search/${searchParam}`)
         .then(res=>{
-            this.setState({searchResults:res.data, currentSearch:this.props.match.params.search})
+            this.setState({searchResults:res.data})
           })
   }
   
@@ -42,18 +43,19 @@ class SearchPage extends Component{
 
             {searchResults.map((item,i)=>{
                 return(
-                    <li className='result-item' key={i}>
-                    <img src='https://via.placeholder.com/80x120' className='search-img'/>
-                    <div className='search-item-info'>
-                        <p>
-                        {item.product_name}
-                        <br/>
-                        By {item.brand}
-                        </p>
-                        <h3>${item.product_price}</h3>
-                    </div>
-                    <hr className='float-clear'/>
-                </li>
+                    <Link to={`/product/${item.product_id}`} style={{color:'black'}} key={i}><li className='result-item' >
+                        <img src='https://via.placeholder.com/80x120' className='search-img'/>
+                        <div className='search-item-info'>
+                            <p>
+                            {item.product_name}
+                            <br/>
+                            By {item.brand}
+                            </p>
+                            <h3>${item.product_price}</h3>
+                        </div>
+                        <hr className='float-clear'/>
+                    </li>
+                </Link>
                 );
             })}
 

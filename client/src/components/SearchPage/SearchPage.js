@@ -43,7 +43,7 @@ class SearchPage extends Component{
 
             {searchResults.map((item,i)=>{
                 return(
-                    <Link to={`/product/${item.product_id}`} style={{color:'black'}} key={i}><li className='result-item' >
+                    <Link to={`/product/${item.product_id}/${searchResults[0].brand}`} style={{color:'black'}} key={i}><li className='result-item' >
                         <img src='https://via.placeholder.com/80x120' className='search-img'/>
                         <div className='search-item-info'>
                             <p>

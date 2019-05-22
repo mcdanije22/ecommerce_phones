@@ -24,19 +24,19 @@ const items = [
   ];
 
 const Product = ({product}) =>{
-    console.log(product)
+    const{ brand, product_id, product_name, product_price, image_url, descripition, sale_discount } = product;
     return(
         <React.Fragment>
         <div id = 'product-header'>
-                <p>Apple</p>  
-                <h3>Iphone XS Max</h3> 
+                <p>{brand}</p>  
+                <h3>{product_name}</h3> 
             </div>
             <div id = 'topCarousel'>
             <UncontrolledCarousel id='carousel' items={items} />
             </div>
             <div id = 'imgText'>
                 <p>Customer Review: 4 out of 5</p>
-                <h3>Price: $900.00</h3>
+                <h3>Price: ${product_price}.00</h3>
             </div>
             <div id='mainButton'>
                 <Button type = 'submit'>Add to Cart</Button>

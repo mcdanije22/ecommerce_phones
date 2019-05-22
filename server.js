@@ -58,13 +58,39 @@ app.get('/search/:search', (req,res)=>{
   }
 });
 
-app.get('/product/:id', (req,res)=>{
+app.get('/product/:id/:brand', (req,res)=>{
   const id = req.params.id;
+  const brand = req.params.brand;
   db('products')
   .where('product_id', id)
+  db.select('*')
+  .from('products')
+  .leftJoin('reviews', 'products.product_id', 'reviews.product_id')
+  .where('products.product_id', id)
+  .orWhere('products.brand', brand)
+  .andWhere('products.product_type', 'Accessory')
   .then(data=>{
     res.send(data)
   })
 });
+
+// app.get('/product/:id', (req,res)=>{
+//   const id = req.params.id;
+//   db('products')
+//   .where('product_id', id)
+//   .then(data=>{
+//     res.send(data)
+//   })
+// });
+
+// app.get('/product',(req,res)=>{
+//   db.select('*').from('reviews')
+//   .then(data=>{
+//     res.send(data)
+//     console.log(data)
+//   })
+// })
+
+
 
 app.listen(port, ()=> console.log('server started successfully'))

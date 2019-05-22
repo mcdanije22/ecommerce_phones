@@ -33,9 +33,8 @@ class App extends Component{
             <Route path='/search/:search' render={(props)=>(
               <SearchPage key={props.location.key} {...props} />
             )}/>
-             <Route path='/product/:id' render={(props)=>(
-              <ProductPage key={props.location.key} {...props} />
-            )}/>
+            {/* <Route path='/product/:id' component={ProductPage} /> */}
+            <Route path='/product/:id/:brand' component={ProductPage} />
             <Route path='/deals' component={SearchPage} />
             <Route path='/product' component={ProductPage} />
           </Switch>

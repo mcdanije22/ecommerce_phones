@@ -9,8 +9,7 @@ class ProductPage extends Component{
     constructor(props){
         super(props);
         this.state={
-            currentProduct:[],
-            productReviews:[]
+            currentProduct:[]
         }
     }
     componentDidMount(){
@@ -44,13 +43,24 @@ class ProductPage extends Component{
         if(this.state.currentProduct.length === 0){
             return null;
         }
-    return(
-        <div id = 'productPage'>
-            <Product 
-                product={this.state.currentProduct[0]}
-            />
-            <Reviews/>
-        </div>
-    )};
+        const filteredProduct = this.state.currentProduct.filter(item=>{
+           return item.product_type === 'Phone'
+        })
+        const productReviews = this.state.currentProduct.filter(item=>{
+            return item.review_id !== null;
+        })
+        
+       
+            return(
+                <div id = 'productPage'>
+                    <Product 
+                        product={filteredProduct[0]}
+                        reviews = {productReviews}
+                    />
+                    <Reviews
+                        reviews = {productReviews}
+                    />
+                </div>
+            )};
 };
 export default ProductPage;

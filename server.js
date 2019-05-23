@@ -61,11 +61,10 @@ app.get('/search/:search', (req,res)=>{
 app.get('/product/:id/:brand', (req,res)=>{
   const id = req.params.id;
   const brand = req.params.brand;
-  db('products')
-  .where('product_id', id)
   db.select('*')
   .from('products')
-  .leftJoin('reviews', 'products.product_id', 'reviews.product_id')
+  .leftJoin('reviews', 'products.product_id', 'reviews.product')
+  .leftJoin('customers', 'reviews.customer_id', 'customers.customer_id')
   .where('products.product_id', id)
   .orWhere('products.brand', brand)
   .andWhere('products.product_type', 'Accessory')

@@ -23,8 +23,17 @@ const items = [
     }
   ];
 
-const Product = ({product}) =>{
+const Product = ({product,reviews}) =>{
     const{ brand, product_id, product_name, product_price, image_url, descripition, sale_discount } = product;
+    console.log(reviews)
+
+    if(reviews.length >= 1){
+        var scoreAverage = reviews.reduce((total, num)=>{
+        return total.review_score + num.review_score / reviews.length;
+        })
+    }
+   
+  
     return(
         <React.Fragment>
         <div id = 'product-header'>
@@ -35,7 +44,7 @@ const Product = ({product}) =>{
             <UncontrolledCarousel id='carousel' items={items} />
             </div>
             <div id = 'imgText'>
-                <p>Customer Review: 4 out of 5</p>
+                <p >Customer Review: {scoreAverage || 'NA'} out of 5</p>
                 <h3>Price: ${product_price}.00</h3>
             </div>
             <div id='mainButton'>

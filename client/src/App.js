@@ -9,7 +9,7 @@ import AccountPage from './components/AccountPage/AccountPage';
 import Footer from './components/footer/Footer';
 import SearchPage from './components/SearchPage/SearchPage';
 import ProductPage from './components/ProductPage/ProductPage';
-
+import ShoppingCart from './components/shoppingCart/ShoppingCart';
 
 
 class App extends Component{
@@ -37,6 +37,7 @@ class App extends Component{
             <Route path='/product/:id/:brand' component={ProductPage} />
             <Route path='/deals' component={SearchPage} />
             <Route path='/product' component={ProductPage} />
+            <Route path='/cart' component={ShoppingCart} />
           </Switch>
         <Footer />
       </div>

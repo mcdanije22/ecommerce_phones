@@ -23,29 +23,26 @@ const items = [
     }
   ];
 
-const Product = ({product,reviews}) =>{
+const Product = ({product, reviews}) =>{
     const{ brand, product_id, product_name, product_price, image_url, descripition, sale_discount } = product;
-    console.log(reviews)
-
-    if(reviews.length >= 1){
-        var scoreAverage = reviews.reduce((total, num)=>{
-        return total.review_score + num.review_score / reviews.length;
-        })
-    }
-   
-  
+    
+    const scoreList = reviews.map(item=> item.review_score)
+    const scoreAverage = scoreList.reduce((total, num)=>{
+        return total + num / scoreList.length;
+    })
     return(
         <React.Fragment>
         <div id = 'product-header'>
                 <p>{brand}</p>  
                 <h3>{product_name}</h3> 
             </div>
-            <div id = 'topCarousel'>
-            <UncontrolledCarousel id='carousel' items={items} />
+            <div id = 'topImg'>
+            <img src='https://via.placeholder.com/200'/>
             </div>
             <div id = 'imgText'>
-                <p >Customer Review: {scoreAverage || 'NA'} out of 5</p>
-                <h3>Price: ${product_price}.00</h3>
+                <p style={{display: reviews[0] == 0? 'none':'block' }}>Customer Review: {scoreAverage || 0} out of 5</p>
+                <h3 style={{textDecoration:sale_discount !== null?'line-Through':''}}>Price: ${product_price}.00</h3>
+                { sale_discount !== null? <h3>Sale Price: ${product_price - sale_discount}.00</h3>:'' }
             </div>
             <div id='mainButton'>
                 <Button type = 'submit'>Add to Cart</Button>

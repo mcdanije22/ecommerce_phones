@@ -1,39 +1,68 @@
 #shoppingCart{
-    display:flex;
-    justify-content: center;
-    .cartItem{
+    #cartHeading{
+        margin:1rem 0 0 1rem;
         display: flex;
-        align-content: center;
-        border: 1px gray solid;
-        border-radius: 5px;
-        height:120px;
-        width:300px;
-        list-style: none;
-        padding:1rem;
-        margin-top:1rem;
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        overflow: hidden;
-        img{
-            float:left;
-            margin-right:1rem;
+        justify-content: space-between; 
+        p{
+            margin:1rem 1rem 0 0;
+            text-decoration: underline;
         }
-        .productDescription{
-            h1{
+    }
+    #cartList{
+        display:flex;
+        flex-direction: column;
+        align-items: center;
+        .cartItem{
+            display: flex;
+            align-content: center;
+            border: 1px gray solid;
+            border-radius: 5px;
+            height:120px;
+            width:300px;
+            list-style: none;
+            margin-top:1rem;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            overflow: hidden;
+            img{
+                float:left;
+                margin-right:1rem;
+                padding:1rem;
+            }
+            .productDescription{
+                .cartDelete{
+                    float: right;
+                    border:none;
+                    background: transparent;
+                    margin-left:0.5rem;
+                }
+                h1{
+                    font-size:1rem;
+                    margin-top:1rem;
+                    margin-bottom:0;
+                }
+            }
+        .bottomCard{
+            display:flex;
+            .quantityBtnGroup{
+                display: flex;
                 font-size:1rem;
-                margin-top:.5rem;
+                height:1.5rem;
+                margin-right:2.2rem;
+                button{
+                    width:1.5rem;
+                    background-color:#ECEEF0;
+                }
+                input{
+                    width:2rem;
+                    text-align:center;
+                    border: 1px #ECEEF0 solid
+                }
             }
+           
             p{
+                          
             }
         }
-       .bottomCard{
-           display:flex;
-           justify-content: space-between;
-           margin-bottom:1rem;
-           button{
-               background-color:gray;
-               height:2rem;
-               width:4rem;
-           }
-       }
+        }
     }
 }

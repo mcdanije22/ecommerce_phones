@@ -23,7 +23,7 @@ const items = [
     }
   ];
 
-const Product = ({product, reviews}) =>{
+const Product = ({product, reviews,addToShoppingCart}) =>{
     const{ brand, product_id, product_name, product_price, image_url, descripition, sale_discount } = product;
     
     const scoreList = reviews.map(item=> item.review_score)
@@ -45,7 +45,7 @@ const Product = ({product, reviews}) =>{
                 { sale_discount !== null? <h3>Sale Price: ${product_price - sale_discount}.00</h3>:'' }
             </div>
             <div id='mainButton'>
-                <Button type = 'submit'>Add to Cart</Button>
+                <Button type = 'submit' id={product_id} onClick={addToShoppingCart}>Add to Cart</Button>
             </div>
             <div id = 'recommendedSection'>
                 <h3>Recommended Items:</h3>

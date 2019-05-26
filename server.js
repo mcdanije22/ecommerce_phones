@@ -73,23 +73,20 @@ app.get('/product/:id/:brand', (req,res)=>{
   })
 });
 
-// app.get('/product/:id', (req,res)=>{
-//   const id = req.params.id;
-//   db('products')
-//   .where('product_id', id)
-//   .then(data=>{
-//     res.send(data)
-//   })
-// });
 
-// app.get('/product',(req,res)=>{
-//   db.select('*').from('reviews')
-//   .then(data=>{
-//     res.send(data)
-//     console.log(data)
-//   })
-// })
-
+app.post('/addcart', (req,res)=>{
+  const{customer_id, product_id,item_quantity}=req.body
+  db('shopping_carts')
+  .insert({
+    customer_id:customer_id,
+    product_id:product_id,
+    item_quantity:item_quantity
+  })
+  .then(item=>{
+    console.log(item)
+    res.json(item)
+  })
+})
 
 
 app.listen(port, ()=> console.log('server started successfully'))

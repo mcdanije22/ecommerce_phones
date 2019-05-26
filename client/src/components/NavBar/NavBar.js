@@ -39,7 +39,7 @@ class NavBar extends Component{
                     </div>
                     <div id= 'navbar-icon-group2'>
                         <FontAwesomeIcon id='navbar-user' icon={faUserCircle} />
-                        <FontAwesomeIcon id='navbar-cart' icon={faShoppingCart} />
+                        <Link to={'/cart'}><FontAwesomeIcon id='navbar-cart' icon={faShoppingCart} /></Link>
                     </div>
                 </div>
                 <SearchBar onSearchChange={onSearchChange} searchField={searchField} />

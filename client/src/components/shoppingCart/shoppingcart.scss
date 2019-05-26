@@ -1,4 +1,7 @@
 #shoppingCart{
+    #backBtn{
+        margin:1rem 0 0 1rem;
+    }
     #cartHeading{
         margin:1rem 0 0 1rem;
         display: flex;
@@ -28,7 +31,7 @@
                 margin-right:1rem;
                 padding:1rem;
             }
-            .productDescription{
+            .productCardContent{
                 .cartDelete{
                     float: right;
                     border:none;
@@ -41,7 +44,7 @@
                     margin-bottom:0;
                 }
             }
-        .bottomCard{
+        .bottomCardContent{
             display:flex;
             .quantityBtnGroup{
                 display: flex;
@@ -58,10 +61,22 @@
                     border: 1px #ECEEF0 solid
                 }
             }
-           
-            p{
-                          
+        }
+        }
+    }
+    #bottomCart{
+        #cartSubtotal{
+            display: flex;
+            justify-content: space-between;
+            margin:2.5rem 1rem 0 1rem;
             }
+        #bottomButton{
+        display: flex;
+        justify-content: center;
+        Button{
+            width:100%;
+            margin:0 1rem 1rem 1rem;
+            padding:1rem;
         }
         }
     }

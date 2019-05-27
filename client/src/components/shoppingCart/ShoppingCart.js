@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './shoppingcart.scss';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes,faChevronLeft  } from '@fortawesome/free-solid-svg-icons';
 import {Button} from 'reactstrap';
@@ -25,6 +26,14 @@ class ShoppingCart extends Component{
     backHistory=()=>{
         this.props.history.goBack();
     }
+
+    deleteFromCar=(product_id)=>{
+        axios.delete(`http://localhost:3000/cart/delete/${8}`)
+        .then(res=>{
+            console.log(res)
+        })
+
+    }
    render(){
     console.log(this.props)
     const shoppingCart = this.state.currentShoppingCart;
@@ -37,12 +46,13 @@ class ShoppingCart extends Component{
         </div>
         <p id='emptyCart' style={{display:shoppingCart.length !== 0?'none':''}}>Your Shopping Cart is Empty...</p>
         <ul id='cartList'>
+
         {shoppingCart.map((item,i)=>{
             const{ brand, image_url, product_name, product_price, sale_discount, product_id, item_quantity } = item;
             return <li className = 'cartItem' id={product_id} key={i}>
                 <img src='https://via.placeholder.com/80'/>
                 <div className='productCardContent'>
-                    <button type = 'submit' className='cartDelete'>
+                    <button type = 'submit' className='cartDelete' onClick={this.deleteFromCar} id={product_id}>
                         <FontAwesomeIcon icon={faTimes}/> 
                     </button>
                     <h1>{product_name}</h1>
@@ -58,6 +68,7 @@ class ShoppingCart extends Component{
                 </div>   
             </li>
         })}
+        
         </ul>
         <div id='bottomCart' style={{display:shoppingCart.length === 0?'none':''}}>
             <div id ='cartSubtotal'>

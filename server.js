@@ -95,9 +95,18 @@ app.get('/cart/:customerid', (req,res)=>{
   .where('customer_id', customerid)
   .innerJoin('products', 'products.product_id', 'shopping_carts.product_id')
   .then(data=>{
-    console.log(data)
     res.send(data)
   })
+})
+
+app.delete('/cart/delete/:productid', (req,res)=>{
+  const productid = req.params.productid;
+  console.log(productid);
+  db('shopping_carts')
+  .returning('*')
+  .where('product_id', productid)
+  .delete()
+  .then(res.json())
 })
 
 app.listen(port, ()=> console.log('server started successfully'))

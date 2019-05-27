@@ -28,6 +28,7 @@ class NavBar extends Component{
     }
     render(){
         const {searchField , onSearchChange} = this.props;
+        const customerid = 0; //change to current logged in account
         return(
         <div id='navbar'>
             <div id = 'navbar-wrapper'>
@@ -39,7 +40,7 @@ class NavBar extends Component{
                     </div>
                     <div id= 'navbar-icon-group2'>
                         <FontAwesomeIcon id='navbar-user' icon={faUserCircle} />
-                        <Link to={'/cart'}><FontAwesomeIcon id='navbar-cart' icon={faShoppingCart} /></Link>
+                        <Link to={`/cart/${customerid}`}><FontAwesomeIcon id='navbar-cart' icon={faShoppingCart} /></Link>
                     </div>
                 </div>
                 <SearchBar onSearchChange={onSearchChange} searchField={searchField} />

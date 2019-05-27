@@ -2,6 +2,7 @@ import React,{Component} from 'react';
 import './productpage.scss';
 import Reviews from './Reviews';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import Product from './Product';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -12,7 +13,7 @@ class ProductPage extends Component{
         super(props);
         this.state={
             currentProduct:[],
-            modal: true
+            modal: false
         }
     }
     componentDidMount(){
@@ -32,9 +33,10 @@ class ProductPage extends Component{
 
     addToShoppingCart= (e) =>{
         axios.post('http://localhost:3000/addcart',{
-            customer_id:0,
+            customer_id:0, //change to current logged in account
             product_id:e.target.id
         })
+        this.toggle();
     }
     
     toggle = () => {
@@ -42,7 +44,9 @@ class ProductPage extends Component{
           modal: !prevState.modal
         }));
       }
+
     render(){
+        const customerid = 0;
         if(this.state.currentProduct.length === 0){
             return null;
         }
@@ -59,13 +63,13 @@ class ProductPage extends Component{
                 <div id = 'productPage'>
                     <button onClick={this.backHistory} id='search-header'><FontAwesomeIcon icon={faChevronLeft}/> Back</button>
                     <Modal isOpen={this.state.modal} toggle={this.toggle} id='cartModal' >
-                    <ModalBody>
-                    Added to Cart
-                    </ModalBody>
-                    <ModalFooter>
-                    <Button>test</Button>
-                    <Button>test</Button>
-                    </ModalFooter>
+                        <ModalBody style={{display:'flex', justifyContent:'center', fontSize:'2rem', marginTop:'2rem', color:'green'}}>
+                            Added to Cart
+                        </ModalBody>
+                        <div id='bottomModal' style={{display:'flex', justifyContent:'center', fontSize:'1rem', marginBottom:'6rem'}}>
+                                <Button className='modalBtn' onClick={this.toggle}>Keep Shopping</Button>
+                                <Link to={`/cart/${customerid}`}><Button className='modalBtn'>Go to Cart</Button></Link>
+                        </div>
                     </Modal>
                     <Product 
                         product = {filteredProduct[0] || filterAccessory[0]}

@@ -58,6 +58,7 @@ app.get('/search/:search', (req,res)=>{
   }
 });
 
+//get specific product and recommended accessories based off brand 
 app.get('/product/:id/:brand', (req,res)=>{
   const id = req.params.id;
   const brand = req.params.brand;
@@ -83,10 +84,20 @@ app.post('/addcart', (req,res)=>{
     item_quantity:item_quantity
   })
   .then(item=>{
-    console.log(item)
     res.json(item)
   })
 })
 
+app.get('/cart/:customerid', (req,res)=>{
+  const customerid = req.params.customerid;
+  db.select('*')
+  .from('shopping_carts')
+  .where('customer_id', customerid)
+  .innerJoin('products', 'products.product_id', 'shopping_carts.product_id')
+  .then(data=>{
+    console.log(data)
+    res.send(data)
+  })
+})
 
 app.listen(port, ()=> console.log('server started successfully'))

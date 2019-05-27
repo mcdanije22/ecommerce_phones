@@ -29,15 +29,13 @@ class App extends Component{
           <Switch>
             <Route exact path='/' component={Home} />
             <Route path='/account' component={AccountPage} />
-            {/* <Route path='/search/:search' component={SearchPage} /> */}
             <Route path='/search/:search' render={(props)=>(
               <SearchPage key={props.location.key} {...props} />
             )}/>
-            {/* <Route path='/product/:id' component={ProductPage} /> */}
             <Route path='/product/:id/:brand' component={ProductPage} />
             <Route path='/deals' component={SearchPage} />
-            <Route path='/product' component={ProductPage} />
-            <Route path='/cart' component={ShoppingCart} />
+            {/* <Route path='/product' component={ProductPage} /> */}
+            <Route path='/cart/:customerid' component={ShoppingCart} />
           </Switch>
         <Footer />
       </div>

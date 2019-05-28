@@ -34,7 +34,7 @@ class ProductPage extends Component{
     addToShoppingCart= (e) =>{
         axios.post('http://localhost:3000/addcart',{
             customer_id:0, //change to current logged in account
-            product_id:e.target.id
+            product_id:e.target.id  
         })
         this.toggle();
     }

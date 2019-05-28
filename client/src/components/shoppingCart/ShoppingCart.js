@@ -27,13 +27,16 @@ class ShoppingCart extends Component{
         this.props.history.goBack();
     }
 
-    deleteFromCar=(product_id)=>{
-        axios.delete(`http://localhost:3000/cart/delete/${8}`)
-        .then(res=>{
-            console.log(res)
-        })
-
+    clearCart=()=>{
+        axios.delete(`http://localhost:3000/cart/delete/clear`)
+        .then(
+            this.setState({currentShoppingCart:[]})
+        )
+        // .then(
+        //     this.setState({currentShoppingCart:res.data})
+        // )
     }
+  
    render(){
     console.log(this.props)
     const shoppingCart = this.state.currentShoppingCart;
@@ -42,9 +45,14 @@ class ShoppingCart extends Component{
         <div id = 'shoppingCart'>
         <button onClick={this.backHistory} id='backBtn'><FontAwesomeIcon icon={faChevronLeft}/> Back</button>
         <div id='cartHeading'>
-        <h1 >Shopping Cart</h1><p >Clear Cart</p>
+        <h1 >Shopping Cart</h1>
+        <button 
+        type='submit'
+        onClick={this.clearCart}>
+            Clear Cart
+        </button>
         </div>
-        <p id='emptyCart' style={{display:shoppingCart.length !== 0?'none':''}}>Your Shopping Cart is Empty...</p>
+        <p id='emptyCart' style={{display:shoppingCart.length !== 0?'none':'', marginBottom:shoppingCart.length === 0?'11rem':''}}>Your Shopping Cart is Empty...</p>
         <ul id='cartList'>
 
         {shoppingCart.map((item,i)=>{
@@ -52,7 +60,15 @@ class ShoppingCart extends Component{
             return <li className = 'cartItem' id={product_id} key={i}>
                 <img src='https://via.placeholder.com/80'/>
                 <div className='productCardContent'>
-                    <button type = 'submit' className='cartDelete' onClick={this.deleteFromCar} id={product_id}>
+                    <button type = 'submit' className='cartDelete'
+                    onClick={()=>{
+                        axios.delete(`http://localhost:3000/cart/delete/${product_id}`)
+                        .then(
+                           this.setState({currentShoppingCart:this.state.currentShoppingCart.filter(item=>item.product_id !== product_id)}) 
+                            )
+                        }
+                    }
+                     id={product_id}>
                         <FontAwesomeIcon icon={faTimes}/> 
                     </button>
                     <h1>{product_name}</h1>

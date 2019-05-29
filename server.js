@@ -76,7 +76,7 @@ app.get('/product/:id/:brand', (req,res)=>{
 
 
 app.post('/addcart', (req,res)=>{
-  const{customer_id, product_id,item_quantity}=req.body
+  const{customer_id, product_id,item_quantity}=req.body;
   db('shopping_carts')
   .insert({
     customer_id:customer_id,
@@ -86,9 +86,13 @@ app.post('/addcart', (req,res)=>{
   .then(item=>{
     res.json(item)
   })
+  // .catch((error)=>console.log(error))  
+  .catch((error)=>{
+    console.log(error);
+  })
 })
 
-app.get('/cart/:customerid', (req,res,next)=>{
+app.get('/cart/:customerid', (req,res)=>{
   const customerid = req.params.customerid;
   db.select('*')
   .from('shopping_carts')

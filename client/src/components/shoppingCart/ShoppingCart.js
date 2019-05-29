@@ -32,9 +32,6 @@ class ShoppingCart extends Component{
         .then(
             this.setState({currentShoppingCart:[]})
         )
-        // .then(
-        //     this.setState({currentShoppingCart:res.data})
-        // )
     }
   
    render(){

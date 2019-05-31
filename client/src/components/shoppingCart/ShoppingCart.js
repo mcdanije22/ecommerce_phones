@@ -11,7 +11,8 @@ class ShoppingCart extends Component{
     constructor(props){
         super(props);
         this.state={
-            currentShoppingCart:[]
+            currentShoppingCart:[],
+            cartTotal:0
         }
     }
     componentDidMount(){
@@ -20,6 +21,9 @@ class ShoppingCart extends Component{
         .then(res=>{
             this.setState({currentShoppingCart:res.data})
             console.log('test',this.state.currentShoppingCart)
+            if(this.state.currentShoppingCart.length >0){
+                this.getTotal();
+            }
         })
     }
 
@@ -32,6 +36,12 @@ class ShoppingCart extends Component{
         .then(
             this.setState({currentShoppingCart:[]})
         )
+    }
+
+    getTotal=()=>{
+       const total = this.state.currentShoppingCart.map(item=>parseInt(item.product_price)).reduce((total, item)=>total+item);
+       console.log(total);
+       this.setState({cartTotal:total})
     }
   
    render(){
@@ -85,7 +95,7 @@ class ShoppingCart extends Component{
         </ul>
         <div id='bottomCart' style={{display:shoppingCart.length === 0?'none':''}}>
             <div id ='cartSubtotal'>
-            <p>Subtotal</p><h5>$1000.00</h5>
+            <p>Subtotal</p><h5>${this.state.cartTotal}</h5>
             </div>
             <div id='bottomButton'>
             <Button type = 'submit' color='success'>CHECKOUT</Button>

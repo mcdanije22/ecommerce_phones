@@ -86,9 +86,9 @@ app.post('/addcart', (req,res)=>{
   .then(item=>{
     res.json(item)
   })
-  // .catch((error)=>console.log(error))  
-  .catch((error)=>{
-    console.log(error);
+  .catch((err)=>{
+    res.status(500).json({message:err})
+    // console.log(err.name);
   })
 })
 

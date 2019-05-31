@@ -13,7 +13,8 @@ class ProductPage extends Component{
         super(props);
         this.state={
             currentProduct:[],
-            modal: false
+            modal: false,
+            errorModal: false
         }
     }
     componentDidMount(){
@@ -36,12 +37,20 @@ class ProductPage extends Component{
             customer_id:0, //change to current logged in account
             product_id:e.target.id  
         })
+        .then(this.setState({errorModal:false}))
+        .catch(err=>{
+            if(err){
+                console.log(err.response.data)
+                this.setState({errorModal:true})
+            }
+        })
         this.toggle();
+
     }
     
     toggle = () => {
         this.setState(prevState => ({
-          modal: !prevState.modal
+          modal: !prevState.modal          
         }));
       }
 
@@ -64,7 +73,8 @@ class ProductPage extends Component{
                     <button onClick={this.backHistory} id='search-header'><FontAwesomeIcon icon={faChevronLeft}/> Back</button>
                     <Modal isOpen={this.state.modal} toggle={this.toggle} id='cartModal' >
                         <ModalBody style={{display:'flex', justifyContent:'center', fontSize:'2rem', marginTop:'2rem', color:'green'}}>
-                            Added to Cart
+                            <p style={{display:this.state.errorModal?'none':''}}>Added to Cart!</p>
+                            <p style={{display:!this.state.errorModal?'none':'', color:'red'}}>Item already in cart!</p>
                         </ModalBody>
                         <div id='bottomModal' style={{display:'flex', justifyContent:'center', fontSize:'1rem', marginBottom:'6rem'}}>
                                 <Button className='modalBtn' onClick={this.toggle}>Keep Shopping</Button>

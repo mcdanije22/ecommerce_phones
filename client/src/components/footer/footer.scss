@@ -1,6 +1,10 @@
 #footer{
     height: 42vh;
     background-color:  #252F3C;
+    // position: absolute;
+    // bottom: 0;
+    // width:100%;
+    flex:1;
         #footer-button{
             border: 1px solid gray;
             background-color:white;

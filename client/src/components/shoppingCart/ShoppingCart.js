@@ -21,12 +21,11 @@ class ShoppingCart extends Component{
         .then(res=>{
             this.setState({currentShoppingCart:res.data})
             console.log('test',this.state.currentShoppingCart)
-            if(this.state.currentShoppingCart.length >0){
+            if(this.state.currentShoppingCart.length > 0){
                 this.getTotal();
             }
         })
     }
-
     backHistory=()=>{
         this.props.history.goBack();
     }
@@ -39,9 +38,13 @@ class ShoppingCart extends Component{
     }
 
     getTotal=()=>{
+        if(this.state.currentShoppingCart.length !== 0){
        const total = this.state.currentShoppingCart.map(item=>parseInt(item.product_price)).reduce((total, item)=>total+item);
        console.log(total);
-       this.setState({cartTotal:total})
+       if(total !== this.state.cartTotal){
+        this.setState({cartTotal:total})
+            }
+        }
     }
   
    render(){
@@ -59,7 +62,8 @@ class ShoppingCart extends Component{
             Clear Cart
         </button>
         </div>
-        <p id='emptyCart' style={{display:shoppingCart.length !== 0?'none':'', marginBottom:shoppingCart.length === 0?'11rem':''}}>Your Shopping Cart is Empty...</p>
+        {/* <p id='emptyCart' style={{display:shoppingCart.length !== 0?'none':'', marginBottom:shoppingCart.length === 0?'11rem':''}}>Your Shopping Cart is Empty...</p> */}
+        <p id='emptyCart' style={{display:shoppingCart.length !== 0?'none':''}}>Your Shopping Cart is Empty...</p>
         <ul id='cartList'>
 
         {shoppingCart.map((item,i)=>{
@@ -67,11 +71,15 @@ class ShoppingCart extends Component{
             return <li className = 'cartItem' id={product_id} key={i}>
                 <img src='https://via.placeholder.com/80'/>
                 <div className='productCardContent'>
-                    <button type = 'submit' className='cartDelete'
+                    <button 
+                    type = 'submit' 
+                    className='cartDelete'
                     onClick={()=>{
                         axios.delete(`http://localhost:3000/cart/delete/${product_id}`)
                         .then(
-                           this.setState({currentShoppingCart:this.state.currentShoppingCart.filter(item=>item.product_id !== product_id)}) 
+                           this.setState({currentShoppingCart:this.state.currentShoppingCart.filter(item=>item.product_id !== product_id)},()=>{
+                            this.getTotal();
+                           })
                             )
                         }
                     }

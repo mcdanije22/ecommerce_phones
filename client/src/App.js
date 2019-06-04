@@ -26,6 +26,7 @@ class App extends Component{
   return (
       <div className="App">
         <NavBar />
+        <div id='main'>
           <Switch>
             <Route exact path='/' component={Home} />
             <Route path='/account' component={AccountPage} />
@@ -37,6 +38,7 @@ class App extends Component{
             {/* <Route path='/product' component={ProductPage} /> */}
             <Route path='/cart/:customerid' component={ShoppingCart} />
           </Switch>
+          </div>
         <Footer />
       </div>
   );

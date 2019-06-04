@@ -38,7 +38,8 @@ class SearchPage extends Component{
         <div id='searchPage'>
             <button onClick={this.backHistory} id='search-header'><FontAwesomeIcon icon={faChevronLeft}/> Back</button>
             <p id='search-header'>{searchResultAmounts} results found for "{searchTerm}"</p>
-            <hr style={{marginBottom: searchResultAmounts === 0?'20rem':''}} /> {/*handles empty page results for footer spacing*/}
+            <hr /> {/*handles empty page results for footer spacing*/}
+            {/* <hr style={{marginBottom: searchResultAmounts === 0?'20rem':''}} /> handles empty page results for footer spacing */}
             <ul id='searchResults'>
 
             {searchResults.map((item,i)=>{
@@ -60,7 +61,8 @@ class SearchPage extends Component{
             })}
 
             </ul>
-            <div id='search-buttons' style={{display: searchResultAmounts ===0? 'none': 'flex', marginBottom: searchResultAmounts === 1? '15rem':''}}>
+            {/* <div id='search-buttons' style={{display: searchResultAmounts ===0? 'none': 'flex', marginBottom: searchResultAmounts === 1? '15rem':''}}> */}
+            <div id='search-buttons' style={{display: searchResultAmounts ===0? 'none': 'flex'}}>
                 <Button type= 'submit' className='searchButton'><FontAwesomeIcon icon={faChevronLeft}/> Previous</Button>
                 <Button type= 'submit' className='searchButton'>Next <FontAwesomeIcon icon={faChevronRight}/></Button>
             </div>

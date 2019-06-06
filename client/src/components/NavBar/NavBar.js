@@ -39,7 +39,7 @@ class NavBar extends Component{
                         <FontAwesomeIcon id='navbar-menu' icon={faBars} onClick={this.toggleNavbarMenu}/>
                     </div>
                     <div id= 'navbar-icon-group2'>
-                        <FontAwesomeIcon id='navbar-user' icon={faUserCircle} />
+                        <Link to={'/signin'} ><FontAwesomeIcon id='navbar-user' icon={faUserCircle} /></Link>
                         <Link to={`/cart/${customerid}`}><FontAwesomeIcon id='navbar-cart' icon={faShoppingCart} /></Link>
                     </div>
                 </div>

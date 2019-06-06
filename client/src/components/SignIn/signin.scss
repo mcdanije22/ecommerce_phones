@@ -1,0 +1,41 @@
+#logPage{
+    text-align: center;
+    margin-top:1rem;
+    #contentBox{
+       
+        #signIn{
+          padding:1rem 2rem 0 2rem;
+          display:flex;
+          flex-direction: column;
+          text-align:left;
+          p{
+              font-size:1rem;
+              margin:.5rem 0 0 0;
+              font-weight: lighter;
+              span{
+                  color:red;
+              }
+          }
+          input{
+              border:none;
+              background-color:transparent;
+              border-bottom:1px black solid;
+              margin:.5rem 0;
+          }
+          input:focus{
+              outline: none;
+          }
+          Button{
+              margin-top:2rem;
+          }
+        }
+        p{
+            font-size:1rem;
+            margin:.5rem 0 0 0;
+            font-weight: lighter;
+            span{
+                color:red;
+            }
+        }
+    }
+}

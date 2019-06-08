@@ -35,13 +35,11 @@ class SignIn extends Component{
                 alert('wrong email or password')
             }else{
             console.log(data.data)
-            this.props.getAccount();
-             
+            this.props.getAccount(data.data[0]);             
         }})
         }
     }
     render(){
-        console.log(this.props.currentAccount)
         return(
             <div id='logPage' >
                 <div id='contentBox'>
@@ -85,7 +83,7 @@ const mapStateToProps = state => {
   
   const mapDispatchToProps = (dispatch) =>{
     return{
-      getAccount: (e) => dispatch(loginAccount({name:'josh'}))
+      getAccount: (user) => dispatch(loginAccount(user))
     }
   } 
-export default connect()(SignIn);
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

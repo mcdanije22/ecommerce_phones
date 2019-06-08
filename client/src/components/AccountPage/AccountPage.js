@@ -2,12 +2,16 @@ import React, {Component} from 'react';
 import './accountpage.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBoxOpen, faHome, faCreditCard, faLock, faSignOutAlt, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import {connect} from 'react-redux';
 
 class AccountPage extends Component{
     constructor(){
         super();
     }
     render(){
+        console.log(this.props.currentAccount)
+        const {first_name, last_name} = this.props.currentAccount;
+        console.log(first_name)
         return(
             <div id='AccountPage'>
                 <h3>My Account</h3>
@@ -48,4 +52,9 @@ class AccountPage extends Component{
         );
     }
 }
-export default AccountPage;
+const mapStateToProps = state => {
+    return {
+        currentAccount: state.account.currentAccount
+    }
+  }
+export default connect(mapStateToProps, null)(AccountPage);

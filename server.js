@@ -120,4 +120,15 @@ app.delete('/cart/delete/:productid', (req,res)=>{
   }
 })
 
+app.post('/signin', (req,res)=>{
+  const {email,password}=req.body;
+  db.select('*')
+  .from('login')
+  .where( 'email', '=' ,email )
+  // .where(email ,'==' ,'email' ,'&&', password, '==', 'password')
+  .then(data=>{
+    console.log(data)
+  })
+})
+
 app.listen(port, ()=> console.log('server started successfully'))

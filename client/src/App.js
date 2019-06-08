@@ -28,7 +28,7 @@ class App extends Component{
         <NavBar />
         <div id='main'>
           <Switch>
-            <Route path ='/signin' component={SignIn} />
+            <Route path ='/login' component={SignIn} />
             <Route exact path='/' component={Home} />
             <Route path='/account' component={AccountPage} />
             <Route path='/search/:search' render={(props)=>(

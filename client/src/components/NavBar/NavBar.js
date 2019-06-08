@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars,faUserCircle, faShoppingCart,faAdjust } from '@fortawesome/free-solid-svg-icons';
 import SearchBar from './SearchBar/SearchBar';
 import NavbarMenu from './NavbarMenu';
-
 import { setSearchField } from '../../actions/searchAction'
 import { connect } from 'react-redux';
 

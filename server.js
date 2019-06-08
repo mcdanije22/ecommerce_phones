@@ -124,10 +124,11 @@ app.post('/signin', (req,res)=>{
   const {email,password}=req.body;
   db.select('*')
   .from('login')
-  .where( 'email', '=' ,email )
-  // .where(email ,'==' ,'email' ,'&&', password, '==', 'password')
+  .where('login.email', email) 
+  .where('login.password', password) 
+  .innerJoin('customers', 'customers.customer_id', 'login.customer_id')
   .then(data=>{
-    console.log(data)
+    res.json(data)
   })
 })
 

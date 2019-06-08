@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import {Button} from 'reactstrap';
 import axios from 'axios';
+import {Link} from 'react-router-dom';
+import {connect} from 'react-redux';
+import { loginAccount } from '../../actions/loginAction';
 import './signin.scss';
 
 class SignIn extends Component{
@@ -19,12 +22,26 @@ class SignIn extends Component{
     }
 
     accountLogIn = () =>{
+        const {email, password}=this.state;
+        if(email === '' || password === ''){
+            alert('fill in both fields')
+        }else{
         axios.post('http://localhost:3000/signin',{
-            email:this.state.email,
-            password:this.state.password
+            email,
+            password
         })
+        .then(data=>{
+            if(data.data.length === 0 ){
+                alert('wrong email or password')
+            }else{
+            console.log(data.data)
+            this.props.getAccount();
+             
+        }})
+        }
     }
     render(){
+        console.log(this.props.currentAccount)
         return(
             <div id='logPage' >
                 <div id='contentBox'>
@@ -34,7 +51,7 @@ class SignIn extends Component{
                         <input type='text' name='email' onChange={this.getInput}/>
                         <p>PASSWORD</p>
                         <input type='text' name='password' onChange={this.getInput}/>
-                        <Button type='submit' onClick={this.accountLogIn}>Sign in</Button>
+                        <Link to={true?'/account':'/login'}> <Button type='submit' onClick={this.accountLogIn}>Sign in</Button> </Link>
                         <p>Dont have an account? <span>Create one!</span></p>
                     </div>
 
@@ -58,4 +75,17 @@ class SignIn extends Component{
         )
     }
 }
-export default SignIn;
+
+
+const mapStateToProps = state => {
+    return {
+        currentAccount: state.account.currentAccount
+    }
+  }
+  
+  const mapDispatchToProps = (dispatch) =>{
+    return{
+      getAccount: (e) => dispatch(loginAccount({name:'josh'}))
+    }
+  } 
+export default connect()(SignIn);

@@ -1,7 +1,8 @@
 import {  GET_ACCOUNT_INFO } from '../actions/constants';
 
 const intialState = {
-    currentAccount: {}
+    currentAccount: '',
+    loggedIn: false
 };
 
 const accountInfo = ( state=intialState, action={} )=>{
@@ -9,7 +10,8 @@ const accountInfo = ( state=intialState, action={} )=>{
         case GET_ACCOUNT_INFO:
         return {
             ...state,
-            currentAccount: action.payload
+            currentAccount: action.payload,
+            loggedIn:action.payload === ''?false:true
         }
         default:
             return state

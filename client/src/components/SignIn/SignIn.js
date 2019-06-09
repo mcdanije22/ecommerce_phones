@@ -15,9 +15,7 @@ class SignIn extends Component{
         }
     }
     getInput = (e) =>{
-      this.setState({[e.target.name] : e.target.value},()=>{
-      
-      })  
+      this.setState({[e.target.name] : e.target.value})  
     }
 
     accountLogIn = () =>{

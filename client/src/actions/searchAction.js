@@ -1,4 +1,4 @@
-import { CHANGE_SEARCH_FIELD } from './constants';
+import { CHANGE_SEARCH_FIELD, CLEAR_SEARCH_FIELD } from './constants';
 
 export const setSearchField = (text) => {
     return{
@@ -6,3 +6,8 @@ export const setSearchField = (text) => {
         payload: text
     }
 };
+export const clearSearchField = () =>{
+    return{
+        type:'CLEAR_SEARCH_FIELD'
+    }
+}

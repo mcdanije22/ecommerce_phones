@@ -1,4 +1,4 @@
-import { CHANGE_SEARCH_FIELD } from '../actions/constants';
+import { CHANGE_SEARCH_FIELD, CLEAR_SEARCH_FIELD } from '../actions/constants';
 
 const intialState = {
     searchField: ''
@@ -11,6 +11,9 @@ const intialState = {
             ...state,
             searchField: action.payload
         }
+        case CLEAR_SEARCH_FIELD:
+            return state
+            
         default:
             return state
     }

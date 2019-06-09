@@ -26,8 +26,8 @@ class NavBar extends Component{
         })
     }
     render(){
-        const {searchField , onSearchChange} = this.props;
-        const customerid = 0; //change to current logged in account
+        const {searchField , onSearchChange, currentAccount} = this.props;
+        const customerid = currentAccount.customer_id; 
         return(
         <div id='navbar'>
             <div id = 'navbar-wrapper'>
@@ -55,7 +55,8 @@ class NavBar extends Component{
 
 const mapStateToProps = state => {
     return {
-      searchField: state.search.searchField
+      searchField: state.search.searchField,
+      currentAccount: state.account.currentAccount    
     }
   }
   

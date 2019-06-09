@@ -84,6 +84,7 @@ app.post('/addcart', (req,res)=>{
     item_quantity:item_quantity
   })
   .then(item=>{
+    console.log(item)
     res.json(item)
   })
   .catch((err)=>{
@@ -105,16 +106,17 @@ app.get('/cart/:customerid', (req,res)=>{
  
 })
 
-app.delete('/cart/delete/:productid', (req,res)=>{
-  const productid = req.params.productid;
-  console.log(productid);
+app.delete('/cart/delete/:productid/:customerid', (req,res)=>{
+  const { productid, customerid} =req.params;
   if(productid == 'clear'){
     db('shopping_carts')
+    .where('customer_id', customerid)
     .delete()
     .then(res.json())
   }else{
   db('shopping_carts')
-  .where('product_id', productid)
+  .where('product_id', productid) 
+  .where('customer_id', customerid)
   .delete()
   .then(res.json())
   }

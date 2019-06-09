@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import './shoppingcart.scss';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes,faChevronLeft  } from '@fortawesome/free-solid-svg-icons';
 import {Button} from 'reactstrap';
@@ -16,7 +17,7 @@ class ShoppingCart extends Component{
         }
     }
     componentDidMount(){
-        const customerid = this.props.match.params.customerid;
+        const customerid = this.props.currentAccount.customer_id;
         axios.get(`http://localhost:3000/cart/${customerid}`)
         .then(res=>{
             this.setState({currentShoppingCart:res.data})
@@ -31,7 +32,8 @@ class ShoppingCart extends Component{
     }
 
     clearCart=()=>{
-        axios.delete(`http://localhost:3000/cart/delete/clear`)
+        const customerid = this.props.currentAccount.customer_id;
+        axios.delete(`http://localhost:3000/cart/delete/clear/${customerid}`)
         .then(
             this.setState({currentShoppingCart:[]})
         )
@@ -48,6 +50,7 @@ class ShoppingCart extends Component{
     }
   
    render(){
+    const customerid = this.props.currentAccount.customer_id;
     console.log(this.props)
     const shoppingCart = this.state.currentShoppingCart;
     console.log(shoppingCart)
@@ -75,7 +78,7 @@ class ShoppingCart extends Component{
                     type = 'submit' 
                     className='cartDelete'
                     onClick={()=>{
-                        axios.delete(`http://localhost:3000/cart/delete/${product_id}`)
+                        axios.delete(`http://localhost:3000/cart/delete/${product_id}/${customerid}`)
                         .then(
                            this.setState({currentShoppingCart:this.state.currentShoppingCart.filter(item=>item.product_id !== product_id)},()=>{
                             this.getTotal();
@@ -113,4 +116,9 @@ class ShoppingCart extends Component{
        );
    }
 }
-export default ShoppingCart;
+const mapStateToProps = state => {
+    return {
+      currentAccount: state.account.currentAccount    
+    }
+  }
+export default connect(mapStateToProps, null)(ShoppingCart);

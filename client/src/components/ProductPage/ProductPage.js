@@ -4,6 +4,7 @@ import Reviews from './Reviews';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Product from './Product';
+import { connect } from 'react-redux';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
@@ -34,7 +35,7 @@ class ProductPage extends Component{
 
     addToShoppingCart= (e) =>{
         axios.post('http://localhost:3000/addcart',{
-            customer_id:0, //change to current logged in account
+            customer_id:this.props.currentAccount.customer_id,
             product_id:e.target.id  
         })
         .then(this.setState({errorModal:false}))
@@ -101,4 +102,9 @@ class ProductPage extends Component{
                 </div>
             )};
 };
-export default ProductPage;
+const mapStateToProps = state => {
+    return {
+      currentAccount: state.account.currentAccount    
+    }
+  }
+export default connect(mapStateToProps, null)(ProductPage);

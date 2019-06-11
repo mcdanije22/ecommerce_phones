@@ -1,6 +1,7 @@
 import React from 'react';
 import './productpage.scss';
-import { UncontrolledCarousel, Button } from 'reactstrap';
+import { Link } from 'react-router-dom';
+import { UncontrolledCarousel, Button, Modal, ModalBody } from 'reactstrap';
 
 const items = [
     {
@@ -23,7 +24,7 @@ const items = [
     }
   ];
 
-const Product = ({product, reviews,addToShoppingCart}) =>{
+const Product = ({product, reviews,addToShoppingCart, currentAccount, modalLogin}) =>{
     const{ brand, product_id, product_name, product_price, image_url, descripition, sale_discount } = product;
     
     const scoreList = reviews.map(item=> item.review_score)
@@ -45,7 +46,19 @@ const Product = ({product, reviews,addToShoppingCart}) =>{
                 { sale_discount !== null? <h3>Sale Price: ${product_price - sale_discount}.00</h3>:'' }
             </div>
             <div id='mainButton'>
-                <Button type = 'submit' id={product_id} onClick={addToShoppingCart}>Add to Cart</Button>
+            {currentAccount !== ''?<Button type = 'submit' id={product_id} onClick={addToShoppingCart}>Add to Cart</Button>:<Button type = 'submit' id={product_id}><Link to='/login' style={{color:'black'}}>Add to Cart</Link></Button>}
+            
+            <Modal isOpen={modalLogin} toggle={this.toggle} id='cartModal' >
+                        <ModalBody style={{display:'flex', justifyContent:'center', fontSize:'2rem', marginTop:'2rem', color:'green'}}>
+                            <p>Please sign in first</p>
+                        </ModalBody>
+                        <div id='bottomModal' style={{display:'flex', justifyContent:'center', fontSize:'1rem', marginBottom:'6rem'}}>
+                                <Button className='modalBtn' onClick={this.toggle}>Log In</Button>
+                                <Link to={'/'}><Button className='modalBtn'>Register</Button></Link>
+                        </div>
+                    </Modal>
+
+
             </div>
             <div id = 'recommendedSection'>
                 <h3>Recommended Items:</h3>

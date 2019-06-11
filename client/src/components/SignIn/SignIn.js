@@ -32,9 +32,14 @@ class SignIn extends Component{
                 alert('wrong email or password')
             }else{
             console.log(data.data)
-            this.props.getAccount(data.data[0]);             
+            this.props.getAccount(data.data[0]); 
+            this.backHistory();            
         }})
         }
+    }
+
+    backHistory= () =>{
+        this.props.history.goBack();
     }
     render(){
         return(
@@ -46,7 +51,7 @@ class SignIn extends Component{
                         <input type='text' name='email' onChange={this.getInput}/>
                         <p>PASSWORD</p>
                         <input type='text' name='password' onChange={this.getInput}/>
-                        <Link to={true?'/account':'/login'}> <Button type='submit' onClick={this.accountLogIn}>Sign in</Button> </Link>
+                        <Button type='submit' onClick={this.accountLogIn}>Sign in</Button>
                         <p>Dont have an account? <span>Create one!</span></p>
                     </div>
 

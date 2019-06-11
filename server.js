@@ -88,8 +88,13 @@ app.post('/addcart', (req,res)=>{
     res.json(item)
   })
   .catch((err)=>{
-    res.status(500).json({message:err})
-    // console.log(err.name);
+    if(err.column === 'customer_id'){
+      res.status(400).json({message:err})
+      console.log('test')
+    }else{
+      res.status(500).json({message:err})
+      // console.log(err.name);
+    }
   })
 })
 

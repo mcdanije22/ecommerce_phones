@@ -29,7 +29,6 @@ class NavBar extends Component{
     render(){
         const {searchField , onSearchChange,clearsearchField, currentAccount, loggedIn} = this.props;
         const customerid = currentAccount.customer_id; 
-        console.log(clearSearchField)
         return(
         <div id='navbar'>
             <div id = 'navbar-wrapper'>

@@ -2,7 +2,7 @@ import React,{Component} from 'react';
 import './productpage.scss';
 import Reviews from './Reviews';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import Product from './Product';
 import { connect } from 'react-redux';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
@@ -40,8 +40,8 @@ class ProductPage extends Component{
         })
         .then(this.setState({errorModal:false}))
         .catch(err=>{
-            if(err){
-                console.log(err.response.data)
+            if(err.response.status == 400){
+                console.log(err.response.status)
                 this.setState({errorModal:true})
             }
         })
@@ -86,6 +86,7 @@ class ProductPage extends Component{
                         product = {filteredProduct[0] || filterAccessory[0]}
                         reviews = {productReviews.length !== 0?productReviews:[0] }
                         addToShoppingCart = {this.addToShoppingCart}
+                        currentAccount = {this.props.currentAccount}
                     />
                    {productReviews.length !== 0?
                    <Reviews

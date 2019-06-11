@@ -24,13 +24,14 @@ const items = [
     }
   ];
 
-const Product = ({product, reviews,addToShoppingCart, currentAccount, modalLogin}) =>{
+const Product = ({product, reviews,addToShoppingCart, currentAccount, modalLogin,loginToggle}) =>{
     const{ brand, product_id, product_name, product_price, image_url, descripition, sale_discount } = product;
     
     const scoreList = reviews.map(item=> item.review_score)
     const scoreAverage = scoreList.reduce((total, num)=>{
         return total + num / scoreList.length;
     })
+    console.log(modalLogin)
     return(
         <React.Fragment>
         <div id = 'product-header'>
@@ -46,15 +47,29 @@ const Product = ({product, reviews,addToShoppingCart, currentAccount, modalLogin
                 { sale_discount !== null? <h3>Sale Price: ${product_price - sale_discount}.00</h3>:'' }
             </div>
             <div id='mainButton'>
-            {currentAccount !== ''?<Button type = 'submit' id={product_id} onClick={addToShoppingCart}>Add to Cart</Button>:<Button type = 'submit' id={product_id}><Link to='/login' style={{color:'black'}}>Add to Cart</Link></Button>}
+
+            {/* {
+              currentAccount !== ''
+            ?
+            <Button type = 'submit' id={product_id} onClick={addToShoppingCart}>Add to Cart</Button>
+            :
+            <Button type = 'submit' id={product_id}><Link to='/login' style={{color:'black'}}>Add to Cart</Link></Button>
+            } */}
+
+            {
+              currentAccount !== ''
+            ?
+            <Button type = 'submit' id={product_id} onClick={addToShoppingCart}>Add to Cart</Button>
+            :
+            <Button type = 'submit' id={product_id} onClick={loginToggle}>Add to Cart</Button>
+            }
             
-            <Modal isOpen={modalLogin} toggle={this.toggle} id='cartModal' >
-                        <ModalBody style={{display:'flex', justifyContent:'center', fontSize:'2rem', marginTop:'2rem', color:'green'}}>
+            <Modal isOpen={modalLogin} toggle={loginToggle} id='cartModal' >
+                        <ModalBody style={{display:'flex', justifyContent:'center', fontSize:'2rem', marginTop:'2rem', color:'red'}}>
                             <p>Please sign in first</p>
                         </ModalBody>
                         <div id='bottomModal' style={{display:'flex', justifyContent:'center', fontSize:'1rem', marginBottom:'6rem'}}>
-                                <Button className='modalBtn' onClick={this.toggle}>Log In</Button>
-                                <Link to={'/'}><Button className='modalBtn'>Register</Button></Link>
+                                <Link to={'/login'} ><Button className='modalBtn'>Log in</Button></Link>
                         </div>
                     </Modal>
 

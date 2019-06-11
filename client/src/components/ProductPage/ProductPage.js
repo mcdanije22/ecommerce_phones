@@ -2,7 +2,7 @@ import React,{Component} from 'react';
 import './productpage.scss';
 import Reviews from './Reviews';
 import axios from 'axios';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Product from './Product';
 import { connect } from 'react-redux';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
@@ -15,7 +15,8 @@ class ProductPage extends Component{
         this.state={
             currentProduct:[],
             modal: false,
-            errorModal: false
+            errorModal: false,
+            modalLogin: false
         }
     }
     componentDidMount(){
@@ -55,6 +56,12 @@ class ProductPage extends Component{
         }));
       }
 
+      loginToggle = () => {
+        this.setState(prevState => ({
+            modalLogin: !prevState.modalLogin      
+        }));
+      }
+
     render(){
         const customerid = 0;
         if(this.state.currentProduct.length === 0){
@@ -87,6 +94,8 @@ class ProductPage extends Component{
                         reviews = {productReviews.length !== 0?productReviews:[0] }
                         addToShoppingCart = {this.addToShoppingCart}
                         currentAccount = {this.props.currentAccount}
+                        loginToggle={this.loginToggle}
+                        modalLogin={this.state.modalLogin}
                     />
                    {productReviews.length !== 0?
                    <Reviews

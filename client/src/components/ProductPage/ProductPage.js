@@ -63,7 +63,7 @@ class ProductPage extends Component{
       }
 
     render(){
-        const customerid = 0;
+        const customerid = this.props.currentAccount.customer_id;
         if(this.state.currentProduct.length === 0){
             return null;
         }

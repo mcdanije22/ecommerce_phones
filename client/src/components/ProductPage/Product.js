@@ -65,15 +65,13 @@ const Product = ({product, reviews,addToShoppingCart, currentAccount, modalLogin
             }
             
             <Modal isOpen={modalLogin} toggle={loginToggle} id='cartModal' >
-                        <ModalBody style={{display:'flex', justifyContent:'center', fontSize:'2rem', marginTop:'2rem', color:'red'}}>
+                        <ModalBody style={{display:'flex', justifyContent:'center', fontSize:'2rem', color:'red'}}>
                             <p>Please sign in first</p>
                         </ModalBody>
-                        <div id='bottomModal' style={{display:'flex', justifyContent:'center', fontSize:'1rem', marginBottom:'6rem'}}>
-                                <Link to={'/login'} ><Button className='modalBtn'>Log in</Button></Link>
+                        <div id='bottomModal' style={{display:'flex', justifyContent:'center', fontSize:'1rem', marginBottom:'2rem'}}>
+                                <Link to={'/login'} ><Button className='modalBtn' style={{width:'14rem'}}>Log in</Button></Link>
                         </div>
                     </Modal>
-
-
             </div>
             <div id = 'recommendedSection'>
                 <h3>Recommended Items:</h3>

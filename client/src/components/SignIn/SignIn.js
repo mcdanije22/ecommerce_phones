@@ -11,7 +11,12 @@ class SignIn extends Component{
         super();
         this.state={
             email:'',
-            password:''
+            password:'',
+            first_name:'',
+            last_name:'',
+            loginFailed:false,
+            signInForm:true
+
         }
     }
     getInput = (e) =>{
@@ -29,7 +34,7 @@ class SignIn extends Component{
         })
         .then(data=>{
             if(data.data.length === 0 ){
-                alert('wrong email or password')
+                this.wrongLogin();
             }else{
             console.log(data.data)
             this.props.getAccount(data.data[0]); 
@@ -37,38 +42,59 @@ class SignIn extends Component{
         }})
         }
     }
+accountRegister = () =>{
+    const { email, password, first_name, last_name } = this.state;
+        axios.post('http://localhost:3000/register',{
+            email,
+            password,
+            first_name,
+            last_name
+        })
+        .then(data=>{
+            console.log(data)
+        })
+}   
 
+    wrongLogin=()=>{
+        this.setState({password:'', loginFailed:true})
+    }
+    signInToggle=()=>{
+        this.setState({signInForm:this.state.signInForm?false:true})
+    }
     backHistory= () =>{
         this.props.history.goBack();
     }
     render(){
+        console.log(this.state.email)
         return(
             <div id='logPage' >
                 <div id='contentBox'>
-                    <div id='signIn' >
+
+                    <div id='signIn' style={{display:this.state.signInForm?'':'none'}}>
                     <h2>Log in</h2>
                         <p>E-MAIL</p>
-                        <input type='text' name='email' onChange={this.getInput}/>
+                        <input type='text' name='email' onChange={this.getInput} value={this.state.email}/>
                         <p>PASSWORD</p>
-                        <input type='text' name='password' onChange={this.getInput}/>
+                        <input type='text' name='password' onChange={this.getInput} value={this.state.password}/>
+                        <p style={{color:'red', textAlign:'center', display:!this.state.loginFailed?'none':'block'}}>Wrong username or password</p>
                         <Button type='submit' onClick={this.accountLogIn}>Sign in</Button>
-                        <p>Dont have an account? <span>Create one!</span></p>
+                        <p>Dont have an account? <span onClick={this.signInToggle}>Create one!</span></p>
                     </div>
 
-                    <div id='signIn' style={{display:'none'}}>
+                    <div id='signIn' style={{display:!this.state.signInForm?'':'none'}}>
                     <h2>Register</h2>
                         <p>First Name</p>
-                        <input type='text'/>
+                        <input type='text' name='first_name' onChange={this.getInput} value={this.state.first_name}/>
                         <p>Last Name</p>
-                        <input type='text'/>
-                        <p>Address</p>
-                        <input type='text'/>
+                        <input type='text' name='last_name' onChange={this.getInput} value={this.state.last_name}/>
                         <p>Email Address</p>
-                        <input type='text'/>
+                        <input type='text' name='email' onChange={this.getInput} value={this.state.email}/>
                         <p>Choose a Password</p>
+                        <input type='text' name='password' onChange={this.getInput} value={this.state.password}/>
+                        <p>Confirm Password</p>
                         <input type='text'/>
-                        <Button type='submit'>Sign in</Button>
-                        <p>Already have an account? <span>Sign in!</span></p>
+                        <Button type='submit' onClick={this.accountRegister}>Register</Button>
+                        <p>Already have an account? <span onClick={this.signInToggle}>Sign in!</span></p>
                     </div>
                 </div>
             </div>

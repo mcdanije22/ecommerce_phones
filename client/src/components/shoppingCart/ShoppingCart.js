@@ -65,10 +65,8 @@ class ShoppingCart extends Component{
             Clear Cart
         </button>
         </div>
-        {/* <p id='emptyCart' style={{display:shoppingCart.length !== 0?'none':'', marginBottom:shoppingCart.length === 0?'11rem':''}}>Your Shopping Cart is Empty...</p> */}
         <p id='emptyCart' style={{display:shoppingCart.length !== 0?'none':''}}>Your Shopping Cart is Empty...</p>
         <ul id='cartList'>
-
         {shoppingCart.map((item,i)=>{
             const{ brand, image_url, product_name, product_price, sale_discount, product_id, item_quantity } = item;
             return <li className = 'cartItem' id={product_id} key={i}>

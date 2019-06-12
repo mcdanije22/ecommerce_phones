@@ -128,7 +128,7 @@ app.delete('/cart/delete/:productid/:customerid', (req,res)=>{
 })
 
 app.post('/signin', (req,res)=>{
-  const {email,password}=req.body;
+  const {email,password} = req.body;
   db.select('*')
   .from('login')
   .where('login.email', email) 
@@ -136,6 +136,20 @@ app.post('/signin', (req,res)=>{
   .innerJoin('customers', 'customers.customer_id', 'login.customer_id')
   .then(data=>{
     res.json(data)
+  })
+})
+
+app.post('/register', (req,res)=>{
+  const { email, password, first_name, last_name } = req.body;
+  db('customers')
+  .insert({
+    email,
+    password,
+    first_name,
+    last_name
+  })
+  .then(item=>{
+    res.json(item)
   })
 })
 

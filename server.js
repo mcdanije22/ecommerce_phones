@@ -141,16 +141,50 @@ app.post('/signin', (req,res)=>{
 
 app.post('/register', (req,res)=>{
   const { email, password, first_name, last_name } = req.body;
-  db('customers')
-  .insert({
-    email,
-    password,
-    first_name,
-    last_name
-  })
-  .then(item=>{
-    res.json(item)
+  db.transaction(trx => { 
+    trx.insert({
+      email,
+      password,
+      first_name,
+      last_name,
+      date_joined: new Date()
+    })
+    .into('customers')
+    .returning('*')
+    .then(user=>{
+      console.log(user)
+     return trx('login')
+     .returning('*')
+     .insert({
+        email:user[0].email,
+        password:user[0].password,
+        customer_id:user[0].customer_id
+      })
+      .then(data=>{
+        console.log(data[0])
+        res.json(data[0])
+      })
+    })
+  .then(trx.commit)
+  .catch(trx.rollback)
   })
 })
+
+
+
+
+// app.post('/register', (req,res)=>{
+//   const { email, password, first_name, last_name } = req.body;
+//   db('customers')
+//   .insert({
+//     email,
+//     password,
+//     first_name,
+//     last_name
+//   })
+//   .then(item=>{
+//     res.json(item)
+//   })
+// })
 
 app.listen(port, ()=> console.log('server started successfully'))

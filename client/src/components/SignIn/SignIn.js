@@ -52,6 +52,7 @@ accountRegister = () =>{
         })
         .then(data=>{
             console.log(data)
+            this.backHistory();            
         })
 }   
 
@@ -69,7 +70,6 @@ accountRegister = () =>{
         return(
             <div id='logPage' >
                 <div id='contentBox'>
-
                     <div id='signIn' style={{display:this.state.signInForm?'':'none'}}>
                     <h2>Log in</h2>
                         <p>E-MAIL</p>
@@ -80,7 +80,6 @@ accountRegister = () =>{
                         <Button type='submit' onClick={this.accountLogIn}>Sign in</Button>
                         <p>Dont have an account? <span onClick={this.signInToggle}>Create one!</span></p>
                     </div>
-
                     <div id='signIn' style={{display:!this.state.signInForm?'':'none'}}>
                     <h2>Register</h2>
                         <p>First Name</p>

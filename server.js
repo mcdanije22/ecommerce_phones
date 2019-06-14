@@ -65,11 +65,12 @@ app.get('/product/:id/:brand', (req,res)=>{
   db.select('*')
   .from('products')
   .leftJoin('reviews', 'products.product_id', 'reviews.product')
-  .leftJoin('customers', 'reviews.customer_id', 'customers.customer_id')
+  // .leftJoin('customers', 'reviews.customer_id', 'customers.customer_id')
   .where('products.product_id', id)
   .orWhere('products.brand', brand)
   .andWhere('products.product_type', 'Accessory')
   .then(data=>{
+    console.log(data)
     res.send(data)
   })
 });
@@ -169,22 +170,5 @@ app.post('/register', (req,res)=>{
   .catch(trx.rollback)
   })
 })
-
-
-
-
-// app.post('/register', (req,res)=>{
-//   const { email, password, first_name, last_name } = req.body;
-//   db('customers')
-//   .insert({
-//     email,
-//     password,
-//     first_name,
-//     last_name
-//   })
-//   .then(item=>{
-//     res.json(item)
-//   })
-// })
 
 app.listen(port, ()=> console.log('server started successfully'))

@@ -8,10 +8,10 @@ const Reviews = ({reviews}) =>{
             <hr/>
             <ul id='reviewList'>
             {reviews.map((item,i)=>{
-                const{post_date, review, review_score, first_name, last_name} = item;
+                const{post_date, review, review_score, reviewer} = item;
                 return(
                     <li className = 'review' key={i}>
-                    <h3>{first_name} {last_name}</h3> 
+                    <h3>{reviewer}</h3> 
                     <p> {post_date.slice(0,10)}</p> 
                     <p> {review_score} out of 5 stars</p>
                     <h5> {review} </h5>

@@ -90,8 +90,6 @@ accountRegister = () =>{
                         <input type='text' name='email' onChange={this.getInput} value={this.state.email}/>
                         <p>Choose a Password</p>
                         <input type='text' name='password' onChange={this.getInput} value={this.state.password}/>
-                        <p>Confirm Password</p>
-                        <input type='text'/>
                         <Button type='submit' onClick={this.accountRegister}>Register</Button>
                         <p>Already have an account? <span onClick={this.signInToggle}>Sign in!</span></p>
                     </div>

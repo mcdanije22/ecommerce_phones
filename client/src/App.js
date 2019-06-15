@@ -11,6 +11,8 @@ import SearchPage from './components/SearchPage/SearchPage';
 import ProductPage from './components/ProductPage/ProductPage';
 import ShoppingCart from './components/shoppingCart/ShoppingCart';
 import SignIn from './components/SignIn/SignIn';
+import Orders from './components/AccountPage/Orders/Orders';
+import AddressBook from './components/AccountPage/AddressBook/AddressBook';
 
 class App extends Component{
   constructor(props){
@@ -31,6 +33,8 @@ class App extends Component{
             <Route path ='/login' component={SignIn} />
             <Route exact path='/' component={Home} />
             <Route path='/account' component={AccountPage} />
+            <Route path='/orders/:customerid' component={Orders} />
+            <Route path='/address/:customerid' component={AddressBook} />
             <Route path='/search/:search' render={(props)=>(
               <SearchPage key={props.location.key} {...props} />
             )}/>

@@ -15,7 +15,8 @@ class SignIn extends Component{
             first_name:'',
             last_name:'',
             loginFailed:false,
-            signInForm:true
+            signInForm:true,
+            registrationFailed:false
 
         }
     }
@@ -26,7 +27,7 @@ class SignIn extends Component{
     accountLogIn = () =>{
         const {email, password}=this.state;
         if(email === '' || password === ''){
-            alert('fill in both fields')
+            alert('fill in all fields')
         }else{
         axios.post('http://localhost:3000/signin',{
             email,
@@ -44,6 +45,11 @@ class SignIn extends Component{
     }
 accountRegister = () =>{
     const { email, password, first_name, last_name } = this.state;
+    if(email === '' || password === '' || first_name === '' || last_name === ''){
+        alert('fill in all fields')
+    }else if(password.length < 8){
+        alert('password must be atleast 8 characters long')
+    }else{
         axios.post('http://localhost:3000/register',{
             email,
             password,
@@ -54,13 +60,21 @@ accountRegister = () =>{
             console.log(data)
             this.backHistory();            
         })
+        .catch(error=>{ 
+            console.log(error.response.status)
+            if(error.response.status === 500){
+                this.setState({registrationFailed:true})
+                console.log('test')
+            }
+        })
+    }
 }   
 
     wrongLogin=()=>{
         this.setState({password:'', loginFailed:true})
     }
     signInToggle=()=>{
-        this.setState({signInForm:this.state.signInForm?false:true})
+        this.setState({signInForm:this.state.signInForm?false:true, loginFailed:false,registrationFailed:false, email:'', password:'', first_name:'', last_name:''})
     }
     backHistory= () =>{
         this.props.history.goBack();
@@ -90,6 +104,7 @@ accountRegister = () =>{
                         <input type='text' name='email' onChange={this.getInput} value={this.state.email}/>
                         <p>Choose a Password</p>
                         <input type='text' name='password' onChange={this.getInput} value={this.state.password}/>
+                        <p style={{color:'red', textAlign:'center', display:!this.state.registrationFailed?'none':'block'}}>Account already exist for this email address</p>
                         <Button type='submit' onClick={this.accountRegister}>Register</Button>
                         <p>Already have an account? <span onClick={this.signInToggle}>Sign in!</span></p>
                     </div>

@@ -169,6 +169,36 @@ app.post('/register', (req,res)=>{
   .then(trx.commit)
   .catch(trx.rollback)
   })
+  .catch(error=>{
+    if(error.detail === 'Key (email)=(test) already exists.'){
+      res.status(500).json({message:error})
+    }
+  })
 })
+app.get('/address/:customerid', (req,res)=>{
+  const {customerid} = req.params;
+  db
+  .select('*')
+  .from('customer_address')
+  .where('customer_id', customerid)
+  .then(data=>{
+    res.send(data)
+  })
+})
+app.post('/addaddress/', (res,res)=>{
+  const { customer_id, street, secondary, city, state, zipcode } = req.body;
+  db('customer_address')
+  .insert({
+    customer_id:customerid,
+    street,
+    secondary,
+    city,
+    state,
+    zipcode
+  })
+  .then(item=>{
+    res.json(item)
+  })
 
+})
 app.listen(port, ()=> console.log('server started successfully'))

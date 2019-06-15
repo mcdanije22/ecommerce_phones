@@ -1,0 +1,49 @@
+#addressBook{
+    padding:1rem;
+    Button{
+        width:100%;
+    }
+    #addressAddModal{
+    
+    }
+.address{
+    list-style: none;
+    border:1px solid #d3d3d3;
+    padding:1rem;
+    margin-top:1rem;
+    p{
+        margin:0;
+        }
+    .bottomButtons{
+        display: flex;
+        justify-content: space-between;
+            .listButton{
+                width:40%;
+                margin-top:1rem;
+            }
+        }
+    }
+}
+#addressAddModal{
+    padding:8rem .2rem;
+    h3{
+        text-align: center;
+        margin-top:1rem;
+    }
+}
+form{
+    display:flex;
+    flex-direction: column;
+    padding:1.5rem;
+    input:focus{
+        outline: none;
+    }
+    .inputAddressAdd{
+        border:none;
+        background-color:transparent;
+        border-bottom:1px black solid;
+        margin:.5rem 0;
+        align-content: center;
+
+        }
+}

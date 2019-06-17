@@ -186,9 +186,10 @@ app.get('/address/:customerid', (req,res)=>{
   })
 })
 app.post('/addaddress', (req,res)=>{
-  const { customer_id, street, secondary, city, state, zipcode } = req.body;
+  const { address_name, customer_id, street, secondary, city, state, zipcode } = req.body;
   db('customer_address')
   .insert({
+    address_name,
     customer_id,
     street,
     secondary,
@@ -206,8 +207,9 @@ app.post('/addaddress', (req,res)=>{
 })
 app.delete('/deleteaddress/:addressid', (req, res)=>{
   const { addressid } =req.params;
+  console.log(addressid) //issue addressid undefined 
   db('customer_address')
-  .where('address_id', addressid)
+  .where('address_name', addressid)
   .delete()
   .then(res.json())
 })

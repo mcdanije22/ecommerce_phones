@@ -16,7 +16,7 @@ class AddressBook extends Component{
             zipcode:'' ,
             modal:false,
             editModal:false,
-            currentAddress:''
+            selectedAddress:''
         }
     }
     componentDidMount(){
@@ -57,8 +57,7 @@ class AddressBook extends Component{
        this.setState({[e.target.name]:e.target.value}) 
     }
     onSubmitNewAddress=()=>{
-        const customerid=this.props.location.state.customerid
-        const { address_name, street, secondary, city, state, zipcode } = this.state;
+            const { address_name, street, secondary, city, state, zipcode } = this.state;
         const currentAddressList = this.state.addressBook;
         if(address_name === '' || street === '' || city === '' || state === '' || zipcode === ''){
             alert('fill in all required fields')
@@ -74,6 +73,7 @@ class AddressBook extends Component{
             state,
             zipcode  
         });
+        console.log(newAddress)
         const newAddressBook = [...currentAddressList, newAddress];
         this.setState({addressBook:newAddressBook})
         console.log(newAddressBook)
@@ -91,11 +91,6 @@ class AddressBook extends Component{
         })
         this.toggle(); 
     }
-}
-
-editAddress=(e)=>{
-    const id = e.target.id;
-    console.log(id)
 }
  
     render(){
@@ -125,16 +120,16 @@ editAddress=(e)=>{
                 <ModalBody >
                 <h3>Edit Address</h3>
                     <form>
-                        <input type='text' className='inputAddressAdd' placeholder='address nickname' name='address_name' value={this.state.address_name} onChange={this.getInput}/>
-                        <input type='text' className='inputAddressAdd' placeholder='street address' name='street' value={this.state.street} onChange={this.getInput}/>
-                        <input type='text' className='inputAddressAdd' placeholder='apt, p.o box, etc..(optional)' name='secondary' value={this.state.secondary} onChange={this.getInput}/>
-                        <input type='text' className='inputAddressAdd' placeholder='city' name='city' value={this.state.city} onChange={this.getInput}/>
-                        <input type='text' className='inputAddressAdd' placeholder='state' name='state' value={this.state.state} onChange={this.getInput}/>
-                        <input type='text' className='inputAddressAdd' placeholder='zipcode' name='zipcode' value={this.state.zipcode} onChange={this.getInput}/>
+                        <input type='text' className='inputAddressAdd' placeholder={this.state.selectedAddress.address_name} name='address_name' value={this.state.address_name} onChange={this.getInput}/>
+                        <input type='text' className='inputAddressAdd' placeholder={this.state.selectedAddress.street}  name='street' value={this.state.street} onChange={this.getInput}/>
+                        <input type='text' className='inputAddressAdd' placeholder={this.state.selectedAddress.secondary}  name='secondary' value={this.state.secondary} onChange={this.getInput}/>
+                        <input type='text' className='inputAddressAdd' placeholder={this.state.selectedAddress.city}  name='city' value={this.state.city} onChange={this.getInput}/>
+                        <input type='text' className='inputAddressAdd' placeholder={this.state.selectedAddress.state}  name='state' value={this.state.state} onChange={this.getInput}/>
+                        <input type='text' className='inputAddressAdd' placeholder={this.state.selectedAddress.zipcode}  name='zipcode' value={this.state.zipcode} onChange={this.getInput}/>
                     </form>
                 </ModalBody>
                 <ModalFooter>
-                    <Button type='submit' onClick={this.editAddress}>edit addresss</Button>
+                    <Button type='submit' onClick={this.editAddress}>Save changes</Button>
                     <Button type='submit' onClick={this.editToggle}>Cancel</Button>
                 </ModalFooter>
             </Modal>
@@ -152,12 +147,25 @@ editAddress=(e)=>{
                             <p>{state}</p>
                             <p>{zipcode}</p>
                             <div className='bottomButtons'>
-                                <Button className='listButton' id={address_id} onClick={this.editToggle} >Edit</Button>
+                                <Button className='listButton' onClick={()=>{
+                                      const currentAddres = Object.assign({},{
+                                        address_id,
+                                        address_name,
+                                        street,
+                                        secondary,
+                                        city,
+                                        state,
+                                        zipcode  
+                                    });
+                                    this.setState({selectedAddress:currentAddres},()=>{
+                                        console.log(this.state.selectedAddress)
+                                    })
+                                    this.editToggle();
+                                }}>Edit</Button>
                                 <Button className='listButton' 
-                                    onClick={()=>{
-                                        const { addressBook } = this.state;
-                                        axios.delete(`http://localhost:3000/deleteaddress/${address_id}`)
-                                        .then(this.setState({addressBook:addressBook.filter(item => item.address_id !== address_id)}))
+                                    onClick={()=>{                                 
+                                        axios.delete(`http://localhost:3000/deleteaddress/${address_name}`)
+                                        .then(this.setState({addressBook:addressBook.filter(item => item.address_name !== address_name)}))
                                 }}>Delete</Button>
                             </div>
                         </li>

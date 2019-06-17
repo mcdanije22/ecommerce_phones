@@ -14,7 +14,9 @@ class AddressBook extends Component{
             city:'',
             state:'',
             zipcode:'' ,
-            modal:false
+            modal:false,
+            editModal:false,
+            currentAddress:''
         }
     }
     componentDidMount(){
@@ -45,6 +47,12 @@ class AddressBook extends Component{
           zipcode:''           
         }));
       }
+      editToggle = () => {
+        this.setState(prevState => ({
+        editModal: !prevState.editModal
+        })
+        );
+      }
     getInput=(e)=>{
        this.setState({[e.target.name]:e.target.value}) 
     }
@@ -54,7 +62,10 @@ class AddressBook extends Component{
         const currentAddressList = this.state.addressBook;
         if(address_name === '' || street === '' || city === '' || state === '' || zipcode === ''){
             alert('fill in all required fields')
-        }else{
+        }else if(zipcode.length !== 5){
+            alert('please enter valid zipcode')
+        }
+        else{
         const newAddress = Object.assign({},{
             address_name,
             street,
@@ -65,7 +76,7 @@ class AddressBook extends Component{
         });
         const newAddressBook = [...currentAddressList, newAddress];
         this.setState({addressBook:newAddressBook})
-
+        console.log(newAddressBook)
         axios.post(`http://localhost:3000/addaddress`, {
             customer_id: this.props.location.state.customerid,
             address_name,
@@ -75,8 +86,16 @@ class AddressBook extends Component{
             state,
             zipcode 
         })
+        .catch(error=>{
+            console.log(error)
+        })
         this.toggle(); 
     }
+}
+
+editAddress=(e)=>{
+    const id = e.target.id;
+    console.log(id)
 }
  
     render(){
@@ -84,7 +103,7 @@ class AddressBook extends Component{
     return(
         <div id ='addressBook'>
             <Button type='submit' onClick={this.toggle}>+new address</Button>
-            <Modal isOpen={this.state.modal} toggle={this.toggle} id='addressAddModal'>
+            <Modal isOpen={this.state.modal} toggle={this.toggle} id='addressModal'>
                         <ModalBody >
                         <h3>Add Address</h3>
                             <form>
@@ -101,6 +120,25 @@ class AddressBook extends Component{
                             <Button type='submit' onClick={this.toggle}>Cancel</Button>
                         </ModalFooter>
                     </Modal>
+
+            <Modal isOpen={this.state.editModal} toggle={this.editToggle} id='addressModal'>
+                <ModalBody >
+                <h3>Edit Address</h3>
+                    <form>
+                        <input type='text' className='inputAddressAdd' placeholder='address nickname' name='address_name' value={this.state.address_name} onChange={this.getInput}/>
+                        <input type='text' className='inputAddressAdd' placeholder='street address' name='street' value={this.state.street} onChange={this.getInput}/>
+                        <input type='text' className='inputAddressAdd' placeholder='apt, p.o box, etc..(optional)' name='secondary' value={this.state.secondary} onChange={this.getInput}/>
+                        <input type='text' className='inputAddressAdd' placeholder='city' name='city' value={this.state.city} onChange={this.getInput}/>
+                        <input type='text' className='inputAddressAdd' placeholder='state' name='state' value={this.state.state} onChange={this.getInput}/>
+                        <input type='text' className='inputAddressAdd' placeholder='zipcode' name='zipcode' value={this.state.zipcode} onChange={this.getInput}/>
+                    </form>
+                </ModalBody>
+                <ModalFooter>
+                    <Button type='submit' onClick={this.editAddress}>edit addresss</Button>
+                    <Button type='submit' onClick={this.editToggle}>Cancel</Button>
+                </ModalFooter>
+            </Modal>
+
             <ul id='addressList'>
             {
                 addressBook.map((item,i)=>{
@@ -114,9 +152,9 @@ class AddressBook extends Component{
                             <p>{state}</p>
                             <p>{zipcode}</p>
                             <div className='bottomButtons'>
-                                <Button className='listButton'>Edit</Button>
+                                <Button className='listButton' id={address_id} onClick={this.editToggle} >Edit</Button>
                                 <Button className='listButton' 
-                                    onClick={(e)=>{
+                                    onClick={()=>{
                                         const { addressBook } = this.state;
                                         axios.delete(`http://localhost:3000/deleteaddress/${address_id}`)
                                         .then(this.setState({addressBook:addressBook.filter(item => item.address_id !== address_id)}))

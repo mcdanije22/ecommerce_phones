@@ -200,6 +200,9 @@ app.post('/addaddress', (req,res)=>{
     console.log(item)
     res.json(item)
   })
+  .catch(error=>{
+    res.status(500).json({message:error})
+  })
 })
 app.delete('/deleteaddress/:addressid', (req, res)=>{
   const { addressid } =req.params;

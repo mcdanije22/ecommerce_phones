@@ -8,6 +8,7 @@ class AddressBook extends Component{
         super(props);
         this.state={
             addressBook:[],
+            address_name:'',
             street:'',
             secondary:'',
             city:'',
@@ -36,6 +37,7 @@ class AddressBook extends Component{
     toggle = () => {
         this.setState(prevState => ({
           modal: !prevState.modal,
+          address_name:'',
           street:'',
           secondary:'',
           city:'',
@@ -48,9 +50,13 @@ class AddressBook extends Component{
     }
     onSubmitNewAddress=()=>{
         const customerid=this.props.location.state.customerid
-        const {street, secondary, city, state, zipcode} = this.state;
+        const { address_name, street, secondary, city, state, zipcode } = this.state;
         const currentAddressList = this.state.addressBook;
+        if(address_name === '' || street === '' || city === '' || state === '' || zipcode === ''){
+            alert('fill in all required fields')
+        }else{
         const newAddress = Object.assign({},{
+            address_name,
             street,
             secondary,
             city,
@@ -60,18 +66,19 @@ class AddressBook extends Component{
         const newAddressBook = [...currentAddressList, newAddress];
         this.setState({addressBook:newAddressBook})
 
-        axios.post(`http://localhost:3000/address/`, {
-            customer_id:customerid,
+        axios.post(`http://localhost:3000/addaddress`, {
+            customer_id: this.props.location.state.customerid,
+            address_name,
             street,
             secondary,
             city,
             state,
             zipcode 
         })
-
         this.toggle(); 
-        console.log(newAddress)
     }
+}
+ 
     render(){
         const { addressBook } = this.state;
     return(
@@ -81,6 +88,7 @@ class AddressBook extends Component{
                         <ModalBody >
                         <h3>Add Address</h3>
                             <form>
+                                <input type='text' className='inputAddressAdd' placeholder='address nickname' name='address_name' value={this.state.address_name} onChange={this.getInput}/>
                                 <input type='text' className='inputAddressAdd' placeholder='street address' name='street' value={this.state.street} onChange={this.getInput}/>
                                 <input type='text' className='inputAddressAdd' placeholder='apt, p.o box, etc..(optional)' name='secondary' value={this.state.secondary} onChange={this.getInput}/>
                                 <input type='text' className='inputAddressAdd' placeholder='city' name='city' value={this.state.city} onChange={this.getInput}/>
@@ -96,9 +104,9 @@ class AddressBook extends Component{
             <ul id='addressList'>
             {
                 addressBook.map((item,i)=>{
-                const { address_name, street, secondary, city, state, zipcode} = item;
+                const { address_name, street, secondary, city, state, zipcode, address_id} = item;
                 return(
-                        <li key={i} className='address'>
+                        <li key={i} className='address' id={address_id}>
                             <h5>{address_name}</h5>
                             <p>{street}</p>
                             <p>{secondary}</p>
@@ -107,7 +115,12 @@ class AddressBook extends Component{
                             <p>{zipcode}</p>
                             <div className='bottomButtons'>
                                 <Button className='listButton'>Edit</Button>
-                                <Button className='listButton'>Delete</Button>
+                                <Button className='listButton' 
+                                    onClick={(e)=>{
+                                        const { addressBook } = this.state;
+                                        axios.delete(`http://localhost:3000/deleteaddress/${address_id}`)
+                                        .then(this.setState({addressBook:addressBook.filter(item => item.address_id !== address_id)}))
+                                }}>Delete</Button>
                             </div>
                         </li>
                     );

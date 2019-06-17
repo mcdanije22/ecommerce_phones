@@ -28,7 +28,6 @@ class AccountPage extends Component{
                         pathname:`/address/${customer_id}`,
                         state:{customerid:customer_id}
                     }} >                    
-                   
                     <li>
                         <FontAwesomeIcon icon={faHome} className='accountIcons'/> 
                             Address Book 

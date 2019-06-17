@@ -185,11 +185,11 @@ app.get('/address/:customerid', (req,res)=>{
     res.send(data)
   })
 })
-app.post('/addaddress/', (res,res)=>{
+app.post('/addaddress', (req,res)=>{
   const { customer_id, street, secondary, city, state, zipcode } = req.body;
   db('customer_address')
   .insert({
-    customer_id:customerid,
+    customer_id,
     street,
     secondary,
     city,
@@ -197,8 +197,17 @@ app.post('/addaddress/', (res,res)=>{
     zipcode
   })
   .then(item=>{
+    console.log(item)
     res.json(item)
   })
-
 })
+app.delete('/deleteaddress/:addressid', (req, res)=>{
+  const { addressid } =req.params;
+  db('customer_address')
+  .where('address_id', addressid)
+  .delete()
+  .then(res.json())
+})
+
+
 app.listen(port, ()=> console.log('server started successfully'))

@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import './shoppingcart.scss';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes,faChevronLeft  } from '@fortawesome/free-solid-svg-icons';

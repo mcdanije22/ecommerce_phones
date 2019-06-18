@@ -1,8 +1,9 @@
-import {  GET_ACCOUNT_INFO } from '../actions/constants';
+import {  GET_ACCOUNT_INFO, GET_ACCOUNT_ADDRESSES } from '../actions/constants';
 
 const intialState = {
     currentAccount: '',
-    loggedIn: false
+    loggedIn: false,
+    accountAddress:[]
 };
 
 const accountInfo = ( state=intialState, action={} )=>{
@@ -13,6 +14,11 @@ const accountInfo = ( state=intialState, action={} )=>{
             currentAccount: action.payload,
             loggedIn:action.payload === ''?false:true
         }
+        case GET_ACCOUNT_ADDRESSES:
+            return{
+            ...state,
+            accountAddress:action.payload
+            }
         default:
             return state
     }

@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import {Button} from 'reactstrap';
 import axios from 'axios';
-import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
-import { loginAccount } from '../../actions/loginAction';
+import { loginAccount, accountAddresses } from '../../actions/loginAction';
 import './signin.scss';
 
 class SignIn extends Component{
@@ -17,7 +16,6 @@ class SignIn extends Component{
             loginFailed:false,
             signInForm:true,
             registrationFailed:false
-
         }
     }
     getInput = (e) =>{
@@ -39,9 +37,11 @@ class SignIn extends Component{
             }else{
             console.log(data.data)
             this.props.getAccount(data.data[0]); 
+            this.props.getAccountAddresses(data.data)
             this.backHistory();            
         }})
         }
+        console.log(this.props.accountAddress)
     }
 accountRegister = () =>{
     const { email, password, first_name, last_name } = this.state;
@@ -69,7 +69,12 @@ accountRegister = () =>{
         })
     }
 }   
-
+    // getAddresses=()=>{
+    //     axios.get(`http://localhost:3000/address/${72}`)
+    //         .then(data=>{
+    //             console.log('test', data)
+    //         })
+    // }
     wrongLogin=()=>{
         this.setState({password:'', loginFailed:true})
     }
@@ -117,13 +122,15 @@ accountRegister = () =>{
 
 const mapStateToProps = state => {
     return {
-        currentAccount: state.account.currentAccount
+        currentAccount: state.account.currentAccount,
+        accountAddress: state.account.accountAddresss
     }
   }
   
   const mapDispatchToProps = (dispatch) =>{
     return{
-      getAccount: (user) => dispatch(loginAccount(user))
+      getAccount: (user) => dispatch(loginAccount(user)),
+      getAccountAddresses: (list) => dispatch(accountAddresses(list))
     }
   } 
 export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

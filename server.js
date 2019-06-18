@@ -135,7 +135,9 @@ app.post('/signin', (req,res)=>{
   .where('login.email', email) 
   .where('login.password', password) 
   .innerJoin('customers', 'customers.customer_id', 'login.customer_id')
+  .innerJoin('customer_address', 'customer_address.customer_id', 'customers.customer_id') //potental issue 
   .then(data=>{
+    console.log(data)
     res.json(data)
   })
 })
@@ -205,11 +207,10 @@ app.post('/addaddress', (req,res)=>{
     res.status(500).json({message:error})
   })
 })
-app.delete('/deleteaddress/:addressid', (req, res)=>{
-  const { addressid } =req.params;
-  console.log(addressid) //issue addressid undefined 
+app.delete('/deleteaddress/:addressname', (req, res)=>{
+  const { addressname } =req.params;
   db('customer_address')
-  .where('address_name', addressid)
+  .where('address_name', addressname)
   .delete()
   .then(res.json())
 })

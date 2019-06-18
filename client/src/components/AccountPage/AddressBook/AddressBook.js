@@ -23,17 +23,9 @@ class AddressBook extends Component{
         const customerid=this.props.location.state.customerid
         axios.get(`http://localhost:3000/address/${customerid}`)
         .then(data=>{
-            // const addressList=data.data;
-            // addressList.map((item,i)=>{
-            //     const newAddressBook = [];
-            //     console.log(newAddressBook)
-            //     newAddressBook.push(item)
-            //     this.setState({addressBook:newAddressBook})
-            // })
             this.setState({addressBook:data.data},()=>{
                 console.log(this.state.addressBook)
             })
-            // this.setState({address:data.data})
         })
     }
     toggle = () => {
@@ -50,14 +42,14 @@ class AddressBook extends Component{
       editToggle = () => {
         this.setState(prevState => ({
         editModal: !prevState.editModal
-        })
+            })
         );
       }
     getInput=(e)=>{
        this.setState({[e.target.name]:e.target.value}) 
     }
     onSubmitNewAddress=()=>{
-            const { address_name, street, secondary, city, state, zipcode } = this.state;
+        const { address_name, street, secondary, city, state, zipcode } = this.state;
         const currentAddressList = this.state.addressBook;
         if(address_name === '' || street === '' || city === '' || state === '' || zipcode === ''){
             alert('fill in all required fields')
@@ -92,7 +84,43 @@ class AddressBook extends Component{
         this.toggle(); 
     }
 }
- 
+onSubmiteditAddress=(e)=>{
+    const { address_name, street, secondary, city, state, zipcode } = this.state;
+    const id = e.target.id;
+    console.log(id)
+    const currentAddressList = this.state.addressBook;
+    if(address_name === '' || street === '' || city === '' || state === '' || zipcode === ''){
+        alert('fill in all required fields')
+    }else if(zipcode.length !== 5){
+        alert('please enter valid zipcode')
+    }
+    else{
+    const editedAddress = Object.assign({},{
+        address_name,
+        street,
+        secondary,
+        city,
+        state,
+        zipcode  
+    });
+    const newAddressBook = [...currentAddressList, editedAddress];
+    this.setState({addressBook:newAddressBook})
+    console.log(newAddressBook)
+    // axios.post(`http://localhost:3000/addaddress`, {
+    //     customer_id: this.props.location.state.customerid,
+    //     address_name,
+    //     street,
+    //     secondary,
+    //     city,
+    //     state,
+    //     zipcode 
+    // })
+    // .catch(error=>{
+    //     console.log(error)
+    // })
+    // this.toggle(); 
+}
+}
     render(){
         const { addressBook } = this.state;
     return(
@@ -129,7 +157,7 @@ class AddressBook extends Component{
                     </form>
                 </ModalBody>
                 <ModalFooter>
-                    <Button type='submit' onClick={this.editAddress}>Save changes</Button>
+                    <Button type='submit' onClick={this.onSubmiteditAddress}>Save changes</Button>
                     <Button type='submit' onClick={this.editToggle}>Cancel</Button>
                 </ModalFooter>
             </Modal>
@@ -137,9 +165,9 @@ class AddressBook extends Component{
             <ul id='addressList'>
             {
                 addressBook.map((item,i)=>{
-                const { address_name, street, secondary, city, state, zipcode, address_id} = item;
+                const { address_name, street, secondary, city, state, zipcode, } = item;
                 return(
-                        <li key={i} className='address' id={address_id}>
+                        <li key={i} className='address' >
                             <h5>{address_name}</h5>
                             <p>{street}</p>
                             <p>{secondary}</p>
@@ -149,7 +177,6 @@ class AddressBook extends Component{
                             <div className='bottomButtons'>
                                 <Button className='listButton' onClick={()=>{
                                       const currentAddres = Object.assign({},{
-                                        address_id,
                                         address_name,
                                         street,
                                         secondary,

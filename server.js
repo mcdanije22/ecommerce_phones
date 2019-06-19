@@ -207,6 +207,24 @@ app.post('/addaddress', (req,res)=>{
     res.status(500).json({message:error})
   })
 })
+app.put('/editaddress', (req, res)=>{
+  const { address_name, customer_id, street, secondary, city, state, zipcode, } = req.body;
+  db('customer_address')
+  .where('address_name', address_name)
+  .where('customer_id', customer_id)
+  .update({
+    address_name,
+    customer_id,
+    street,
+    secondary,
+    city,
+    state,
+    zipcode
+  })
+  .then(item=>{
+    res.json(item)
+  })
+})
 app.delete('/deleteaddress/:addressname', (req, res)=>{
   const { addressname } =req.params;
   db('customer_address')

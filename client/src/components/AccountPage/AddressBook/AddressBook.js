@@ -84,43 +84,44 @@ class AddressBook extends Component{
         this.toggle(); 
     }
 }
-onSubmiteditAddress=(e)=>{
+    onSubmiteditAddress=()=>{
     const { address_name, street, secondary, city, state, zipcode } = this.state;
-    const id = e.target.id;
+    const id = this.state.selectedAddress.id;
     console.log(id)
-    const currentAddressList = this.state.addressBook;
-    if(address_name === '' || street === '' || city === '' || state === '' || zipcode === ''){
-        alert('fill in all required fields')
-    }else if(zipcode.length !== 5){
-        alert('please enter valid zipcode')
-    }
-    else{
+    // if(address_name === '' || street === '' || city === '' || state === '' || zipcode === ''){
+    //     alert('fill in all required fields')
+    // }else if(zipcode.length !== 5){
+    //     alert('please enter valid zipcode')
+    // }
+    // else{
     const editedAddress = Object.assign({},{
-        address_name,
-        street,
-        secondary,
-        city,
-        state,
-        zipcode  
+        customer_id: this.state.selectedAddress.customer_id,
+        address_name: address_name || this.state.selectedAddress.address_name,
+        street:street || this.state.selectedAddress.street,
+        secondary: secondary || this.state.selectedAddress.secondary,
+        city: city || this.state.selectedAddress.city,
+        state: state || this.state.selectedAddress.state,
+        zipcode: zipcode || this.state.selectedAddress.zipcode
     });
-    const newAddressBook = [...currentAddressList, editedAddress];
-    this.setState({addressBook:newAddressBook})
-    console.log(newAddressBook)
-    // axios.post(`http://localhost:3000/addaddress`, {
-    //     customer_id: this.props.location.state.customerid,
-    //     address_name,
-    //     street,
-    //     secondary,
-    //     city,
-    //     state,
-    //     zipcode 
-    // })
-    // .catch(error=>{
-    //     console.log(error)
-    // })
-    // this.toggle(); 
+    const editedAdressList = [...this.state.addressBook];
+    editedAdressList[id] = editedAddress;
+    this.setState({addressBook:editedAdressList})
+    console.log(editedAdressList)
+    axios.put(`http://localhost:3000/editaddress`, {
+        customer_id: this.state.selectedAddress.customer_id,
+        address_name: address_name || this.state.selectedAddress.address_name,
+        street:street || this.state.selectedAddress.street,
+        secondary: secondary || this.state.selectedAddress.secondary,
+        city: city || this.state.selectedAddress.city,
+        state: state || this.state.selectedAddress.state,
+        zipcode: zipcode || this.state.selectedAddress.zipcode
+    })
+    .catch(error=>{
+        console.log(error)
+    })
+    this.editToggle(); 
 }
-}
+
     render(){
         const { addressBook } = this.state;
     return(
@@ -165,7 +166,7 @@ onSubmiteditAddress=(e)=>{
             <ul id='addressList'>
             {
                 addressBook.map((item,i)=>{
-                const { address_name, street, secondary, city, state, zipcode, } = item;
+                const { address_name, street, secondary, city, state, zipcode, customer_id } = item;
                 return(
                         <li key={i} className='address' >
                             <h5>{address_name}</h5>
@@ -175,14 +176,16 @@ onSubmiteditAddress=(e)=>{
                             <p>{state}</p>
                             <p>{zipcode}</p>
                             <div className='bottomButtons'>
-                                <Button className='listButton' onClick={()=>{
+                                <Button className='listButton' onClick={(e)=>{
                                       const currentAddres = Object.assign({},{
+                                        id:i,
                                         address_name,
                                         street,
                                         secondary,
                                         city,
                                         state,
-                                        zipcode  
+                                        zipcode, 
+                                        customer_id  
                                     });
                                     this.setState({selectedAddress:currentAddres},()=>{
                                         console.log(this.state.selectedAddress)

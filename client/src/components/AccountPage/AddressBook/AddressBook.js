@@ -88,12 +88,6 @@ class AddressBook extends Component{
     const { address_name, street, secondary, city, state, zipcode } = this.state;
     const id = this.state.selectedAddress.id;
     console.log(id)
-    // if(address_name === '' || street === '' || city === '' || state === '' || zipcode === ''){
-    //     alert('fill in all required fields')
-    // }else if(zipcode.length !== 5){
-    //     alert('please enter valid zipcode')
-    // }
-    // else{
     const editedAddress = Object.assign({},{
         customer_id: this.state.selectedAddress.customer_id,
         address_name: address_name || this.state.selectedAddress.address_name,
@@ -151,7 +145,7 @@ class AddressBook extends Component{
                     <form>
                         <input type='text' className='inputAddressAdd' placeholder={this.state.selectedAddress.address_name} name='address_name' value={this.state.address_name} onChange={this.getInput}/>
                         <input type='text' className='inputAddressAdd' placeholder={this.state.selectedAddress.street}  name='street' value={this.state.street} onChange={this.getInput}/>
-                        <input type='text' className='inputAddressAdd' placeholder={this.state.selectedAddress.secondary}  name='secondary' value={this.state.secondary} onChange={this.getInput}/>
+                        <input type='text' className='inputAddressAdd' placeholder={this.state.selectedAddress.secondary || 'apt, p.o box, etc..(optional)'}  name='secondary' value={this.state.secondary} onChange={this.getInput}/>
                         <input type='text' className='inputAddressAdd' placeholder={this.state.selectedAddress.city}  name='city' value={this.state.city} onChange={this.getInput}/>
                         <input type='text' className='inputAddressAdd' placeholder={this.state.selectedAddress.state}  name='state' value={this.state.state} onChange={this.getInput}/>
                         <input type='text' className='inputAddressAdd' placeholder={this.state.selectedAddress.zipcode}  name='zipcode' value={this.state.zipcode} onChange={this.getInput}/>
@@ -207,3 +201,5 @@ class AddressBook extends Component{
     )}
 }
 export default AddressBook;
+
+

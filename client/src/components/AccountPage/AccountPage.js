@@ -35,11 +35,16 @@ class AccountPage extends Component{
                     </li>
                     </Link>
                     <hr />
+                    <Link to={{
+                        pathname:`/wallet/${customer_id}`,
+                        state:{customerid:customer_id}
+                    }} >  
                     <li>
                         <FontAwesomeIcon icon={faCreditCard} className='accountIcons'/> 
                             Wallet 
                         <FontAwesomeIcon icon={faChevronRight} className='accountIconsRight'/>
                     </li>
+                    </Link>
                     <hr />
                     <li>
                         <FontAwesomeIcon icon={faLock} className='accountIcons'/>  

@@ -135,7 +135,7 @@ app.post('/signin', (req,res)=>{
   .where('login.email', email) 
   .where('login.password', password) 
   .innerJoin('customers', 'customers.customer_id', 'login.customer_id')
-  .innerJoin('customer_address', 'customer_address.customer_id', 'customers.customer_id') //potental issue 
+  // .leftJoin('customer_address', 'customer_address.customer_id', 'customers.customer_id') //potental issue 
   .then(data=>{
     console.log(data)
     res.json(data)
@@ -229,6 +229,63 @@ app.delete('/deleteaddress/:addressname', (req, res)=>{
   const { addressname } =req.params;
   db('customer_address')
   .where('address_name', addressname)
+  .delete()
+  .then(res.json())
+})
+
+
+
+
+
+
+app.get('/wallet/:customerid', (req,res)=>{
+  const {customerid} = req.params;
+  db
+  .select('*')
+  .from('customer_cards')
+  .where('customer_id', customerid)
+  .then(data=>{
+    res.send(data)
+  })
+})
+app.post('/addcard', (req,res)=>{
+  const { card_name, card_number, exp_date, cvc, customer_id  } = req.body;
+  db('customer_cards')
+  .insert({
+    customer_id,
+    card_name,
+    card_number,
+    exp_date,
+    cvc 
+  })
+  .then(item=>{
+    console.log(item)
+    res.json(item)
+  })
+  // .catch(error=>{
+  //   res.status(500).json({message:error})
+  // })
+})
+app.put('/editcard', (req, res)=>{
+  const { card_name, card_number, exp_date, cvc  } = req.body;
+  db('customer_address')
+  .where('card_name', card_name)
+  .where('customer_id', customer_id)
+  .update({
+    customer_id,
+    card_name,
+    card_number,
+    exp_date,
+    cvc 
+  })
+  .then(item=>{
+    res.json(item)
+  })
+})
+app.delete('/deletecard/:cardname', (req, res)=>{
+  const { cardname } =req.params;
+  db('customer_address')
+  .where('card_name', cardname)
   .delete()
   .then(res.json())
 })

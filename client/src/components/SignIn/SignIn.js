@@ -35,9 +35,14 @@ class SignIn extends Component{
             if(data.data.length === 0 ){
                 this.wrongLogin();
             }else{
-            console.log(data.data)
+            console.log(data.data[0].customer_id)
             this.props.getAccount(data.data[0]); 
-            this.props.getAccountAddresses(data.data)
+            axios.get(`http://localhost:3000/address/${data.data[0].customer_id}`)
+            .then(data=>{
+                console.log(data)
+                this.props.getAccountAddresses(data.data)
+            }) 
+            
             this.backHistory();            
         }})
         }
@@ -57,7 +62,7 @@ accountRegister = () =>{
             last_name
         })
         .then(data=>{
-            console.log(data)
+            console.log(data)           
             this.backHistory();            
         })
         .catch(error=>{ 
@@ -69,12 +74,6 @@ accountRegister = () =>{
         })
     }
 }   
-    // getAddresses=()=>{
-    //     axios.get(`http://localhost:3000/address/${72}`)
-    //         .then(data=>{
-    //             console.log('test', data)
-    //         })
-    // }
     wrongLogin=()=>{
         this.setState({password:'', loginFailed:true})
     }
@@ -85,7 +84,6 @@ accountRegister = () =>{
         this.props.history.goBack();
     }
     render(){
-        console.log(this.state.email)
         return(
             <div id='logPage' >
                 <div id='contentBox'>

@@ -13,6 +13,7 @@ import ShoppingCart from './components/shoppingCart/ShoppingCart';
 import SignIn from './components/SignIn/SignIn';
 import Orders from './components/AccountPage/Orders/Orders';
 import AddressBook from './components/AccountPage/AddressBook/AddressBook';
+import Wallet from './components/AccountPage/wallet/Wallet';
 
 class App extends Component{
   constructor(props){
@@ -35,8 +36,9 @@ class App extends Component{
             <Route path='/account' component={AccountPage} />
             <Route path='/orders/:customerid' component={Orders} />
             <Route path='/address/:customerid' component={AddressBook} />
+            <Route path='/wallet/:customerid' component={Wallet} />
             <Route path='/search/:search' render={(props)=>(
-              <SearchPage key={props.location.key} {...props} />
+            <SearchPage key={props.location.key} {...props} />
             )}/>
             <Route path='/product/:id/:brand' component={ProductPage} />
             <Route path='/deals' component={SearchPage} />

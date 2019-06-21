@@ -49,11 +49,14 @@ class AddressBook extends Component{
        this.setState({[e.target.name]:e.target.value}) 
     }
     onSubmitNewAddress=()=>{
-        const { address_name, street, secondary, city, state, zipcode } = this.state;
+        let { address_name, street, secondary, city, state, zipcode } = this.state;
         const currentAddressList = this.state.addressBook;
+        zipcode = parseInt(zipcode)
+        const zipcodeCheck = Number.isInteger(zipcode);
+        const zipcodeLength = zipcode.toString().length;
         if(address_name === '' || street === '' || city === '' || state === '' || zipcode === ''){
             alert('fill in all required fields')
-        }else if(zipcode.length !== 5){
+        }else if(!zipcodeCheck || zipcodeLength !== 5){
             alert('please enter valid zipcode')
         }
         else{
@@ -85,11 +88,15 @@ class AddressBook extends Component{
     }
 }
     onSubmiteditAddress=()=>{
-    const { address_name, street, secondary, city, state, zipcode } = this.state;
+    let { address_name, street, secondary, city, state, zipcode } = this.state;
     const id = this.state.selectedAddress.id;
+    zipcode = parseInt(zipcode)
+    const zipcodeCheck = Number.isInteger(zipcode);
+    const zipcodeLength = zipcode.toString().length;
     console.log(id)
-    if(zipcode.length !== 5){
+    if(!zipcodeCheck || zipcodeLength !== 5){
         alert('please enter valid zipcode')
+        this.setState({zipcode:''})
     }else{
     const editedAddress = Object.assign({},{
         customer_id: this.state.selectedAddress.customer_id,
@@ -138,8 +145,8 @@ class AddressBook extends Component{
                             </form>
                         </ModalBody>
                         <ModalFooter>
-                            <Button type='submit' onClick={this.onSubmitNewAddress}>Add addresss</Button>
-                            <Button type='submit' onClick={this.toggle}>Cancel</Button>
+                            <Button type='submit' color='success' onClick={this.onSubmitNewAddress}>Add addresss</Button>
+                            <Button type='submit' color='danger' onClick={this.toggle}>Cancel</Button>
                         </ModalFooter>
                     </Modal>
 
@@ -155,8 +162,8 @@ class AddressBook extends Component{
                     </form>
                 </ModalBody>
                 <ModalFooter>
-                    <Button type='submit' onClick={this.onSubmiteditAddress}>Save changes</Button>
-                    <Button type='submit' onClick={this.editToggle}>Cancel</Button>
+                    <Button type='submit' color='success'  onClick={this.onSubmiteditAddress}>Save changes</Button>
+                    <Button type='submit' color='danger' onClick={this.editToggle}>Cancel</Button>
                 </ModalFooter>
             </Modal>
 
@@ -190,6 +197,8 @@ class AddressBook extends Component{
                                     this.editToggle();
                                 }}>Edit</Button>
                                 <Button className='listButton' 
+                                    color='danger'
+                                    style={{backgroundColor:'red'}}
                                     onClick={()=>{                                 
                                         axios.delete(`http://localhost:3000/deleteaddress/${address_name}`)
                                         .then(this.setState({addressBook:addressBook.filter(item => item.address_name !== address_name)}))

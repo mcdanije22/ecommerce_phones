@@ -55,8 +55,8 @@ onSubmitNewCard=()=>{
     console.log(Number.isInteger(card_number))
     const numberCheck = Number.isInteger(card_number);
     const cvcCheck = Number.isInteger(cvc);
-    const cardNumberLength = card_number.toString().length
-    console.log(cardNumberLength)
+    const cardNumberLength = card_number.toString().length;
+    const cardCvcLength = cvc.toString().length;
     if(card_name === '' || card_number === '' || exp_date === '' || cvc === ''){
     alert('fill in all required fields')
     } else if(!numberCheck && !cvcCheck){
@@ -66,7 +66,7 @@ onSubmitNewCard=()=>{
      else if(!numberCheck || cardNumberLength !== 16){
         alert('enter vaild card number')
         this.setState({card_number:''})
-    }else if(!cvcCheck){
+    }else if(!cvcCheck || cardCvcLength > 3 && cardCvcLength > 5){
         alert('enter vaild security number')
         this.setState({cvc:''})
     }
@@ -123,10 +123,13 @@ onSubmitNewCard=()=>{
     console.log(card_number, cvc)
     const id = this.state.selectedCard.id;
     console.log(id)
+    const cardNumberLength = card_number.toString().length;
+    const cardCvcLength = cvc.toString().length;
+    console.log(cardCvcLength)
     if(card_number !== ''){
         card_number = parseInt(card_number)
         const numberCheck = Number.isInteger(card_number);
-        if(!numberCheck){
+        if(!numberCheck || cardNumberLength !== 16){
             alert('enter valid card number')
             this.setState({card_number:''})
         }else{
@@ -135,43 +138,19 @@ onSubmitNewCard=()=>{
     }else if(cvc !== ''){
         cvc = parseInt(cvc)
         const cvcCheck = Number.isInteger(cvc);
-        if(!cvcCheck){
+        if(!cvcCheck || cardCvcLength > 3 && cardCvcLength > 5){
             alert('enter valid security number')
             this.setState({cvc:''})
         }else{
             this.editCard(card_name, card_number, exp_date, cvc, id); 
         }
     }
-    // else{
-    // const editedCard = Object.assign({},{
-    //     customer_id: this.state.selectedCard.customer_id,
-    //     card_name: this.state.selectedCard.card_name,
-    //     card_number:card_number || this.state.selectedCard.card_number,
-    //     exp_date: exp_date || this.state.selectedCard.exp_date,
-    //     cvc: cvc || this.state.selectedCard.cvc
-    // });
-    // const editedWalletList = [...this.state.walletList];
-    // editedWalletList[id] = editedCard;
-    // this.setState({walletList:editedWalletList})
-    // console.log(editedWalletList)
-    // axios.put(`http://localhost:3000/editcard`, {
-    //     customer_id: this.state.selectedCard.customer_id,
-    //     card_name:this.state.selectedCard.card_name,
-    //     card_number:card_number || this.state.selectedCard.card_number,
-    //     exp_date: exp_date || this.state.selectedCard.exp_date,
-    //     cvc: cvc || this.state.selectedCard.cvc
-    // })
-    // .catch(error=>{
-    //     console.log(error)
-    // })
-    // this.editToggle(); 
-    // }
 }
     render(){
         const { walletList } = this.state;
     return(
         <div id ='addressBook'>
-            <Button type='submit' onClick={this.toggle}>new card</Button>
+            <Button type='submit'  onClick={this.toggle}>new card</Button>
             <Modal isOpen={this.state.modal} toggle={this.toggle} id='addressModal'>
                         <ModalBody >
                         <h3>Add Card</h3>
@@ -183,8 +162,8 @@ onSubmitNewCard=()=>{
                             </form>
                         </ModalBody>
                         <ModalFooter>
-                            <Button type='submit' onClick={this.onSubmitNewCard}>Add card</Button>
-                            <Button type='submit' onClick={this.toggle}>Cancel</Button>
+                            <Button type='submit' color='success' onClick={this.onSubmitNewCard}>Add card</Button>
+                            <Button type='submit' color='danger' onClick={this.toggle}>Cancel</Button>
                         </ModalFooter>
                     </Modal>
 
@@ -198,8 +177,8 @@ onSubmitNewCard=()=>{
                     </form>
                 </ModalBody>
                 <ModalFooter>
-                    <Button type='submit' onClick={this.onSubmiteditCard}>Save changes</Button>
-                    <Button type='submit' onClick={this.editToggle}>Cancel</Button>
+                    <Button type='submit' color='success' onClick={this.onSubmiteditCard}>Save changes</Button>
+                    <Button type='submit' color='danger' onClick={this.editToggle}>Cancel</Button>
                 </ModalFooter>
             </Modal>
 
@@ -214,7 +193,9 @@ onSubmitNewCard=()=>{
                             <p>{exp_date}</p>
                             <p>{cvc}</p>
                             <div className='bottomButtons'>
-                                <Button className='listButton' onClick={(e)=>{
+                                <Button className='listButton'
+                                color='primary'
+                                onClick={(e)=>{
                                       const currentCard = Object.assign({},{
                                         id:i,
                                         card_name,
@@ -228,7 +209,9 @@ onSubmitNewCard=()=>{
                                     })
                                     this.editToggle();
                                 }}>Edit</Button>
-                                <Button className='listButton' 
+                                <Button 
+                                className='listButton' 
+                                color='danger'
                                     onClick={()=>{                                 
                                         axios.delete(`http://localhost:3000/deletecard/${card_name}`)
                                         .then(this.setState({walletList:walletList.filter(item => item.card_name !== card_name)}))

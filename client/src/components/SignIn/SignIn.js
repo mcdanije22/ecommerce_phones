@@ -94,7 +94,7 @@ accountRegister = () =>{
                         <p>PASSWORD</p>
                         <input type='text' name='password' onChange={this.getInput} value={this.state.password}/>
                         <p style={{color:'red', textAlign:'center', display:!this.state.loginFailed?'none':'block'}}>Wrong username or password</p>
-                        <Button type='submit' onClick={this.accountLogIn}>Sign in</Button>
+                        <Button type='submit' color='success' onClick={this.accountLogIn}>Sign in</Button>
                         <p>Dont have an account? <span onClick={this.signInToggle}>Create one!</span></p>
                     </div>
                     <div id='signIn' style={{display:!this.state.signInForm?'':'none'}}>
@@ -108,7 +108,7 @@ accountRegister = () =>{
                         <p>Choose a Password</p>
                         <input type='text' name='password' onChange={this.getInput} value={this.state.password}/>
                         <p style={{color:'red', textAlign:'center', display:!this.state.registrationFailed?'none':'block'}}>Account already exist for this email address</p>
-                        <Button type='submit' onClick={this.accountRegister}>Register</Button>
+                        <Button type='submit' color='success' onClick={this.accountRegister}>Register</Button>
                         <p>Already have an account? <span onClick={this.signInToggle}>Sign in!</span></p>
                     </div>
                 </div>

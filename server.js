@@ -262,13 +262,14 @@ app.post('/addcard', (req,res)=>{
     console.log(item)
     res.json(item)
   })
-  // .catch(error=>{
-  //   res.status(500).json({message:error})
-  // })
+  .catch(error=>{
+    console.log(error)
+    res.status(500).json({message:error})
+  })
 })
 app.put('/editcard', (req, res)=>{
-  const { card_name, card_number, exp_date, cvc  } = req.body;
-  db('customer_address')
+  const { card_name, card_number, exp_date, cvc, customer_id  } = req.body;
+  db('customer_cards')
   .where('card_name', card_name)
   .where('customer_id', customer_id)
   .update({
@@ -281,10 +282,13 @@ app.put('/editcard', (req, res)=>{
   .then(item=>{
     res.json(item)
   })
+  .catch(error=>{
+    res.status(500).json({message:error})
+  })
 })
 app.delete('/deletecard/:cardname', (req, res)=>{
   const { cardname } =req.params;
-  db('customer_address')
+  db('customer_cards')
   .where('card_name', cardname)
   .delete()
   .then(res.json())

@@ -88,9 +88,12 @@ class AddressBook extends Component{
     const { address_name, street, secondary, city, state, zipcode } = this.state;
     const id = this.state.selectedAddress.id;
     console.log(id)
+    if(zipcode.length !== 5){
+        alert('please enter valid zipcode')
+    }else{
     const editedAddress = Object.assign({},{
         customer_id: this.state.selectedAddress.customer_id,
-        address_name: address_name || this.state.selectedAddress.address_name,
+        address_name: this.state.selectedAddress.address_name,
         street:street || this.state.selectedAddress.street,
         secondary: secondary || this.state.selectedAddress.secondary,
         city: city || this.state.selectedAddress.city,
@@ -103,7 +106,7 @@ class AddressBook extends Component{
     console.log(editedAdressList)
     axios.put(`http://localhost:3000/editaddress`, {
         customer_id: this.state.selectedAddress.customer_id,
-        address_name: address_name || this.state.selectedAddress.address_name,
+        address_name: this.state.selectedAddress.address_name,
         street:street || this.state.selectedAddress.street,
         secondary: secondary || this.state.selectedAddress.secondary,
         city: city || this.state.selectedAddress.city,
@@ -114,13 +117,14 @@ class AddressBook extends Component{
         console.log(error)
     })
     this.editToggle(); 
+    }
 }
 
     render(){
         const { addressBook } = this.state;
     return(
         <div id ='addressBook'>
-            <Button type='submit' onClick={this.toggle}>+new address</Button>
+            <Button type='submit' onClick={this.toggle}>new address</Button>
             <Modal isOpen={this.state.modal} toggle={this.toggle} id='addressModal'>
                         <ModalBody >
                         <h3>Add Address</h3>
@@ -134,16 +138,15 @@ class AddressBook extends Component{
                             </form>
                         </ModalBody>
                         <ModalFooter>
-                            <Button type='submit' onClick={this.onSubmitNewAddress}>add addresss</Button>
+                            <Button type='submit' onClick={this.onSubmitNewAddress}>Add addresss</Button>
                             <Button type='submit' onClick={this.toggle}>Cancel</Button>
                         </ModalFooter>
                     </Modal>
 
             <Modal isOpen={this.state.editModal} toggle={this.editToggle} id='addressModal'>
                 <ModalBody >
-                <h3>Edit Address</h3>
+                <h3>Edit Address:</h3><h4 style={{textAlign:'center'}}>{this.state.selectedAddress.address_name}</h4> 
                     <form>
-                        <input type='text' className='inputAddressAdd' placeholder={this.state.selectedAddress.address_name} name='address_name' value={this.state.address_name} onChange={this.getInput}/>
                         <input type='text' className='inputAddressAdd' placeholder={this.state.selectedAddress.street}  name='street' value={this.state.street} onChange={this.getInput}/>
                         <input type='text' className='inputAddressAdd' placeholder={this.state.selectedAddress.secondary || 'apt, p.o box, etc..(optional)'}  name='secondary' value={this.state.secondary} onChange={this.getInput}/>
                         <input type='text' className='inputAddressAdd' placeholder={this.state.selectedAddress.city}  name='city' value={this.state.city} onChange={this.getInput}/>

@@ -3,7 +3,7 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import axios from 'axios';
 import '../AddressBook/addressbook.scss';
 
-class AddressBook extends Component{
+class Wallet extends Component{
     constructor(props){
         super(props);
         this.state={
@@ -45,71 +45,136 @@ class AddressBook extends Component{
     getInput=(e)=>{
        this.setState({[e.target.name]:e.target.value}) 
     }
-    onSubmitNewCard=()=>{
-        const { card_name, card_number, exp_date, cvc  } = this.state;
-        const currentWalletList = this.state.walletList;
-        if(card_name === '' || card_number === '' || exp_date === '' || cvc === ''){
-            alert('fill in all required fields')
-        }else{
-        const newCard = Object.assign({},{
-            card_name,
-            card_number,
-            exp_date,
-            cvc 
-        });
-        console.log(newCard)
-        const newWalletList = [...currentWalletList, newCard];
-        this.setState({walletList:newWalletList})
-        console.log(newWalletList)
-        axios.post(`http://localhost:3000/addcard`, {
-            customer_id: this.props.location.state.customerid,
-            card_name,
-            card_number,
-            exp_date,
-            cvc 
-        })
-        .catch(error=>{
-            console.log(error)
-        })
-        this.toggle(); 
+   
+
+onSubmitNewCard=()=>{
+    let { card_name, card_number, exp_date, cvc  } = this.state;
+    const currentWalletList = this.state.walletList;
+    card_number = parseInt(card_number)
+    cvc = parseInt(cvc)
+    console.log(Number.isInteger(card_number))
+    const numberCheck = Number.isInteger(card_number);
+    const cvcCheck = Number.isInteger(cvc);
+    const cardNumberLength = card_number.toString().length
+    console.log(cardNumberLength)
+    if(card_name === '' || card_number === '' || exp_date === '' || cvc === ''){
+    alert('fill in all required fields')
+    } else if(!numberCheck && !cvcCheck){
+        alert('enter vaild numbers in fields')
+        this.setState({card_number:'', cvc:''})
     }
-}
-    onSubmiteditCard=()=>{
-    const { card_name, card_number, exp_date, cvc  } = this.state;
-    const id = this.state.selectedCard.id;
-    console.log(id)
-    const editedCard = Object.assign({},{
-        customer_id: this.state.selectedCard.customer_id,
-        card_name: card_name || this.state.selectedCard.card_name,
-        card_number:card_number || this.state.selectedCard.card_number,
-        exp_date: exp_date || this.state.selectedCard.exp_date,
-        cvc: cvc || this.state.selectedCard.cvc
+     else if(!numberCheck || cardNumberLength !== 16){
+        alert('enter vaild card number')
+        this.setState({card_number:''})
+    }else if(!cvcCheck){
+        alert('enter vaild security number')
+        this.setState({cvc:''})
+    }
+    else{
+    const newCard = Object.assign({},{
+        card_name,
+        card_number,
+        exp_date,
+        cvc 
     });
-    const editedWalletList = [...this.state.walletList];
-    editedWalletList[id] = editedCard;
-    this.setState({walletList:editedWalletList})
-    console.log(editedWalletList)
-    axios.put(`http://localhost:3000/editcard`, {
-        customer_id: this.state.selectedCard.customer_id,
-        card_name: card_name || this.state.selectedCard.card_name,
-        card_number:card_number || this.state.selectedCard.card_number,
-        exp_date: exp_date || this.state.selectedCard.exp_date,
-        cvc: cvc || this.state.selectedCard.cvc
+    console.log(newCard)
+    const newWalletList = [...currentWalletList, newCard];
+    this.setState({walletList:newWalletList})
+    console.log(newWalletList)
+    axios.post(`http://localhost:3000/addcard`, {
+        customer_id: this.props.location.state.customerid,
+        card_name,
+        card_number,
+        exp_date,
+        cvc 
     })
     .catch(error=>{
         console.log(error)
     })
-    this.editToggle(); 
+    this.toggle(); 
+    }
 }
-
+    editCard = (card_name, card_number, exp_date, cvc,id) =>{
+        const editedCard = Object.assign({},{
+                customer_id: this.state.selectedCard.customer_id,
+                card_name: this.state.selectedCard.card_name,
+                card_number:card_number || this.state.selectedCard.card_number,
+                exp_date: exp_date || this.state.selectedCard.exp_date,
+                cvc: cvc || this.state.selectedCard.cvc
+        });
+        const editedWalletList = [...this.state.walletList];
+        editedWalletList[id] = editedCard;
+        this.setState({walletList:editedWalletList})
+        console.log(editedWalletList)
+        axios.put(`http://localhost:3000/editcard`, {
+            customer_id: this.state.selectedCard.customer_id,
+            card_name:this.state.selectedCard.card_name,
+            card_number:card_number || this.state.selectedCard.card_number,
+            exp_date: exp_date || this.state.selectedCard.exp_date,
+            cvc: cvc || this.state.selectedCard.cvc
+        })
+        .catch(error=>{
+            console.log(error)
+        })
+        this.editToggle(); 
+    }
+    onSubmiteditCard=()=>{
+    let { card_name, card_number, exp_date, cvc  } = this.state;
+    console.log(card_number, cvc)
+    const id = this.state.selectedCard.id;
+    console.log(id)
+    if(card_number !== ''){
+        card_number = parseInt(card_number)
+        const numberCheck = Number.isInteger(card_number);
+        if(!numberCheck){
+            alert('enter valid card number')
+            this.setState({card_number:''})
+        }else{
+            this.editCard(card_name, card_number, exp_date, cvc, id);
+        }
+    }else if(cvc !== ''){
+        cvc = parseInt(cvc)
+        const cvcCheck = Number.isInteger(cvc);
+        if(!cvcCheck){
+            alert('enter valid security number')
+            this.setState({cvc:''})
+        }else{
+            this.editCard(card_name, card_number, exp_date, cvc, id); 
+        }
+    }
+    // else{
+    // const editedCard = Object.assign({},{
+    //     customer_id: this.state.selectedCard.customer_id,
+    //     card_name: this.state.selectedCard.card_name,
+    //     card_number:card_number || this.state.selectedCard.card_number,
+    //     exp_date: exp_date || this.state.selectedCard.exp_date,
+    //     cvc: cvc || this.state.selectedCard.cvc
+    // });
+    // const editedWalletList = [...this.state.walletList];
+    // editedWalletList[id] = editedCard;
+    // this.setState({walletList:editedWalletList})
+    // console.log(editedWalletList)
+    // axios.put(`http://localhost:3000/editcard`, {
+    //     customer_id: this.state.selectedCard.customer_id,
+    //     card_name:this.state.selectedCard.card_name,
+    //     card_number:card_number || this.state.selectedCard.card_number,
+    //     exp_date: exp_date || this.state.selectedCard.exp_date,
+    //     cvc: cvc || this.state.selectedCard.cvc
+    // })
+    // .catch(error=>{
+    //     console.log(error)
+    // })
+    // this.editToggle(); 
+    // }
+}
     render(){
         const { walletList } = this.state;
     return(
         <div id ='addressBook'>
-            <Button type='submit' onClick={this.toggle}>+new address</Button>
+            <Button type='submit' onClick={this.toggle}>new card</Button>
             <Modal isOpen={this.state.modal} toggle={this.toggle} id='addressModal'>
                         <ModalBody >
-                        <h3>Add Address</h3>
+                        <h3>Add Card</h3>
                             <form>
                                 <input type='text' className='inputAddressAdd' placeholder='card nickname' name='card_name' value={this.state.card_name} onChange={this.getInput}/>
                                 <input type='text' className='inputAddressAdd' placeholder='credit card number' name='card_number' value={this.state.card_number} onChange={this.getInput}/>
@@ -118,16 +183,15 @@ class AddressBook extends Component{
                             </form>
                         </ModalBody>
                         <ModalFooter>
-                            <Button type='submit' onClick={this.onSubmitNewCard}>add addresss</Button>
+                            <Button type='submit' onClick={this.onSubmitNewCard}>Add card</Button>
                             <Button type='submit' onClick={this.toggle}>Cancel</Button>
                         </ModalFooter>
                     </Modal>
 
             <Modal isOpen={this.state.editModal} toggle={this.editToggle} id='addressModal'>
                 <ModalBody >
-                <h3>Edit Address</h3>
+                <h3>Edit Card:</h3><h4 style={{textAlign:'center'}}>{this.state.selectedCard.card_name}</h4> 
                     <form>
-                        <input type='text' className='inputAddressAdd' placeholder={this.state.selectedCard.card_name} name='card_name' value={this.state.card_name} onChange={this.getInput}/>
                         <input type='text' className='inputAddressAdd' placeholder={this.state.selectedCard.card_number}  name='card_number' value={this.state.card_number} onChange={this.getInput}/>
                         <input type='text' className='inputAddressAdd' placeholder={this.state.selectedCard.exp_date}  name='exp_date' value={this.state.exp_date} onChange={this.getInput}/>
                         <input type='text' className='inputAddressAdd' placeholder={this.state.selectedCard.cvc}  name='cvc' value={this.state.cvc} onChange={this.getInput}/>
@@ -178,4 +242,4 @@ class AddressBook extends Component{
         </div>
     )}
 }
-export default AddressBook;
+export default Wallet;

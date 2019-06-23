@@ -232,12 +232,6 @@ app.delete('/deleteaddress/:addressname', (req, res)=>{
   .delete()
   .then(res.json())
 })
-
-
-
-
-
-
 app.get('/wallet/:customerid', (req,res)=>{
   const {customerid} = req.params;
   db
@@ -293,6 +287,28 @@ app.delete('/deletecard/:cardname', (req, res)=>{
   .delete()
   .then(res.json())
 })
-
-
+app.put('/editpassword', (req,res)=>{
+  const { newPassword, customer_id}= req.body;
+  db.transaction(trx=>{
+  db('login') 
+  .where('customer_id', customer_id)
+  .update('password', newPassword)
+  .returning('*')
+  .then(()=>{
+    return db('customers')
+    .where('customer_id', customer_id)
+    .update('password', newPassword)
+    .returning('*')
+  })
+  .then(item=>{
+    res.json(item)
+  })
+  .then(trx.commit)
+  .catch(trx.rollback)
+})
+  .catch(error=>{
+    console.log(error)
+    res.status(500).json({message:error})
+  })
+});
 app.listen(port, ()=> console.log('server started successfully'))

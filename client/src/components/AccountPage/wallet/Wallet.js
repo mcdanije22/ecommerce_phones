@@ -150,6 +150,7 @@ onSubmitNewCard=()=>{
         const { walletList } = this.state;
     return(
         <div id ='addressBook'>
+            <h2>Card wallet</h2>
             <Button type='submit' style={{backgroundColor:'#ECEEF0'}} onClick={this.toggle}>new card</Button>
             <Modal isOpen={this.state.modal} toggle={this.toggle} id='addressModal'>
                         <ModalBody >

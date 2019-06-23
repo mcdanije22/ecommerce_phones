@@ -48,7 +48,7 @@ class AccountPage extends Component{
                     <hr />
                     <Link to={{
                         pathname:`/changepassword`,
-                        state:{customerid:customer_id}
+                        state:{currentCustomer:this.props.currentAccount, customerid:customer_id}
                     }} >  
                     <li>
                         <FontAwesomeIcon icon={faLock} className='accountIcons'/>  

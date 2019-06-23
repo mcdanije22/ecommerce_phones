@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import {Button} from 'reactstrap';
+import { Button } from 'reactstrap';
 import axios from 'axios';
 import {connect} from 'react-redux';
-import { loginAccount, accountAddresses } from '../../actions/loginAction';
+import { loginAccount, accountAddresses, accountCards } from '../../actions/loginAction';
 import './signin.scss';
 
 class SignIn extends Component{
@@ -39,14 +39,17 @@ class SignIn extends Component{
             this.props.getAccount(data.data[0]); 
             axios.get(`http://localhost:3000/address/${data.data[0].customer_id}`)
             .then(data=>{
-                console.log(data)
+                console.log(data.data)
                 this.props.getAccountAddresses(data.data)
             }) 
-            
+            axios.get(`http://localhost:3000/wallet/${data.data[0].customer_id}`)
+            .then(data=>{
+                console.log(data.data)
+                this.props.getAccountCards(data.data)
+            })             
             this.backHistory();            
         }})
         }
-        console.log(this.props.accountAddress)
     }
 accountRegister = () =>{
     const { email, password, first_name, last_name } = this.state;
@@ -121,14 +124,16 @@ accountRegister = () =>{
 const mapStateToProps = state => {
     return {
         currentAccount: state.account.currentAccount,
-        accountAddress: state.account.accountAddresss
+        accountAddress: state.account.accountAddresss,
+        accountCards: state.account.accountCards
     }
   }
   
   const mapDispatchToProps = (dispatch) =>{
     return{
       getAccount: (user) => dispatch(loginAccount(user)),
-      getAccountAddresses: (list) => dispatch(accountAddresses(list))
+      getAccountAddresses: (list) => dispatch(accountAddresses(list)),
+      getAccountCards: (list) =>dispatch(accountCards(list))
     }
   } 
 export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

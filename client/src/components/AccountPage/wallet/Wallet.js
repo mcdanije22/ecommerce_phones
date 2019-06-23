@@ -150,7 +150,7 @@ onSubmitNewCard=()=>{
         const { walletList } = this.state;
     return(
         <div id ='addressBook'>
-            <Button type='submit'  onClick={this.toggle}>new card</Button>
+            <Button type='submit' style={{backgroundColor:'#ECEEF0'}} onClick={this.toggle}>new card</Button>
             <Modal isOpen={this.state.modal} toggle={this.toggle} id='addressModal'>
                         <ModalBody >
                         <h3>Add Card</h3>
@@ -194,7 +194,7 @@ onSubmitNewCard=()=>{
                             <p>{cvc}</p>
                             <div className='bottomButtons'>
                                 <Button className='listButton'
-                                color='primary'
+                                style={{backgroundColor:'#ECEEF0'}}
                                 onClick={(e)=>{
                                       const currentCard = Object.assign({},{
                                         id:i,
@@ -212,6 +212,7 @@ onSubmitNewCard=()=>{
                                 <Button 
                                 className='listButton' 
                                 color='danger'
+                                style={{color:'white'}}
                                     onClick={()=>{                                 
                                         axios.delete(`http://localhost:3000/deletecard/${card_name}`)
                                         .then(this.setState({walletList:walletList.filter(item => item.card_name !== card_name)}))

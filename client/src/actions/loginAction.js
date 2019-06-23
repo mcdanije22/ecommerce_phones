@@ -1,4 +1,4 @@
-import { GET_ACCOUNT_INFO, GET_ACCOUNT_ADDRESSES } from './constants';
+import { GET_ACCOUNT_INFO, GET_ACCOUNT_ADDRESSES, GET_ACCOUNT_CARDS } from './constants';
 
 export const loginAccount = (user) =>{
     return{
@@ -11,4 +11,10 @@ export const accountAddresses = (list) =>{
         type:GET_ACCOUNT_ADDRESSES,
         payload: list
     }
-}
+};
+export const accountCards = (list) =>{
+    return{
+        type:GET_ACCOUNT_CARDS,
+        payload: list
+    }
+};

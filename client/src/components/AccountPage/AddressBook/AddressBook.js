@@ -131,7 +131,7 @@ class AddressBook extends Component{
         const { addressBook } = this.state;
     return(
         <div id ='addressBook'>
-            <Button type='submit' onClick={this.toggle}>new address</Button>
+            <Button type='submit' style={{backgroundColor:'#ECEEF0'}} onClick={this.toggle}>new address</Button>
             <Modal isOpen={this.state.modal} toggle={this.toggle} id='addressModal'>
                         <ModalBody >
                         <h3>Add Address</h3>
@@ -180,7 +180,9 @@ class AddressBook extends Component{
                             <p>{state}</p>
                             <p>{zipcode}</p>
                             <div className='bottomButtons'>
-                                <Button className='listButton' onClick={(e)=>{
+                                <Button className='listButton'
+                                style={{backgroundColor:'#ECEEF0'}}
+                                 onClick={(e)=>{
                                       const currentAddres = Object.assign({},{
                                         id:i,
                                         address_name,
@@ -198,7 +200,7 @@ class AddressBook extends Component{
                                 }}>Edit</Button>
                                 <Button className='listButton' 
                                     color='danger'
-                                    style={{backgroundColor:'red'}}
+                                    style={{color:'white'}}
                                     onClick={()=>{                                 
                                         axios.delete(`http://localhost:3000/deleteaddress/${address_name}`)
                                         .then(this.setState({addressBook:addressBook.filter(item => item.address_name !== address_name)}))

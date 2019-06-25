@@ -73,15 +73,17 @@
             display: flex;
             justify-content: space-between;
             margin:2.5rem 1rem 0 1rem;
-
             }
         #bottomButton{
         display: flex;
         justify-content: center;
-        Button{
+        a{
             width:100%;
             margin:0 1rem 1rem 1rem;
             padding:1rem;
+            background-color:#28a745;
+            border-radius: 1rem;
+            text-align: center;
         }
         }
     }

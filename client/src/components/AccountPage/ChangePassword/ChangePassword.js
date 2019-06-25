@@ -11,7 +11,8 @@ class ChangePassword extends Component{
         this.state={
             currentPassword:'',
             newPassword:'',
-            confirmPassword:''
+            confirmPassword:'',
+            changeSuccessful:false
         }
     }
     getInput = (e) =>{
@@ -34,7 +35,15 @@ class ChangePassword extends Component{
                 customer_id
             })
             .then(data=>{
-                this.props.getAccount(data.data[0])
+                if(data.data.length !== 0){
+                    this.props.getAccount(data.data[0])
+                    this.setState({
+                        currentPassword:'',
+                        newPassword:'',
+                        confirmPassword:'',
+                        changeSuccessful:true
+                    })
+                }
             })
             .catch(error=>{
                 console.log(error)
@@ -53,6 +62,7 @@ class ChangePassword extends Component{
             <input type='text' name='newPassword' value={this.state.newPassword} onChange={this.getInput}></input>
             <p>Confirm Passowrd</p>
             <input type='text' name='confirmPassword' value={this.state.confirmPassword} onChange={this.getInput}></input>
+            <p style={{display:this.state.changeSuccessful?'':'none',color:'green'}}>Password changed succsessfully!</p>
             <Button type='submit' color='success' onClick={this.changePassword}>Change password</Button>
             </div>
         </div>

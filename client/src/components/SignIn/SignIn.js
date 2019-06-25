@@ -124,7 +124,7 @@ accountRegister = () =>{
 const mapStateToProps = state => {
     return {
         currentAccount: state.account.currentAccount,
-        accountAddress: state.account.accountAddresss,
+        accountAddresses: state.account.accountAddresses,
         accountCards: state.account.accountCards
     }
   }

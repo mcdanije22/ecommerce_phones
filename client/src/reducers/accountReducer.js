@@ -3,7 +3,7 @@ import {  GET_ACCOUNT_INFO, GET_ACCOUNT_ADDRESSES, GET_ACCOUNT_CARDS } from '../
 const intialState = {
     currentAccount: '',
     loggedIn: false,
-    accountAddress:[],
+    accountAddresses:[],
     accountCards:[]
 };
 
@@ -18,7 +18,7 @@ const accountInfo = ( state=intialState, action={} )=>{
         case GET_ACCOUNT_ADDRESSES:
             return{
             ...state,
-            accountAddress:action.payload
+            accountAddresses:action.payload
             }
         case GET_ACCOUNT_CARDS:
             return{

@@ -4,13 +4,22 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 import { faBoxOpen, faHome, faCreditCard, faLock, faSignOutAlt, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import {connect} from 'react-redux';
+import { loginAccount, accountAddresses, accountCards } from '../../actions/loginAction';
+
 
 class AccountPage extends Component{
     constructor(){
         super();
     }
-    render(){
+    logOut=()=>{
+        const { getAccount, getAccountAddresses, getAccountCards } = this.props;
+        getAccount('')
+        getAccountAddresses('')
+        getAccountCards('')
         console.log(this.props.currentAccount)
+    }
+    render(){
+        console.log(this.props)
         const {first_name, last_name, customer_id} = this.props.currentAccount;
         console.log(first_name)
         return(
@@ -57,11 +66,13 @@ class AccountPage extends Component{
                     </li>
                     <hr />
                     </Link>
-                    <li>
-                        <FontAwesomeIcon icon={faSignOutAlt} className='accountIcons'/>
-                            Sign Out 
-                        <FontAwesomeIcon icon={faChevronRight} className='accountIconsRight'/>
-                    </li>
+                    <Link to={'/'}>
+                        <li onClick={this.logOut}>
+                            <FontAwesomeIcon icon={faSignOutAlt} className='accountIcons'/>
+                                Sign Out 
+                            <FontAwesomeIcon icon={faChevronRight} className='accountIconsRight'/>
+                        </li>
+                    </Link>
                     <hr />
                 </ul>
             </div>
@@ -70,7 +81,17 @@ class AccountPage extends Component{
 }
 const mapStateToProps = state => {
     return {
-        currentAccount: state.account.currentAccount
+        currentAccount: state.account.currentAccount,
+        accountAddresses: state.account.accountAddresses,
+        accountCards: state.account.accountCards
     }
   }
-export default connect(mapStateToProps, null)(AccountPage);
+  
+  const mapDispatchToProps = (dispatch) =>{
+    return{
+      getAccount: (user) => dispatch(loginAccount(user)),
+      getAccountAddresses: (list) => dispatch(accountAddresses(list)),
+      getAccountCards: (list) =>dispatch(accountCards(list))
+    }
+  } 
+export default connect(mapStateToProps, mapDispatchToProps)(AccountPage);

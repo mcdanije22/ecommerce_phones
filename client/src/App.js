@@ -15,6 +15,7 @@ import Orders from './components/AccountPage/Orders/Orders';
 import AddressBook from './components/AccountPage/AddressBook/AddressBook';
 import Wallet from './components/AccountPage/wallet/Wallet';
 import ChangePassword from './components/AccountPage/ChangePassword/ChangePassword';
+import OrderCheckOut from './components/shoppingCart/OrderCheckOut/OrderCheckOut';
 
 class App extends Component{
   constructor(props){
@@ -39,6 +40,7 @@ class App extends Component{
             <Route path='/address/:customerid' component={AddressBook} />
             <Route path='/wallet/:customerid' component={Wallet} />
             <Route path='/changepassword' component={ChangePassword} />
+            <Route path='/checkout' component={OrderCheckOut} />
             <Route path='/search/:search' render={(props)=>(
             <SearchPage key={props.location.key} {...props} />
             )}/>

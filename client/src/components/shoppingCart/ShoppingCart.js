@@ -2,14 +2,15 @@ import React, {Component} from 'react';
 import './shoppingcart.scss';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes,faChevronLeft  } from '@fortawesome/free-solid-svg-icons';
-import {Button} from 'reactstrap';
+import { Button } from 'reactstrap';
 
 
 class ShoppingCart extends Component{
-    constructor(props){
-        super(props);
+    constructor(){
+        super();
         this.state={
             currentShoppingCart:[],
             cartTotal:0
@@ -50,9 +51,8 @@ class ShoppingCart extends Component{
   
    render(){
     const customerid = this.props.currentAccount.customer_id;
-    console.log(this.props)
     const shoppingCart = this.state.currentShoppingCart;
-    console.log(shoppingCart)
+    console.log(this.props)
        return(
         <div id = 'shoppingCart'>
         <button onClick={this.backHistory} id='backBtn'><FontAwesomeIcon icon={faChevronLeft}/> Back</button>
@@ -106,7 +106,12 @@ class ShoppingCart extends Component{
             <p>Subtotal</p><h5>${this.state.cartTotal}</h5>
             </div>
             <div id='bottomButton'>
-            <Button type = 'submit' color='success'>CHECKOUT</Button>
+            <Link style={{color:'white'}} color='success' to={{
+                        pathname:`/checkout`,
+                        state:{currentShoppingCart:this.state.currentShoppingCart}
+                    }} > 
+            CHECKOUT
+            </Link>
             </div>
         </div>
         </div>
@@ -115,7 +120,9 @@ class ShoppingCart extends Component{
 }
 const mapStateToProps = state => {
     return {
-      currentAccount: state.account.currentAccount    
+      currentAccount: state.account.currentAccount,
+      accountAddresses: state.account.accountAddresses,
+      accountCards: state.account.accountCards    
     }
   }
 export default connect(mapStateToProps, null)(ShoppingCart);

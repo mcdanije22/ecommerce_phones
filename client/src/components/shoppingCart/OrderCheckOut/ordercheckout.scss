@@ -1,0 +1,24 @@
+#mainContent{
+    #shippingAddress{
+        h3{
+            margin-left:1rem;
+        }
+        button{
+            margin-left:1rem;
+        }
+        #addressList{
+            .address{
+                display:flex;
+                padding:1rem;
+                line-height: 50%;
+                margin:1rem;
+                border:1px gray solid;
+            }
+            input{
+                margin:1rem;
+                border-radius: 100%;
+            }
+        }
+    }
+
+}

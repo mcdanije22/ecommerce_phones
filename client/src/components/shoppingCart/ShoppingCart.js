@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes,faChevronLeft  } from '@fortawesome/free-solid-svg-icons';
-import { Button } from 'reactstrap';
 
 
 class ShoppingCart extends Component{
@@ -52,7 +51,6 @@ class ShoppingCart extends Component{
    render(){
     const customerid = this.props.currentAccount.customer_id;
     const shoppingCart = this.state.currentShoppingCart;
-    console.log(this.props)
        return(
         <div id = 'shoppingCart'>
         <button onClick={this.backHistory} id='backBtn'><FontAwesomeIcon icon={faChevronLeft}/> Back</button>

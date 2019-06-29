@@ -151,7 +151,9 @@ onSubmitNewCard=()=>{
     return(
         <div id ='addressBook'>
             <h2>Card wallet</h2>
-            <Button type='submit' style={{backgroundColor:'#ECEEF0'}} onClick={this.toggle}>new card</Button>
+            <Button type='submit' 
+             style={{border:'1px #28a745  solid', backgroundColor:'transparent', color:'#28a745'}}
+             onClick={this.toggle}>new card</Button>
             <Modal isOpen={this.state.modal} toggle={this.toggle} id='addressModal'>
                         <ModalBody >
                         <h3>Add Card</h3>
@@ -163,8 +165,8 @@ onSubmitNewCard=()=>{
                             </form>
                         </ModalBody>
                         <ModalFooter>
-                            <Button type='submit' color='success' onClick={this.onSubmitNewCard}>Add card</Button>
-                            <Button type='submit' color='danger' onClick={this.toggle}>Cancel</Button>
+                            <Button type='submit' style={{border:'1px #28a745  solid', backgroundColor:'transparent', color:'#28a745'}}  onClick={this.onSubmitNewCard}>Add card</Button>
+                            <Button type='submit' style={{border:'1px #dc3545  solid', backgroundColor:'transparent', color:'#dc3545'}} onClick={this.toggle}>Cancel</Button>
                         </ModalFooter>
                     </Modal>
 
@@ -178,8 +180,8 @@ onSubmitNewCard=()=>{
                     </form>
                 </ModalBody>
                 <ModalFooter>
-                    <Button type='submit' color='success' onClick={this.onSubmiteditCard}>Save changes</Button>
-                    <Button type='submit' color='danger' onClick={this.editToggle}>Cancel</Button>
+                    <Button type='submit' style={{border:'1px #28a745  solid', backgroundColor:'transparent', color:'#28a745'}}  onClick={this.onSubmiteditCard}>Save changes</Button>
+                    <Button type='submit' style={{border:'1px #dc3545  solid', backgroundColor:'transparent', color:'#dc3545'}}  onClick={this.editToggle}>Cancel</Button>
                 </ModalFooter>
             </Modal>
 
@@ -195,7 +197,7 @@ onSubmitNewCard=()=>{
                             <p>{cvc}</p>
                             <div className='bottomButtons'>
                                 <Button className='listButton'
-                                style={{backgroundColor:'#ECEEF0'}}
+                                style={{border:'1px #868e96  solid', backgroundColor:'transparent', color:'#868e96'}}
                                 onClick={(e)=>{
                                       const currentCard = Object.assign({},{
                                         id:i,
@@ -212,8 +214,7 @@ onSubmitNewCard=()=>{
                                 }}>Edit</Button>
                                 <Button 
                                 className='listButton' 
-                                color='danger'
-                                style={{color:'white'}}
+                                style={{border:'1px #dc3545  solid', backgroundColor:'transparent', color:'#dc3545'}} 
                                     onClick={()=>{                                 
                                         axios.delete(`http://localhost:3000/deletecard/${card_name}`)
                                         .then(this.setState({walletList:walletList.filter(item => item.card_name !== card_name)}))

@@ -132,7 +132,9 @@ class AddressBook extends Component{
     return(
         <div id ='addressBook'>
             <h2>Address Book</h2>
-            <Button type='submit' style={{backgroundColor:'#ECEEF0'}} onClick={this.toggle}>new address</Button>
+            <Button type='submit' 
+            style={{border:'1px #28a745  solid', backgroundColor:'transparent', color:'#28a745'}}
+            onClick={this.toggle}>new address</Button>
             <Modal isOpen={this.state.modal} toggle={this.toggle} id='addressModal'>
                         <ModalBody >
                         <h3>Add Address</h3>
@@ -146,8 +148,8 @@ class AddressBook extends Component{
                             </form>
                         </ModalBody>
                         <ModalFooter>
-                            <Button type='submit' color='success' onClick={this.onSubmitNewAddress}>Add addresss</Button>
-                            <Button type='submit' color='danger' onClick={this.toggle}>Cancel</Button>
+                            <Button type='submit' style={{border:'1px #28a745  solid', backgroundColor:'transparent', color:'#28a745'}} onClick={this.onSubmitNewAddress}>Add address</Button>
+                            <Button type='submit' style={{border:'1px #dc3545  solid', backgroundColor:'transparent', color:'#dc3545'}} onClick={this.toggle}>Cancel</Button>
                         </ModalFooter>
                     </Modal>
 
@@ -163,8 +165,8 @@ class AddressBook extends Component{
                     </form>
                 </ModalBody>
                 <ModalFooter>
-                    <Button type='submit' color='success'  onClick={this.onSubmiteditAddress}>Save changes</Button>
-                    <Button type='submit' color='danger' onClick={this.editToggle}>Cancel</Button>
+                    <Button type='submit' style={{border:'1px #28a745  solid', backgroundColor:'transparent', color:'#28a745'}}  onClick={this.onSubmiteditAddress}>Save changes</Button>
+                    <Button type='submit' style={{border:'1px #dc3545  solid', backgroundColor:'transparent', color:'#dc3545'}} onClick={this.editToggle}>Cancel</Button>
                 </ModalFooter>
             </Modal>
 
@@ -177,12 +179,10 @@ class AddressBook extends Component{
                             <h5>{address_name}</h5>
                             <p>{street}</p>
                             <p>{secondary}</p>
-                            <p>{city}</p>
-                            <p>{state}</p>
-                            <p>{zipcode}</p>
+                            <p>{city}, {state} {zipcode}</p>
                             <div className='bottomButtons'>
                                 <Button className='listButton'
-                                style={{backgroundColor:'#ECEEF0'}}
+                                style={{border:'1px #868e96  solid', backgroundColor:'transparent', color:'#868e96'}}
                                  onClick={(e)=>{
                                       const currentAddres = Object.assign({},{
                                         id:i,
@@ -200,8 +200,7 @@ class AddressBook extends Component{
                                     this.editToggle();
                                 }}>Edit</Button>
                                 <Button className='listButton' 
-                                    color='danger'
-                                    style={{color:'white'}}
+                                    style={{border:'1px #dc3545  solid', backgroundColor:'transparent', color:'#dc3545'}}
                                     onClick={()=>{                                 
                                         axios.delete(`http://localhost:3000/deleteaddress/${address_name}`)
                                         .then(this.setState({addressBook:addressBook.filter(item => item.address_name !== address_name)}))

@@ -104,7 +104,7 @@ class ShoppingCart extends Component{
             <p>Subtotal</p><h5>${this.state.cartTotal}</h5>
             </div>
             <div id='bottomButton'>
-            <Link style={{color:'white'}} color='success' to={{
+            <Link style={{color:'#28a745'}} to={{
                         pathname:`/checkout`,
                         state:{currentShoppingCart:this.state.currentShoppingCart}
                     }} > 

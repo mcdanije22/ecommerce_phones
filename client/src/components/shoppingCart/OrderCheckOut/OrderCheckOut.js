@@ -101,7 +101,7 @@ class OrderCheckOut extends Component{
                             })
                         }
                     </div>
-                    <Button type='submit' color='success' onClick={this.toggle}>Add Address</Button>
+                    <Button type='submit' style={{border:'1px #28a745  solid', backgroundColor:'transparent', color:'#28a745'}} onClick={this.toggle}>Add Address</Button>
                 </div>
                 <Modal isOpen={this.state.modal} toggle={this.toggle} id='addressModal'>
                         <ModalBody >
@@ -116,8 +116,8 @@ class OrderCheckOut extends Component{
                             </form>
                         </ModalBody>
                         <ModalFooter>
-                            <Button type='submit' color='success' onClick={this.onSubmitNewAddress}>Add addresss</Button>
-                            <Button type='submit' color='danger' onClick={this.toggle}>Cancel</Button>
+                            <Button type='submit' style={{border:'1px #28a745  solid', backgroundColor:'transparent', color:'#28a745'}} onClick={this.onSubmitNewAddress}>Add addresss</Button>
+                            <Button type='submit' style={{border:'1px #dc3545  solid', backgroundColor:'transparent', color:'#dc3545'}} onClick={this.toggle}>Cancel</Button>
                         </ModalFooter>
                     </Modal>
             </div>

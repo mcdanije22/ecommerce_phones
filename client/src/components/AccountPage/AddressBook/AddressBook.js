@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import axios from 'axios';
+import { connect } from 'react-redux';
+import {  accountAddresses } from '../../../actions/loginAction';
 import './addressbook.scss';
 
 class AddressBook extends Component{
@@ -71,6 +73,7 @@ class AddressBook extends Component{
         console.log(newAddress)
         const newAddressBook = [...currentAddressList, newAddress];
         this.setState({addressBook:newAddressBook})
+        this.props.getAccountAddresses(newAddressBook)
         console.log(newAddressBook)
         axios.post(`http://localhost:3000/addaddress`, {
             customer_id: this.props.location.state.customerid,
@@ -110,6 +113,7 @@ class AddressBook extends Component{
     const editedAdressList = [...this.state.addressBook];
     editedAdressList[id] = editedAddress;
     this.setState({addressBook:editedAdressList})
+    this.props.getAccountAddresses(editedAdressList)
     console.log(editedAdressList)
     axios.put(`http://localhost:3000/editaddress`, {
         customer_id: this.state.selectedAddress.customer_id,
@@ -204,6 +208,7 @@ class AddressBook extends Component{
                                     onClick={()=>{                                 
                                         axios.delete(`http://localhost:3000/deleteaddress/${address_name}`)
                                         .then(this.setState({addressBook:addressBook.filter(item => item.address_name !== address_name)}))
+                                        .then(this.props.getAccountAddresses(addressBook.filter(item => item.address_name !== address_name)))
                                 }}>Delete</Button>
                             </div>
                         </li>
@@ -214,6 +219,11 @@ class AddressBook extends Component{
         </div>
     )}
 }
-export default AddressBook;
+const mapDispatchToProps = (dispatch) =>{
+    return{
+      getAccountAddresses: (list) => dispatch(accountAddresses(list))
+    }
+  } 
+export default connect(null, mapDispatchToProps )(AddressBook);
 
 

@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import axios from 'axios';
+import { connect } from 'react-redux';
+import { accountCards } from '../../../actions/loginAction';
 import '../AddressBook/addressbook.scss';
 
 class Wallet extends Component{
@@ -38,7 +40,10 @@ class Wallet extends Component{
       }
       editToggle = () => {
         this.setState(prevState => ({
-        editModal: !prevState.editModal
+        editModal: !prevState.editModal,
+        card_number:'',
+        exp_date:'',
+        cvc:''  
             })
         );
       }
@@ -80,6 +85,7 @@ onSubmitNewCard=()=>{
     console.log(newCard)
     const newWalletList = [...currentWalletList, newCard];
     this.setState({walletList:newWalletList})
+    this.props.getAccountCards(newWalletList)
     console.log(newWalletList)
     axios.post(`http://localhost:3000/addcard`, {
         customer_id: this.props.location.state.customerid,
@@ -105,6 +111,7 @@ onSubmitNewCard=()=>{
         const editedWalletList = [...this.state.walletList];
         editedWalletList[id] = editedCard;
         this.setState({walletList:editedWalletList})
+        this.props.getAccountCards(editedWalletList)
         console.log(editedWalletList)
         axios.put(`http://localhost:3000/editcard`, {
             customer_id: this.state.selectedCard.customer_id,
@@ -218,6 +225,7 @@ onSubmitNewCard=()=>{
                                     onClick={()=>{                                 
                                         axios.delete(`http://localhost:3000/deletecard/${card_name}`)
                                         .then(this.setState({walletList:walletList.filter(item => item.card_name !== card_name)}))
+                                        .then(this.props.getAccountCards(walletList.filter(item => item.card_name !== card_name)))
                                 }}>Delete</Button>
                             </div>
                         </li>
@@ -228,4 +236,9 @@ onSubmitNewCard=()=>{
         </div>
     )}
 }
-export default Wallet;
+const mapDispatchToProps = (dispatch) =>{
+    return{
+        getAccountCards: (list) =>dispatch(accountCards(list))
+    }
+  } 
+export default connect(null, mapDispatchToProps )(Wallet);

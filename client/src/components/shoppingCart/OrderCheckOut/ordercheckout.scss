@@ -14,7 +14,7 @@
                 display:flex;
                 padding:1rem;
                 line-height: 50%;
-                margin:1rem;
+                margin: 0 1rem 1rem 1rem;
                 border:1px gray solid;
             }
             input{
@@ -25,5 +25,17 @@
             }
         }
     }
-
+    #bottomCheckOut{
+        display: flex;
+    #paymnetButton{
+        margin:0 1rem 1rem 1rem;
+            width:100%;
+            padding:1rem;
+            border:1px solid #28a745;
+            color:#28a745;
+            border-radius: 1rem;
+            text-align: center;
+            background-color: transparent;
+    }
+}
 }

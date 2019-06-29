@@ -59,9 +59,9 @@ const Product = ({product, reviews,addToShoppingCart, currentAccount, modalLogin
             {
               currentAccount !== ''
             ?
-            <Button type = 'submit' id={product_id} onClick={addToShoppingCart}>Add to Cart</Button>
+            <Button type = 'submit' style={{border:'1px #28a745  solid', backgroundColor:'transparent', color:'#28a745'}} id={product_id} onClick={addToShoppingCart}>Add to Cart</Button>
             :
-            <Button type = 'submit' id={product_id} onClick={loginToggle}>Add to Cart</Button>
+            <Button type = 'submit' style={{border:'1px #28a745  solid', backgroundColor:'transparent', color:'#28a745'}} onClick={loginToggle}>Add to Cart</Button>
             }
             
             <Modal isOpen={modalLogin} toggle={loginToggle} id='cartModal' >

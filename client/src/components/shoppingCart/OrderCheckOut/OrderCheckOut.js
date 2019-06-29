@@ -63,18 +63,18 @@ class OrderCheckOut extends Component{
         console.log(newAddressBook)
         this.props.getAccountAddresses(newAddressBook)
         console.log(this.props.accountAddresses)
-        // axios.post(`http://localhost:3000/addaddress`, {
-        //     customer_id: this.props.currentAccount.customer_id,
-        //     address_name,
-        //     street,
-        //     secondary,
-        //     city,
-        //     state,
-        //     zipcode 
-        // })
-        // .catch(error=>{
-        //     console.log(error)
-        // })
+        axios.post(`http://localhost:3000/addaddress`, {
+            customer_id: this.props.currentAccount.customer_id,
+            address_name,
+            street,
+            secondary,
+            city,
+            state,
+            zipcode 
+        })
+        .catch(error=>{
+            console.log(error)
+        })
         this.toggle(); 
     }
 }
@@ -87,6 +87,7 @@ class OrderCheckOut extends Component{
                 <div id ='shippingAddress'>
                 <button onClick={this.backHistory} id='search-header'><FontAwesomeIcon icon={faChevronLeft}/> Back to cart</button>
                 <h3>Shipping Address</h3>
+                <Button type='submit' style={{border:'1px #28a745  solid', backgroundColor:'transparent', color:'#28a745'}} onClick={this.toggle}>+ Add Address</Button>
                     <div id='addressList'>
                         {
                             accountAddresses.map((address,i)=>{
@@ -101,7 +102,6 @@ class OrderCheckOut extends Component{
                             })
                         }
                     </div>
-                    <Button type='submit' style={{border:'1px #28a745  solid', backgroundColor:'transparent', color:'#28a745'}} onClick={this.toggle}>Add Address</Button>
                 </div>
                 <Modal isOpen={this.state.modal} toggle={this.toggle} id='addressModal'>
                         <ModalBody >
@@ -120,6 +120,9 @@ class OrderCheckOut extends Component{
                             <Button type='submit' style={{border:'1px #dc3545  solid', backgroundColor:'transparent', color:'#dc3545'}} onClick={this.toggle}>Cancel</Button>
                         </ModalFooter>
                     </Modal>
+                    <div id='bottomCheckOut'>
+                    <Button type='submit' id='paymnetButton'> Continue to payment </Button>
+                    </div>
             </div>
         )
     }

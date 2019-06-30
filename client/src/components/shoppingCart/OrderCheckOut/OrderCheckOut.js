@@ -12,7 +12,9 @@ class OrderCheckOut extends Component{
     constructor(props){
         super(props);
        this.state={
+        activeScreen:'address',
         modal:false,
+        orderAddress:'',
         address_name:'',
         street:'',
         secondary:'',
@@ -36,8 +38,11 @@ class OrderCheckOut extends Component{
         }));
       }
       getInput=(e)=>{
-        this.setState({[e.target.name]:e.target.value}) 
+        this.setState({[e.target.name]:e.target.value},()=>{
+            console.log(this.state.orderAddress)
+        }) 
      }
+     
 
      onSubmitNewAddress=()=>{
         let { address_name, street, secondary, city, state, zipcode } = this.state;
@@ -78,13 +83,40 @@ class OrderCheckOut extends Component{
         this.toggle(); 
     }
 }
+isChecked=(e)=>{
+    console.log(e.target.checked)
+    if(e.target.checked){
+        if(this.state.orderAddress !== ''){
+            alert('select only one address')
+            e.target.checked =false;
+            // this.setState({orderAddress:e.target.id})
+            }else{
+        this.setState({orderAddress:e.target.id},()=>{
+            console.log(this.state.orderAddress)
+            })
+        }
+    }else if(!e.target.checked){
+        this.setState({orderAddress:''})
+    }
+ }
+addAddressToOrder=(e)=>{
+    if(this.state.orderAddress === ''){
+        alert('please select a shipping address')
+    }else{
+        this.setState({activeScreen:'payment'},()=>{
+            console.log(this.state.activeScreen)
+        })
+      console.log(this.state.orderAddress)
+    }
+}
 
     render(){
         console.log(this.props)
-        const{ accountAddresses } = this.props;
+        const{ accountAddresses, accountCards } = this.props;
+        const { activeScreen } = this.state;
             return(
             <div id='mainContent'>
-                <div id ='shippingAddress'>
+                <div id ='shippingAddress' style={{display:activeScreen === 'address'?'':'none'}}>
                 <button onClick={this.backHistory} id='search-header'><FontAwesomeIcon icon={faChevronLeft}/> Back to cart</button>
                 <h3>Shipping Address</h3>
                 <Button type='submit' style={{border:'1px #28a745  solid', backgroundColor:'transparent', color:'#28a745'}} onClick={this.toggle}>+ Add Address</Button>
@@ -92,7 +124,7 @@ class OrderCheckOut extends Component{
                         {
                             accountAddresses.map((address,i)=>{
                                 return <div className='address' key={i}>
-                                            <input type='checkbox'/> 
+                                            <input type='checkbox' name='orderAddress' id={address.address_id || address.address_name} onChange={this.isChecked} /> 
                                             <div>
                                                 <h5>{address.address_name}</h5>
                                                 <p>{address.street}</p>
@@ -102,7 +134,31 @@ class OrderCheckOut extends Component{
                             })
                         }
                     </div>
+                    
                 </div>
+
+                    {/* wallet */}
+                <div id ='shippingAddress' style={{display:activeScreen === 'payment'?'':'none'}}>
+                <button  id='search-header'><FontAwesomeIcon icon={faChevronLeft}/> Back to shipping options</button>
+                <h3>Payment Option</h3>
+                <Button type='submit' style={{border:'1px #28a745  solid', backgroundColor:'transparent', color:'#28a745'}} onClick={this.toggle}>+ Add Card</Button>
+                    <div id='addressList'>
+                        {
+                            accountCards.map((card,i)=>{
+                                return <div className='address' key={i}>
+                                            <input type='checkbox' name='orderAddress' id={card.card_id || card.card_name} onChange={this.isChecked} /> 
+                                            <div>
+                                                <h5>{card.card_name}</h5>
+                                                <p>{card.card_number}</p>
+                                                <p>{card.cvc}</p>
+                                                <p>{card.exp_date}</p>
+                                            </div>
+                                        </div>
+                            })
+                        }
+                    </div>
+                </div>
+                
                 <Modal isOpen={this.state.modal} toggle={this.toggle} id='addressModal'>
                         <ModalBody >
                         <h3>Add Address</h3>
@@ -121,7 +177,7 @@ class OrderCheckOut extends Component{
                         </ModalFooter>
                     </Modal>
                     <div id='bottomCheckOut'>
-                    <Button type='submit' id='paymnetButton'> Continue to payment </Button>
+                    <Button type='submit' id='paymnetButton' onClick={this.addAddressToOrder}> Continue to payment </Button>
                     </div>
             </div>
         )

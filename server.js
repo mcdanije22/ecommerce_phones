@@ -199,6 +199,7 @@ app.post('/addaddress', (req,res)=>{
     state,
     zipcode
   })
+  .returning('*')
   .then(item=>{
     console.log(item)
     res.json(item)
@@ -312,20 +313,19 @@ app.put('/editpassword', (req,res)=>{
   })
 });
 app.get('/orderaccountinfo/:orderAddress/:orderPayment/:customerid',(req,res)=>{
-  const { orderAddress, orderPayment, customerid } = req.params;
+  let { orderAddress, orderPayment, customerid } = req.params;
+  customerid = parseInt(customerid)
   console.log(orderAddress, orderPayment, customerid)
-  db.select('*')
-  // .from('customer_address')
-  // .where('address_id', orderAddress)
-  // .innerJoin('customer_cards', 'customer_cards.card_id', orderPayment)
+    db.select('*')
     .from('customers')
-    .where('customer_id', customerid)
-    .innerJoin('customer_address', 'customer_address.address_id', orderAddress)
-
-    // .innerJoin('customer_address', 'customer_address.address_id', orderAddress)
-
+    .where('customers.customer_id', customerid)
+    .innerJoin('customer_address', 'customer_address.customer_id', customerid)
+    .innerJoin('customer_cards', 'customer_cards.customer_id', customerid)
+    .where('customer_address.address_id', orderAddress)
+    .where('customer_cards.card_id', orderPayment)
   .then(data=>{
     res.send(data)
   })
+
 })
 app.listen(port, ()=> console.log('server started successfully'))

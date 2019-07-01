@@ -64,19 +64,72 @@ class OrderCheckOut extends Component{
      }
      
 
-     onSubmitNewAddress=()=>{
-        let { address_name, street, secondary, city, state, zipcode } = this.state;
-        zipcode = parseInt(zipcode)
-        const zipcodeCheck = Number.isInteger(zipcode);
-        const zipcodeLength = zipcode.toString().length;
-        if(address_name === '' || street === '' || city === '' || state === '' || zipcode === ''){
-            alert('fill in all required fields')
-        }else if(!zipcodeCheck || zipcodeLength !== 5){
-            alert('please enter valid zipcode')
-        }
-        else{
+//      onSubmitNewAddress=()=>{
+//         let { address_name, street, secondary, city, state, zipcode } = this.state;
+//         zipcode = parseInt(zipcode)
+//         const zipcodeCheck = Number.isInteger(zipcode);
+//         const zipcodeLength = zipcode.toString().length;
+//         if(address_name === '' || street === '' || city === '' || state === '' || zipcode === ''){
+//             alert('fill in all required fields')
+//         }else if(!zipcodeCheck || zipcodeLength !== 5){
+//             alert('please enter valid zipcode')
+//         }
+//         else{
+//         const newAddress = Object.assign({},{
+//             customer_id: this.props.currentAccount.customer_id,
+//             address_name,
+//             street,
+//             secondary,
+//             city,
+//             state,
+//             zipcode  
+//         });
+//         const newAddressBook = [...this.props.accountAddresses, newAddress]
+//         console.log(newAddressBook)
+//         this.props.getAccountAddresses(newAddressBook)
+//         console.log(this.props.accountAddresses)
+//         axios.post(`http://localhost:3000/addaddress`, {
+//             customer_id: this.props.currentAccount.customer_id,
+//             address_name,
+//             street,
+//             secondary,
+//             city,
+//             state,
+//             zipcode 
+//         })
+//         .catch(error=>{
+//             console.log(error)
+//         })
+//         this.addressToggle(); 
+//     }
+// }
+
+// current
+onSubmitNewAddress=()=>{
+    let { address_name, street, secondary, city, state, zipcode } = this.state;
+    zipcode = parseInt(zipcode)
+    const zipcodeCheck = Number.isInteger(zipcode);
+    const zipcodeLength = zipcode.toString().length;
+    if(address_name === '' || street === '' || city === '' || state === '' || zipcode === ''){
+        alert('fill in all required fields')
+    }else if(!zipcodeCheck || zipcodeLength !== 5){
+        alert('please enter valid zipcode')
+    }
+    else{
+    axios.post(`http://localhost:3000/addaddress`, {
+        customer_id: this.props.currentAccount.customer_id,
+        address_name,
+        street,
+        secondary,
+        city,
+        state,
+        zipcode 
+    })
+    .then(data=>{
+        console.log(data)
         const newAddress = Object.assign({},{
             customer_id: this.props.currentAccount.customer_id,
+            address_id:data.data[0].address_id,
             address_name,
             street,
             secondary,
@@ -87,21 +140,13 @@ class OrderCheckOut extends Component{
         const newAddressBook = [...this.props.accountAddresses, newAddress]
         console.log(newAddressBook)
         this.props.getAccountAddresses(newAddressBook)
-        console.log(this.props.accountAddresses)
-        axios.post(`http://localhost:3000/addaddress`, {
-            customer_id: this.props.currentAccount.customer_id,
-            address_name,
-            street,
-            secondary,
-            city,
-            state,
-            zipcode 
-        })
-        .catch(error=>{
-            console.log(error)
-        })
-        this.paymentToggle(); 
-    }
+        console.log(this.props.accountAddresses)    
+    })
+    .catch(error=>{
+        console.log(error)
+    })
+    this.addressToggle(); 
+}
 }
 
 onSubmitNewCard=()=>{

@@ -311,4 +311,21 @@ app.put('/editpassword', (req,res)=>{
     res.status(500).json({message:error})
   })
 });
+app.get('/orderaccountinfo/:orderAddress/:orderPayment/:customerid',(req,res)=>{
+  const { orderAddress, orderPayment, customerid } = req.params;
+  console.log(orderAddress, orderPayment, customerid)
+  db.select('*')
+  // .from('customer_address')
+  // .where('address_id', orderAddress)
+  // .innerJoin('customer_cards', 'customer_cards.card_id', orderPayment)
+    .from('customers')
+    .where('customer_id', customerid)
+    .innerJoin('customer_address', 'customer_address.address_id', orderAddress)
+
+    // .innerJoin('customer_address', 'customer_address.address_id', orderAddress)
+
+  .then(data=>{
+    res.send(data)
+  })
+})
 app.listen(port, ()=> console.log('server started successfully'))

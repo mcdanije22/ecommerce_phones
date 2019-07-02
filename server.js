@@ -226,10 +226,10 @@ app.put('/editaddress', (req, res)=>{
     res.json(item)
   })
 })
-app.delete('/deleteaddress/:addressname', (req, res)=>{
-  const { addressname } =req.params;
+app.delete('/deleteaddress/:addressid', (req, res)=>{
+  const { addressid } =req.params;
   db('customer_address')
-  .where('address_name', addressname)
+  .where('address_id', addressid)
   .delete()
   .then(res.json())
 })
@@ -253,6 +253,7 @@ app.post('/addcard', (req,res)=>{
     exp_date,
     cvc 
   })
+  .returning('*')
   .then(item=>{
     console.log(item)
     res.json(item)
@@ -281,10 +282,10 @@ app.put('/editcard', (req, res)=>{
     res.status(500).json({message:error})
   })
 })
-app.delete('/deletecard/:cardname', (req, res)=>{
-  const { cardname } =req.params;
+app.delete('/deletecard/:cardid', (req, res)=>{
+  const { cardid } =req.params;
   db('customer_cards')
-  .where('card_name', cardname)
+  .where('card_id', cardid)
   .delete()
   .then(res.json())
 })
@@ -315,6 +316,7 @@ app.put('/editpassword', (req,res)=>{
 app.get('/orderaccountinfo/:orderAddress/:orderPayment/:customerid',(req,res)=>{
   let { orderAddress, orderPayment, customerid } = req.params;
   customerid = parseInt(customerid)
+  orderPayment = parseInt(orderPayment)
   console.log(orderAddress, orderPayment, customerid)
     db.select('*')
     .from('customers')
@@ -324,6 +326,7 @@ app.get('/orderaccountinfo/:orderAddress/:orderPayment/:customerid',(req,res)=>{
     .where('customer_address.address_id', orderAddress)
     .where('customer_cards.card_id', orderPayment)
   .then(data=>{
+    console.log(data)
     res.send(data)
   })
 

@@ -50,19 +50,32 @@ class AddressBook extends Component{
     getInput=(e)=>{
        this.setState({[e.target.name]:e.target.value}) 
     }
-    onSubmitNewAddress=()=>{
-        let { address_name, street, secondary, city, state, zipcode } = this.state;
-        const currentAddressList = this.state.addressBook;
-        zipcode = parseInt(zipcode)
-        const zipcodeCheck = Number.isInteger(zipcode);
-        const zipcodeLength = zipcode.toString().length;
-        if(address_name === '' || street === '' || city === '' || state === '' || zipcode === ''){
-            alert('fill in all required fields')
-        }else if(!zipcodeCheck || zipcodeLength !== 5){
-            alert('please enter valid zipcode')
-        }
-        else{
+
+onSubmitNewAddress=()=>{
+    let { address_name, street, secondary, city, state, zipcode } = this.state;
+    const currentAddressList = this.state.addressBook;
+    zipcode = parseInt(zipcode)
+    const zipcodeCheck = Number.isInteger(zipcode);
+    const zipcodeLength = zipcode.toString().length;
+    if(address_name === '' || street === '' || city === '' || state === '' || zipcode === ''){
+        alert('fill in all required fields')
+    }else if(!zipcodeCheck || zipcodeLength !== 5){
+        alert('please enter valid zipcode')
+    }
+    else{
+   
+ axios.post(`http://localhost:3000/addaddress`, {
+        customer_id: this.props.location.state.customerid,
+        address_name,
+        street,
+        secondary,
+        city,
+        state,
+        zipcode 
+    })
+    .then(data=>{
         const newAddress = Object.assign({},{
+            address_id: data.data[0].address_id,
             address_name,
             street,
             secondary,
@@ -75,32 +88,17 @@ class AddressBook extends Component{
         this.setState({addressBook:newAddressBook})
         this.props.getAccountAddresses(newAddressBook)
         console.log(newAddressBook)
-        axios.post(`http://localhost:3000/addaddress`, {
-            customer_id: this.props.location.state.customerid,
-            address_name,
-            street,
-            secondary,
-            city,
-            state,
-            zipcode 
-        })
-        .catch(error=>{
-            console.log(error)
-        })
-        this.toggle(); 
-    }
+    })
+    .catch(error=>{
+        console.log(error)
+    })
+    this.toggle(); 
+}
 }
     onSubmiteditAddress=()=>{
-    let { address_name, street, secondary, city, state, zipcode } = this.state;
+    let { street, secondary, city, state, zipcode } = this.state;
     const id = this.state.selectedAddress.id;
-    zipcode = parseInt(zipcode)
-    const zipcodeCheck = Number.isInteger(zipcode);
-    const zipcodeLength = zipcode.toString().length;
-    console.log(id)
-    if(!zipcodeCheck || zipcodeLength !== 5){
-        alert('please enter valid zipcode')
-        this.setState({zipcode:''})
-    }else{
+    // zipcode = parseInt(zipcode)
     const editedAddress = Object.assign({},{
         customer_id: this.state.selectedAddress.customer_id,
         address_name: this.state.selectedAddress.address_name,
@@ -128,7 +126,6 @@ class AddressBook extends Component{
         console.log(error)
     })
     this.editToggle(); 
-    }
 }
 
     render(){
@@ -177,7 +174,7 @@ class AddressBook extends Component{
             <ul id='addressList'>
             {
                 addressBook.map((item,i)=>{
-                const { address_name, street, secondary, city, state, zipcode, customer_id } = item;
+                const { address_name, street, secondary, city, state, zipcode, customer_id, address_id } = item;
                 return(
                         <li key={i} className='address' >
                             <h5>{address_name}</h5>
@@ -206,9 +203,9 @@ class AddressBook extends Component{
                                 <Button className='listButton' 
                                     style={{border:'1px #dc3545  solid', backgroundColor:'transparent', color:'#dc3545'}}
                                     onClick={()=>{                                 
-                                        axios.delete(`http://localhost:3000/deleteaddress/${address_name}`)
-                                        .then(this.setState({addressBook:addressBook.filter(item => item.address_name !== address_name)}))
-                                        .then(this.props.getAccountAddresses(addressBook.filter(item => item.address_name !== address_name)))
+                                        axios.delete(`http://localhost:3000/deleteaddress/${address_id}`)
+                                        .then(this.setState({addressBook:addressBook.filter(item => item.address_id!== address_id)}))
+                                        .then(this.props.getAccountAddresses(addressBook.filter(item => item.address_id !== address_id)))
                                 }}>Delete</Button>
                             </div>
                         </li>

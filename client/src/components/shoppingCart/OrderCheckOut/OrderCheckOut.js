@@ -64,45 +64,6 @@ class OrderCheckOut extends Component{
      }
      
 
-//      onSubmitNewAddress=()=>{
-//         let { address_name, street, secondary, city, state, zipcode } = this.state;
-//         zipcode = parseInt(zipcode)
-//         const zipcodeCheck = Number.isInteger(zipcode);
-//         const zipcodeLength = zipcode.toString().length;
-//         if(address_name === '' || street === '' || city === '' || state === '' || zipcode === ''){
-//             alert('fill in all required fields')
-//         }else if(!zipcodeCheck || zipcodeLength !== 5){
-//             alert('please enter valid zipcode')
-//         }
-//         else{
-//         const newAddress = Object.assign({},{
-//             customer_id: this.props.currentAccount.customer_id,
-//             address_name,
-//             street,
-//             secondary,
-//             city,
-//             state,
-//             zipcode  
-//         });
-//         const newAddressBook = [...this.props.accountAddresses, newAddress]
-//         console.log(newAddressBook)
-//         this.props.getAccountAddresses(newAddressBook)
-//         console.log(this.props.accountAddresses)
-//         axios.post(`http://localhost:3000/addaddress`, {
-//             customer_id: this.props.currentAccount.customer_id,
-//             address_name,
-//             street,
-//             secondary,
-//             city,
-//             state,
-//             zipcode 
-//         })
-//         .catch(error=>{
-//             console.log(error)
-//         })
-//         this.addressToggle(); 
-//     }
-// }
 
 // current
 onSubmitNewAddress=()=>{
@@ -126,7 +87,6 @@ onSubmitNewAddress=()=>{
         zipcode 
     })
     .then(data=>{
-        console.log(data)
         const newAddress = Object.assign({},{
             customer_id: this.props.currentAccount.customer_id,
             address_id:data.data[0].address_id,
@@ -148,7 +108,6 @@ onSubmitNewAddress=()=>{
     this.addressToggle(); 
 }
 }
-
 onSubmitNewCard=()=>{
     let { card_name, card_number, exp_date, cvc  } = this.state;
     card_number = parseInt(card_number)
@@ -172,22 +131,27 @@ onSubmitNewCard=()=>{
         this.setState({cvc:''})
     }
     else{
-    const newCard = Object.assign({},{
-        card_name,
-        card_number,
-        exp_date,
-        cvc 
-    });
-    console.log(newCard)
-    const newWalletList = [...this.props.accountCards, newCard];
-    this.props.getAccountCards(newWalletList)
-    console.log(newWalletList)
     axios.post(`http://localhost:3000/addcard`, {
-        customer_id: this.props.location.state.customerid,
+        customer_id: this.props.currentAccount.customer_id,
         card_name,
         card_number,
         exp_date,
         cvc 
+    })
+    .then(data=>{
+        console.log(data)
+        const newCard = Object.assign({},{
+            customer_id: this.props.currentAccount.customer_id,
+            card_id:data.data[0].card_id,
+            card_name,
+            card_number,
+            exp_date,
+            cvc 
+        });
+        console.log(newCard)
+        const newWalletList = [...this.props.accountCards, newCard];
+        this.props.getAccountCards(newWalletList)
+        console.log(newWalletList)
     })
     .catch(error=>{
         console.log(error)
@@ -359,7 +323,7 @@ changeScreen=()=>{
                         </form>
                         </ModalBody>
                         <ModalFooter>
-                            <Button type='submit' style={{border:'1px #28a745  solid', backgroundColor:'transparent', color:'#28a745'}} onClick={this.onSubmitNewCard}>Add addresss</Button>
+                            <Button type='submit' style={{border:'1px #28a745  solid', backgroundColor:'transparent', color:'#28a745'}} onClick={this.onSubmitNewCard}>Add payment</Button>
                             <Button type='submit' style={{border:'1px #dc3545  solid', backgroundColor:'transparent', color:'#dc3545'}} onClick={this.paymentToggle}>Cancel</Button>
                         </ModalFooter>
                     </Modal>

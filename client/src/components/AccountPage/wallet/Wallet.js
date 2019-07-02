@@ -76,17 +76,6 @@ onSubmitNewCard=()=>{
         this.setState({cvc:''})
     }
     else{
-    const newCard = Object.assign({},{
-        card_name,
-        card_number,
-        exp_date,
-        cvc 
-    });
-    console.log(newCard)
-    const newWalletList = [...currentWalletList, newCard];
-    this.setState({walletList:newWalletList})
-    this.props.getAccountCards(newWalletList)
-    console.log(newWalletList)
     axios.post(`http://localhost:3000/addcard`, {
         customer_id: this.props.location.state.customerid,
         card_name,
@@ -94,13 +83,27 @@ onSubmitNewCard=()=>{
         exp_date,
         cvc 
     })
+    .then(data=>{
+        const newCard = Object.assign({},{
+            card_id: data.data[0].card_id,
+            card_name,
+            card_number,
+            exp_date,
+            cvc 
+        });
+        console.log(newCard)
+        const newWalletList = [...currentWalletList, newCard];
+        this.setState({walletList:newWalletList})
+        this.props.getAccountCards(newWalletList)
+        console.log(newWalletList)
+    })
     .catch(error=>{
         console.log(error)
     })
     this.toggle(); 
     }
 }
-    editCard = (card_name, card_number, exp_date, cvc,id) =>{
+    editCard = ( card_number, exp_date, cvc, id ) =>{
         const editedCard = Object.assign({},{
                 customer_id: this.state.selectedCard.customer_id,
                 card_name: this.state.selectedCard.card_name,
@@ -195,7 +198,7 @@ onSubmitNewCard=()=>{
             <ul id='addressList'>
             {
                 walletList.map((item,i)=>{
-                const { card_name, card_number, exp_date, cvc, customer_id } = item;
+                const { card_name, card_number, exp_date, cvc, customer_id, card_id } = item;
                 return(
                         <li key={i} className='address' >
                             <h5>{card_name}</h5>
@@ -222,10 +225,10 @@ onSubmitNewCard=()=>{
                                 <Button 
                                 className='listButton' 
                                 style={{border:'1px #dc3545  solid', backgroundColor:'transparent', color:'#dc3545'}} 
-                                    onClick={()=>{                                 
-                                        axios.delete(`http://localhost:3000/deletecard/${card_name}`)
-                                        .then(this.setState({walletList:walletList.filter(item => item.card_name !== card_name)}))
-                                        .then(this.props.getAccountCards(walletList.filter(item => item.card_name !== card_name)))
+                                    onClick={()=>{      
+                                        axios.delete(`http://localhost:3000/deletecard/${card_id}`)
+                                        .then(this.setState({walletList:walletList.filter(item => item.card_id !== card_id)}))
+                                        .then(this.props.getAccountCards(walletList.filter(item => item.card_id !== card_id)))
                                 }}>Delete</Button>
                             </div>
                         </li>

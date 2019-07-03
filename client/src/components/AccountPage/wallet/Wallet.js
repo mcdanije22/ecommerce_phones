@@ -166,7 +166,7 @@ onSubmitNewCard=()=>{
              onClick={this.toggle}>new card</Button>
             <Modal isOpen={this.state.modal} toggle={this.toggle} id='addressModal'>
                         <ModalBody >
-                        <h3>Add PAyment</h3>
+                        <h3>Add Payment</h3>
                             <form>
                                 <input type='text' className='inputAddressAdd' placeholder='Card Nickname' name='card_name' value={this.state.card_name} onChange={this.getInput}/>
                                 <input type='text' className='inputAddressAdd' placeholder='Card #' name='card_number' value={this.state.card_number} onChange={this.getInput}/>

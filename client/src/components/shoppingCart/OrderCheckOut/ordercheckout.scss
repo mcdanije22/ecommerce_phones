@@ -39,3 +39,31 @@
     }
 }
 }
+#review{
+         #review-top{
+            margin:1rem;
+             border:1px gray solid;
+             padding:1rem;    
+             border-radius: 1rem;         
+            }
+        p{
+            padding-left:2rem;
+        }
+        #review-body{
+            margin:1rem;
+            border:1px gray solid;
+            padding:1rem;     
+            border-radius: 1rem;    
+            ul{
+                list-style:none;
+                li{
+                display:flex;
+                justify-content: space-between;
+                p{
+                    margin:0;
+                    padding:.5rem;
+                }
+                }
+            }
+        }
+}

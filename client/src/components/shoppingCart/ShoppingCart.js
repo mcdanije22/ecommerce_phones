@@ -106,7 +106,7 @@ class ShoppingCart extends Component{
             <div id='bottomButton'>
             <Link style={{color:'#28a745'}} to={{
                         pathname:`/checkout`,
-                        state:{currentShoppingCart:this.state.currentShoppingCart}
+                        state:{currentShoppingCart:this.state.currentShoppingCart, cartTotal:this.state.cartTotal}
                     }} > 
             CHECKOUT
             </Link>

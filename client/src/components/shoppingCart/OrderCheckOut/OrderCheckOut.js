@@ -27,7 +27,8 @@ class OrderCheckOut extends Component{
         card_name:'',
         card_number:'',
         cvc:'',
-        exp_date:''  
+        exp_date:'',
+        cartTax:0  
        }
     }
     backHistory= () =>{
@@ -62,9 +63,6 @@ class OrderCheckOut extends Component{
             console.log(this.state.orderAddress)
         }) 
      }
-     
-
-
 // current
 onSubmitNewAddress=()=>{
     let { address_name, street, secondary, city, state, zipcode } = this.state;
@@ -210,12 +208,13 @@ isCheckedWalet=(e)=>{
             console.log(this.state.activeScreen)
             axios.get(`http://localhost:3000/orderaccountinfo/${orderAddress}/${orderPayment}/${customerid}`)
             .then(res=>{
-                this.setState({orderInfo:res.data},()=>{
+                this.setState({orderInfo:res.data[0]},()=>{
                     console.log(this.state.orderInfo)
                 })
               })
         })
     }
+    this.getTaxes();
 }
 changeScreen=()=>{
     let { activeScreen } = this.state;
@@ -225,11 +224,23 @@ changeScreen=()=>{
         this.setState({activeScreen:'payment'})
     }
 }
+getTaxes=()=>{
+    const total = this.props.location.state.cartTotal;
+    const cartTax = total * 0.08;
+    this.setState({cartTax:cartTax},()=>{
+        console.log(this.state.cartTax) 
+
+    })
+}
     render(){
         console.log(this.props)
         const{ accountAddresses, accountCards } = this.props;
         const { activeScreen } = this.state;
-            return(
+        let { address_name, street, secondary, city, state, zipcode, card_name, card_number, cvc, exp_date } = this.state.orderInfo;
+        if(card_number){
+            card_number = card_number.slice(12,16)
+        }
+        return(
             <div id='mainContent'>
             
                     {/* shipping addresss */}
@@ -286,7 +297,53 @@ changeScreen=()=>{
                 <div id ='shippingAddress' style={{display:activeScreen === 'review'?'':'none'}}>
                             <button onClick={this.changeScreen} id='search-header'><FontAwesomeIcon icon={faChevronLeft}/> Back to payment option</button>
                             <h3>Order Summary</h3>
-                                <div id='addressList'>
+                                <div id='review'>
+                                    <div id='review-top'>
+                                        <h4>Shipping to:</h4>
+                                        <p>{street} {secondary} {city}, {state} {zipcode}</p>
+                                        <hr/>
+                                        <h5>Payment used:</h5>
+                                        <p> Card that ends in {card_number}</p>
+                                    </div>
+                                    <div id='review-body'>
+                                    <ul>
+                                        <li>
+                                            <p>
+                                                Items ({this.props.location.state.currentShoppingCart.length}) 
+                                            </p>
+                                            <p>
+                                                ${this.props.location.state.cartTotal}
+                                            </p>
+                                        </li>
+                                        <hr/>
+                                        <li>
+                                        <p>
+                                            Shipping & handing:
+                                        </p>
+                                        <p>
+                                            $5.00
+                                        </p>
+                                        </li>
+                                        <hr/>
+                                        <li>
+                                        <p>
+                                            Estimated taxes:
+                                        </p>
+                                        <p>
+                                            ${this.state.cartTax}
+                                        </p>
+                                        </li>
+                                        <hr/>
+                                        <li>
+                                        <p>
+                                            <b>Order total:</b>
+                                        </p>
+                                        <p>
+                                            ${this.props.location.state.cartTotal + this.state.cartTax + 5}
+                                        </p>
+                                        </li>
+                                    </ul>
+                                    </div>
                                 </div>
                                 <div id='bottomCheckOut'>
                                 <Button type='submit' id='orderButton' onClick={this.addAddressToOrder}> Place order </Button>
@@ -294,6 +351,8 @@ changeScreen=()=>{
 
                             </div>
                 
+
+
                 <Modal isOpen={this.state.addressModal} toggle={this.addressToggle} id='addressModal'>
                         <ModalBody >
                         <h3>Add Address</h3>

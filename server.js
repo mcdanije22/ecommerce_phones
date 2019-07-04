@@ -329,6 +329,12 @@ app.get('/orderaccountinfo/:orderAddress/:orderPayment/:customerid',(req,res)=>{
     console.log(data)
     res.send(data)
   })
-
 })
+app.post('/placeorder', (req,res)=>{
+  const { customer_id, card_id, address_id } = req.body;
+  console.log(customer_id, card_id, address_id )
+})
+
+
+
 app.listen(port, ()=> console.log('server started successfully'))

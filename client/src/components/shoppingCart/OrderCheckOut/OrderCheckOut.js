@@ -216,6 +216,24 @@ isCheckedWalet=(e)=>{
     }
     this.getTaxes();
 }
+
+placeOrder=()=>{
+    const { customer_id, card_id, address_id } = this.state.orderInfo;
+    const cartProductIds = [];
+    this.props.location.state.currentShoppingCart.map(item=>{
+        cartProductIds.push(item.product_id)
+    })
+    console.log(cartProductIds)
+    axios.post('http://localhost:3000/placeorder',{
+        customer_id,
+        card_id,
+        address_id
+    })
+    .then(data=>{
+        console.log(data)
+    })
+}
+
 changeScreen=()=>{
     let { activeScreen } = this.state;
     if(activeScreen == 'payment'){
@@ -229,7 +247,6 @@ getTaxes=()=>{
     const cartTax = total * 0.08;
     this.setState({cartTax:cartTax},()=>{
         console.log(this.state.cartTax) 
-
     })
 }
     render(){
@@ -309,7 +326,7 @@ getTaxes=()=>{
                                     <ul>
                                         <li>
                                             <p>
-                                                Items ({this.props.location.state.currentShoppingCart.length}) 
+                                                Items ({this.props.location.state.currentShoppingCart.length}): 
                                             </p>
                                             <p>
                                                 ${this.props.location.state.cartTotal}
@@ -346,7 +363,7 @@ getTaxes=()=>{
                                     </div>
                                 </div>
                                 <div id='bottomCheckOut'>
-                                <Button type='submit' id='orderButton' onClick={this.addAddressToOrder}> Place order </Button>
+                                <Button type='submit' id='orderButton' onClick={this.placeOrder}> Place order </Button>
                                 </div>
 
                             </div>

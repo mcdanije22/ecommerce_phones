@@ -330,11 +330,68 @@ app.get('/orderaccountinfo/:orderAddress/:orderPayment/:customerid',(req,res)=>{
     res.send(data)
   })
 })
+
 app.post('/placeorder', (req,res)=>{
-  const { customer_id, card_id, address_id } = req.body;
-  console.log(customer_id, card_id, address_id )
+  const { customer_id, card_id, address_id, cartProductIds } = req.body;
+  console.log(cartProductIds)
+  db.transaction(trx=>{
+  trx.insert({
+    customer_id,
+    card_id,
+    address_id,
+    date_order_placed: new Date()
+  })
+  .into('orders')
+  .returning('*')
+  .then(order=>{
+    console.log(order)
+    return cartProductIds.map((item,i)=>{
+      trx('order_items')
+      .returning('*')
+      .insert({
+        product_id:item,
+        order_id:order[0].order_id
+      })
+      .then(data=>{
+        console.log(data)
+      })
+      .then(trx.commit)
+      .catch(trx.rollback)
+    })
+   
+  })
+ 
+  })
+
 })
 
 
-
+// app.post('/placeorder', (req,res)=>{
+//   const { customer_id, card_id, address_id, cartProductIds } = req.body;
+//   console.log(cartProductIds)
+//   db.transaction(trx=>{
+//   trx.insert({
+//     customer_id,
+//     card_id,
+//     address_id,
+//     date_order_placed: new Date()
+//   })
+//   .into('orders')
+//   .returning('*')
+//   .then(order=>{
+//     return cartProductIds.map((item,i)=>{
+//       db.insert({
+//         product_id:item,
+//         order_id:order.order_id
+//       })
+//       .into('order_items')
+//       .then(data=>{
+//         console.log(data)
+//       })
+//     })
+//       .then(trx.commit)
+//       .catch(trx.rollback)
+//   })
+//   })
+// })
 app.listen(port, ()=> console.log('server started successfully'))

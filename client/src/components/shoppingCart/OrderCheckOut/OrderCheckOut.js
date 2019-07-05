@@ -227,7 +227,8 @@ placeOrder=()=>{
     axios.post('http://localhost:3000/placeorder',{
         customer_id,
         card_id,
-        address_id
+        address_id,
+        cartProductIds
     })
     .then(data=>{
         console.log(data)

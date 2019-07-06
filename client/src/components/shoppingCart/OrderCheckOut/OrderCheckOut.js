@@ -228,7 +228,8 @@ placeOrder=()=>{
         customer_id,
         card_id,
         address_id,
-        cartProductIds
+        cartProductIds,
+        total:this.props.location.state.cartTotal + this.state.cartTax + 5
     })
     .then(data=>{
         console.log(data)

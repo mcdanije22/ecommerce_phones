@@ -332,8 +332,8 @@ app.get('/orderaccountinfo/:orderAddress/:orderPayment/:customerid',(req,res)=>{
 })
 
 app.post('/placeorder', (req,res)=>{
-  const { customer_id, card_id, address_id, cartProductIds } = req.body;
-  console.log(cartProductIds)
+  const { customer_id, card_id, address_id, cartProductIds,total } = req.body;
+  console.log(total)
   db.transaction(trx=>{
   trx.insert({
     customer_id,
@@ -344,26 +344,33 @@ app.post('/placeorder', (req,res)=>{
   .into('orders')
   .returning('*')
   .then(order=>{
-    console.log(order)
     return cartProductIds.map((item,i)=>{
       trx('order_items')
       .returning('*')
       .insert({
         product_id:item,
         order_id:order[0].order_id
+        })
+        .returning('*')
+        .then(order=>{
+          return trx('invoices')
+          .insert({
+            order_id:order[0].order_id,
+            total
+            })
+            .returning('*')
+         })
+          .then(data=>{
+            console.log(data)
+            res.json(data)
+          })
+          .then(trx.commit)
+          .catch(trx.rollback)
       })
-      .then(data=>{
-        console.log(data)
-      })
-      .then(trx.commit)
-      .catch(trx.rollback)
     })
-   
   })
- 
-  })
-
 })
+
 
 
 // app.post('/placeorder', (req,res)=>{

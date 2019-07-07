@@ -2,17 +2,18 @@ import React,{Component} from 'react';
 import './ordercheckout.scss';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { faChevronLeft, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { Button, Modal, ModalBody, ModalFooter } from 'reactstrap';
 import axios from 'axios';
 import { accountAddresses, accountCards } from '../../../actions/loginAction';
+import { Link } from 'react-router-dom';
 
 
 class OrderCheckOut extends Component{
     constructor(props){
         super(props);
        this.state={
-        activeScreen:'address',
+        activeScreen:'address', 
         addressModal:false,
         paymentModal:false,
         orderInfo:'',
@@ -374,6 +375,20 @@ getTaxes=()=>{
                             </div>
                 
 
+                            {/* successful order */}
+                            <div id ='successfulOrder' style={{display:activeScreen === 'successfulorder'?'':'none'}}>
+                                <div id='successMain'>
+                                <p><FontAwesomeIcon icon={faCheckCircle}/></p>
+                                <h3>Order successfully placed!</h3>
+                                </div>
+                                <div id='shippingInfo'>
+                                <p>Your order will be shipped to:</p>
+                                <p><b>{street} {secondary} {city}, {state} {zipcode}</b></p>
+                                </div>
+                                <div id='bottomCheckOut'>
+                                <Button type='submit' id='orderButton'><Link to={'/'} style={{color:'#28a745'}}>Continue shopping</Link></Button>
+                                </div>
+                            </div>
 
                 <Modal isOpen={this.state.addressModal} toggle={this.addressToggle} id='addressModal'>
                         <ModalBody >

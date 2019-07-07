@@ -38,6 +38,23 @@
             background-color: transparent;
     }
 }
+    #successfulOrder{
+        text-align: center;
+        margin-top:4rem;
+        #successMain{
+            p{
+                font-size:6rem;
+                color:#28a745;
+            } 
+            h3{
+                color:#28a745;
+            }
+        }
+        #shippingInfo{
+            line-height: 100%;
+            margin-bottom:6rem;
+        }   
+    }
 }
 #review{
          #review-top{

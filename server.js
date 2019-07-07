@@ -330,7 +330,6 @@ app.get('/orderaccountinfo/:orderAddress/:orderPayment/:customerid',(req,res)=>{
     res.send(data)
   })
 })
-
 // app.post('/placeorder', (req,res)=>{
 //   const { customer_id, card_id, address_id, cartProductIds,total } = req.body;
 //   console.log(total)
@@ -344,6 +343,14 @@ app.get('/orderaccountinfo/:orderAddress/:orderPayment/:customerid',(req,res)=>{
 //   .into('orders')
 //   .returning('*')
 //   .then(order=>{
+//     return trx('invoices')
+//     .insert({
+//       order_id:order[0].order_id,
+//       total
+//       })
+//       .returning('*')
+//    })
+//   .then(order=>{
 //     return cartProductIds.map((item,i)=>{
 //       trx('order_items')
 //       .returning('*')
@@ -352,14 +359,6 @@ app.get('/orderaccountinfo/:orderAddress/:orderPayment/:customerid',(req,res)=>{
 //         order_id:order[0].order_id
 //         })
 //         .returning('*')
-//         .then(order=>{
-//           return trx('invoices')
-//           .insert({
-//             order_id:order[0].order_id,
-//             total
-//             })
-//             .returning('*')
-//          })
 //           .then(data=>{
 //             console.log(data)
 //             res.json(data)
@@ -371,21 +370,24 @@ app.get('/orderaccountinfo/:orderAddress/:orderPayment/:customerid',(req,res)=>{
 //   })
 // })
 
-
-
-
 app.post('/placeorder', (req,res)=>{
   const { customer_id, card_id, address_id, cartProductIds,total } = req.body;
   console.log(total)
   db.transaction(trx=>{
-  trx.insert({
-    customer_id,
-    card_id,
-    address_id,
-    date_order_placed: new Date()
-  })
-  .into('orders')
+  trx('shopping_carts')
+  .where('customer_id', customer_id)
+  .delete()
   .returning('*')
+  .then(order=>{
+    return trx('orders')
+    .insert({
+      customer_id,
+      card_id,
+      address_id,
+      date_order_placed: new Date()
+    })
+      .returning('*')
+   })
   .then(order=>{
     return trx('invoices')
     .insert({

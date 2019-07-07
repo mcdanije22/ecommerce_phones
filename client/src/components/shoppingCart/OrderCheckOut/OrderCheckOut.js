@@ -232,6 +232,9 @@ placeOrder=()=>{
         total:this.props.location.state.cartTotal + this.state.cartTax + 5
     })
     .then(data=>{
+        if(data.status=200){
+           this.setState({activeScreen:'successfulorder'})
+        }
         console.log(data)
     })
 }

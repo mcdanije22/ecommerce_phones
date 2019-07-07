@@ -7,7 +7,9 @@ import Product from './Product';
 import { connect } from 'react-redux';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { faChevronLeft, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+
+
 
 class ProductPage extends Component{
     constructor(props){
@@ -80,11 +82,12 @@ class ProductPage extends Component{
                 <div id = 'productPage'>
                     <button onClick={this.backHistory} id='search-header'><FontAwesomeIcon icon={faChevronLeft}/> Back</button>
                     <Modal isOpen={this.state.modal} toggle={this.toggle} id='cartModal' >
-                        <ModalBody style={{display:'flex', justifyContent:'center', fontSize:'2rem', marginTop:'2rem', color:'green'}}>
+                    <p style={{display:'flex', justifyContent:'center', fontSize:'6rem', marginTop:'2rem', color:'green'}}><FontAwesomeIcon icon={faCheckCircle}  /></p>
+                        <ModalBody style={{display:'flex', justifyContent:'center', fontSize:'2rem', color:'green'}}>
                             <p style={{display:this.state.errorModal?'none':''}}>Added to Cart!</p>
                             <p style={{display:!this.state.errorModal?'none':'', color:'red'}}>Item already in cart!</p>
                         </ModalBody>
-                        <div id='bottomModal' style={{display:'flex', justifyContent:'center', fontSize:'1rem', marginBottom:'6rem'}}>
+                        <div id='bottomModal' style={{display:'flex', justifyContent:'center', fontSize:'1rem', marginBottom:'4rem'}}>
                                 <Button className='modalBtn' onClick={this.toggle}>Keep Shopping</Button>
                                 <Link to={`/cart/${customerid}`}><Button className='modalBtn'>Go to Cart</Button></Link>
                         </div>

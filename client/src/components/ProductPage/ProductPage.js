@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import { shoppingCart } from '../../actions/shoppingCartAction';
 
 
 
@@ -37,6 +38,7 @@ class ProductPage extends Component{
     }
 
     addToShoppingCart= (e) =>{
+        const shoppingCart = this.props.shoppingCart;
         axios.post('http://localhost:3000/addcart',{
             customer_id:this.props.currentAccount.customer_id,
             product_id:e.target.id  
@@ -65,6 +67,7 @@ class ProductPage extends Component{
       }
 
     render(){
+        console.log(this.props.shoppingCart)
         const customerid = this.props.currentAccount.customer_id;
         if(this.state.currentProduct.length === 0){
             return null;
@@ -117,7 +120,13 @@ class ProductPage extends Component{
 };
 const mapStateToProps = state => {
     return {
-      currentAccount: state.account.currentAccount    
+      currentAccount: state.account.currentAccount,
+      shoppingCart: state.shoppingCart.shoppingCart    
     }
   }
-export default connect(mapStateToProps, null)(ProductPage);
+  const mapDispatchToProps = (dispatch) =>{
+    return{
+        getShoppingCart: (item) => dispatch(shoppingCart(item))
+    }
+} 
+export default connect(mapStateToProps, mapDispatchToProps)(ProductPage);

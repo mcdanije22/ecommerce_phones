@@ -12,6 +12,7 @@ import ProductPage from './components/ProductPage/ProductPage';
 import ShoppingCart from './components/shoppingCart/ShoppingCart';
 import SignIn from './components/SignIn/SignIn';
 import Orders from './components/AccountPage/Orders/Orders';
+import SpecificOrder from './components/AccountPage/Orders/SpecificOrder';
 import AddressBook from './components/AccountPage/AddressBook/AddressBook';
 import Wallet from './components/AccountPage/wallet/Wallet';
 import ChangePassword from './components/AccountPage/ChangePassword/ChangePassword';
@@ -37,6 +38,7 @@ class App extends Component{
             <Route exact path='/' component={Home} />
             <Route path='/account' component={AccountPage} />
             <Route path='/orders/:customerid' component={Orders} />
+            <Route path='/specificorder/:customerid/:orderid' component={SpecificOrder} />
             <Route path='/address/:customerid' component={AddressBook} />
             <Route path='/wallet/:customerid' component={Wallet} />
             <Route path='/changepassword' component={ChangePassword} />
@@ -46,7 +48,6 @@ class App extends Component{
             )}/>
             <Route path='/product/:id/:brand' component={ProductPage} />
             <Route path='/deals' component={SearchPage} />
-            {/* <Route path='/product' component={ProductPage} /> */}
             <Route path='/cart/:customerid' component={ShoppingCart} />
           </Switch>
           </div>

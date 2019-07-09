@@ -1,0 +1,31 @@
+#orders{
+    padding:1rem;
+    #orderList{
+        list-style: none;
+        .order{
+           color:black;
+           .listContent{
+            display:flex;
+           margin:1rem 0;
+           }
+           p{
+               margin:1.5rem 0 0 1rem;
+           }
+          h6{
+            margin:1.5rem 0 0 10rem;
+            }
+        }
+    }
+}
+
+#specific-order{
+    #order-detail{
+    margin:1rem;
+    border:1px gray solid;
+    padding:1rem;    
+    border-radius: 1rem;  
+    }
+    p{
+        margin-left:1rem;
+    }
+}

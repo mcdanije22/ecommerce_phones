@@ -27,11 +27,16 @@ class AccountPage extends Component{
                 <h3>My Account</h3>
                 <ul id='accountOptions'>
                     <hr />
+                    <Link to={{
+                        pathname:`/orders/${customer_id}`,
+                        state:{customerid:customer_id}
+                    }} >  
                     <li>
                         <FontAwesomeIcon icon={faBoxOpen} className='accountIcons'/> 
                             Orders 
                         <FontAwesomeIcon icon={faChevronRight} className='accountIconsRight'/> 
                     </li>
+                    </Link>
                     <hr />
                     <Link to={{
                         pathname:`/address/${customer_id}`,

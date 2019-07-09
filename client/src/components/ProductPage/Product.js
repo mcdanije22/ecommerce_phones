@@ -47,15 +47,6 @@ const Product = ({product, reviews,addToShoppingCart, currentAccount, modalLogin
                 { sale_discount !== null? <h3>Sale Price: ${product_price - sale_discount}.00</h3>:'' }
             </div>
             <div id='mainButton'>
-
-            {/* {
-              currentAccount !== ''
-            ?
-            <Button type = 'submit' id={product_id} onClick={addToShoppingCart}>Add to Cart</Button>
-            :
-            <Button type = 'submit' id={product_id}><Link to='/login' style={{color:'black'}}>Add to Cart</Link></Button>
-            } */}
-
             {
               currentAccount !== ''
             ?

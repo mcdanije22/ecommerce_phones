@@ -177,6 +177,40 @@ app.post('/register', (req,res)=>{
     }
   })
 })
+
+app.get('/orders/:customerid', (req,res)=>{
+  const {customerid} = req.params;
+  console.log(customerid)
+  db
+  .select('*')
+  .from('orders')
+  .where('customer_id', customerid)
+  .innerJoin('order_items', 'order_items.order_id', 'orders.order_id')
+  .innerJoin('products', 'products.product_id', 'order_items.product_id')
+  .innerJoin('invoices', 'invoices.order_id', 'orders.order_id')
+  .then(data=>{
+    res.send(data)
+  })
+})
+app.get('/specificorder/:customerid/:orderid',(req,res)=>{
+  const {customerid, orderid } =  req.params; 
+  db 
+  .select('*')
+  .from('orders')
+  .where('orders.order_id', orderid)
+  // .where('order_id.customer_id', customerid)
+  .innerJoin('customer_address', 'customer_address.address_id', 'orders.address_id')
+  .innerJoin('customer_cards', 'customer_cards.card_id', 'orders.card_id')
+  .innerJoin('order_items', 'order_items.order_id', 'orders.order_id')
+  .innerJoin('products', 'products.product_id', 'order_items.product_id')
+  .innerJoin('invoices', 'invoices.order_id', 'orders.order_id')
+  .then(data=>{
+    res.send(data)
+  })
+})
+
+
+
 app.get('/address/:customerid', (req,res)=>{
   const {customerid} = req.params;
   db
@@ -330,46 +364,6 @@ app.get('/orderaccountinfo/:orderAddress/:orderPayment/:customerid',(req,res)=>{
     res.send(data)
   })
 })
-// app.post('/placeorder', (req,res)=>{
-//   const { customer_id, card_id, address_id, cartProductIds,total } = req.body;
-//   console.log(total)
-//   db.transaction(trx=>{
-//   trx.insert({
-//     customer_id,
-//     card_id,
-//     address_id,
-//     date_order_placed: new Date()
-//   })
-//   .into('orders')
-//   .returning('*')
-//   .then(order=>{
-//     return trx('invoices')
-//     .insert({
-//       order_id:order[0].order_id,
-//       total
-//       })
-//       .returning('*')
-//    })
-//   .then(order=>{
-//     return cartProductIds.map((item,i)=>{
-//       trx('order_items')
-//       .returning('*')
-//       .insert({
-//         product_id:item,
-//         order_id:order[0].order_id
-//         })
-//         .returning('*')
-//           .then(data=>{
-//             console.log(data)
-//             res.json(data)
-//           })
-//           .then(trx.commit)
-//           .catch(trx.rollback)
-//       })
-//     })
-//   })
-// })
-
 app.post('/placeorder', (req,res)=>{
   const { customer_id, card_id, address_id, cartProductIds,total } = req.body;
   console.log(total)

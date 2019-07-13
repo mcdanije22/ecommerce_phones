@@ -7,8 +7,7 @@ import Product from './Product';
 import { connect } from 'react-redux';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
-import { shoppingCart } from '../../actions/shoppingCartAction';
+import { faChevronLeft, faCheckCircle, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 
 
@@ -18,20 +17,21 @@ class ProductPage extends Component{
         this.state={
             currentProduct:[],
             modal: false,
+            reviewModal:false,
             errorModal: false,
-            modalLogin: false
+            modalLogin: false,
+            reviewer:'',
+            reivew:'',
+            reviewScore:''
         }
     }
     componentDidMount(){
         const productId = this.props.match.params.id; //from link 
         const brandName = this.props.match.params.brand;
-        console.log(this.props)
         axios.get(`http://localhost:3000/product/${productId}/${brandName}`)
         .then(res=>{
-            this.setState({currentProduct:res.data}, ()=>{
-                console.log(this.state.currentProduct)
-            })
-          })
+            this.setState({currentProduct:res.data})
+})
     }
     backHistory= () =>{
         this.props.history.goBack();
@@ -46,7 +46,6 @@ class ProductPage extends Component{
         .then(this.setState({errorModal:false}))
         .catch(err=>{
             if(err.response.status == 400){
-                console.log(err.response.status)
                 this.setState({errorModal:true})
             }
         })
@@ -65,9 +64,31 @@ class ProductPage extends Component{
             modalLogin: !prevState.modalLogin      
         }));
       }
+      reviewToggle = () => {
+        this.setState(prevState => ({
+          reviewModal: !prevState.reviewModal          
+        }));
+      }
+      getInput = (e) =>{
+        this.setState({[e.target.name] : e.target.value})  
+      }
+      onReviewSubmit=()=>{
+          const productId = this.props.match.params.id;
+          const { reviewer, reviewScore, review } = this.state;
+          console.log(reviewer, reviewScore, review)
+          axios.post('http://localhost:3000/postreview',{
+              reviewer,
+              review,
+              review_score:reviewScore,
+              product_id:productId
+          })
+          .then(data=>{
+            console.log(data)
+          })
+          this.reviewToggle()
+      }
 
     render(){
-        console.log(this.props.shoppingCart)
         const customerid = this.props.currentAccount.customer_id;
         if(this.state.currentProduct.length === 0){
             return null;
@@ -95,6 +116,20 @@ class ProductPage extends Component{
                                 <Link to={`/cart/${customerid}`}><Button className='modalBtn'>Go to Cart</Button></Link>
                         </div>
                     </Modal>
+                    <Modal isOpen={this.state.reviewModal} toggle={this.reviewToggle} id='cartModal' >
+                    <p style={{display:'flex', justifyContent:'center',fontSize:'2rem', marginTop:'2rem'}}>Add Review</p>
+                        <ModalBody style={{display:'flex', justifyContent:'center', fontSize:'2rem'}}>
+                           <form>
+                               <input type='text' placeholder='Name' name='reviewer' onChange={this.getInput} style={{paddingLeft:'1rem',border:'none',backgroundColor:'transparent',borderBottom:'1px black solid',margin:'.5rem 0'}}></input>
+                               <input  type="number" name="reviewScore" placeholder='Review score (1 to 5)' min="1" max="5"  onChange={this.getInput}  style={{paddingLeft:'1rem',border:'1px black solid', margin:'1rem 0'}}></input>
+                               <textarea type='text' placeholder='review' name='review' onChange={this.getInput} style={{paddingLeft:'1rem',marginTop:'1rem',width:'300px', height:'200px', border:'1px solid black'}}></textarea>
+                           </form>
+                        </ModalBody>
+                        <div id='bottomModal' style={{display:'flex', justifyContent:'center', fontSize:'1rem', marginBottom:'4rem'}}>
+                                <Button className='modalBtn' onClick={this.reviewToggle}>Cancel Review</Button>
+                                 <Button className='modalBtn' onClick={this.onReviewSubmit}>Add Review</Button>
+                        </div>
+                    </Modal>
                     <Product 
                         product = {filteredProduct[0] || filterAccessory[0]}
                         reviews = {productReviews.length !== 0?productReviews:[0] }
@@ -109,12 +144,11 @@ class ProductPage extends Component{
                     />
                     : 
                     <div id = 'noReviews'>
-                    <h1><b>Reviews</b></h1>
+                    <h1><b>Reviews</b><button type='submit' onClick={this.reviewToggle} style={{marginLeft:'.5rem', fontSize:'1.2rem'}}><FontAwesomeIcon icon={faPlus}/></button></h1>
                     <hr/>
                     <p>No Reviews yet...</p>
                     </div>
                     }
-                   
                 </div>
             )};
 };
@@ -124,9 +158,4 @@ const mapStateToProps = state => {
       shoppingCart: state.shoppingCart.shoppingCart    
     }
   }
-  const mapDispatchToProps = (dispatch) =>{
-    return{
-        getShoppingCart: (item) => dispatch(shoppingCart(item))
-    }
-} 
-export default connect(mapStateToProps, mapDispatchToProps)(ProductPage);
+export default connect(mapStateToProps, null)(ProductPage);

@@ -39,9 +39,7 @@ class SearchPage extends Component{
             <button onClick={this.backHistory} id='search-header'><FontAwesomeIcon icon={faChevronLeft}/> Back</button>
             <p id='search-header'>{searchResultAmounts} results found for "{searchTerm}"</p>
             <hr /> {/*handles empty page results for footer spacing*/}
-            {/* <hr style={{marginBottom: searchResultAmounts === 0?'20rem':''}} /> handles empty page results for footer spacing */}
             <ul id='searchResults'>
-
             {searchResults.map((item,i)=>{
                 return(
                     <Link to={`/product/${item.product_id}/${searchResults[0].brand}`} style={{color:'black', textDecoration:'none'}} key={i}><li className='result-item' >

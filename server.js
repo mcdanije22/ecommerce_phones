@@ -74,8 +74,6 @@ app.get('/product/:id/:brand', (req,res)=>{
     res.send(data)
   })
 });
-
-
 app.post('/addcart', (req,res)=>{
   const{customer_id, product_id,item_quantity}=req.body;
   db('shopping_carts')
@@ -98,7 +96,6 @@ app.post('/addcart', (req,res)=>{
     }
   })
 })
-
 app.get('/cart/:customerid', (req,res)=>{
   const customerid = req.params.customerid;
   db.select('*')
@@ -407,6 +404,22 @@ app.post('/placeorder', (req,res)=>{
           .catch(trx.rollback)
       })
     })
+  })
+})
+app.post('/postreview', (req,res)=>{
+  const { reviewer, review, review_score, product_id } = req.body;
+  db('reviews')
+  .insert({
+    product: product_id,
+    review,
+    reviewer,
+    review_score,
+    post_date: new Date()
+  })
+  .returning('*')
+  .then(review=>{
+    console.log(review)
+    res.json(review)
   })
 })
 app.listen(port, ()=> console.log('server started successfully'))

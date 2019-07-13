@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes,faChevronLeft  } from '@fortawesome/free-solid-svg-icons';
-import { shoppingCart } from '../../actions/shoppingCartAction';
 
 
 class ShoppingCart extends Component{
@@ -21,7 +20,6 @@ class ShoppingCart extends Component{
         axios.get(`http://localhost:3000/cart/${customerid}`)
         .then(res=>{
             this.setState({currentShoppingCart:res.data},()=>{
-                this.props.getShoppingCart(res.data)
             })
             console.log('test',this.state.currentShoppingCart)
             if(this.state.currentShoppingCart.length > 0){
@@ -128,10 +126,6 @@ const mapStateToProps = state => {
       accountCards: state.account.accountCards    
     }
 }
-const mapDispatchToProps = (dispatch) =>{
-    return{
-        getShoppingCart: (item) => dispatch(shoppingCart(item))
-    }
-} 
 
-export default connect(mapStateToProps, mapDispatchToProps)(ShoppingCart);
+
+export default connect(mapStateToProps, null)(ShoppingCart);

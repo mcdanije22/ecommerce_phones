@@ -115,6 +115,7 @@ class ProductPage extends Component{
         })
             return(
                 <div id = 'productPage'>
+                {console.log(filterAccessory)}
                     <button onClick={this.backHistory} id='search-header'><FontAwesomeIcon icon={faChevronLeft}/> Back</button>
                     <Modal isOpen={this.state.modal} toggle={this.toggle} id='cartModal' >
                     <p style={{display:'flex', justifyContent:'center', fontSize:'6rem', marginTop:'2rem', color:'green'}}><FontAwesomeIcon icon={faCheckCircle}  /></p>

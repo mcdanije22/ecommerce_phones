@@ -24,10 +24,6 @@ app.get('/', (req,res)=>{
     res.send(data);
   })
 });
-
-// db.query('SELECT * FROM products')
-
-
 app.get('/search/:search', (req,res)=>{
   const search = req.params.search;
   if(search == 'deals'){
@@ -57,7 +53,6 @@ app.get('/search/:search', (req,res)=>{
     })
   }
 });
-
 //get specific product and recommended accessories based off brand 
 app.get('/product/:id/:brand', (req,res)=>{
   const id = req.params.id;

@@ -3,15 +3,18 @@
     background-color:transparent;
     border:none;
 }
-
 .result-item{
     list-style: none;
     margin-left:1rem;
-    font-size:1.5rem;
-   
+    font-size:1.2rem;
+    .search-item-info{
+        padding-top:8%;
+    }
        .search-img{
            float:left;
            margin-right:3rem;
+           width:40%;
+           height:auto;
        }
        .float-clear{
         clear:left; 
@@ -20,7 +23,6 @@
 #search-buttons{
     display:flex;
     justify-content: center;
-    // margin-bottom:15rem; need to fix footer position
 
         .searchButton{
             margin: 0 .5rem 1rem .5rem;

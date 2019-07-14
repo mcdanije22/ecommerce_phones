@@ -70,7 +70,7 @@ class ShoppingCart extends Component{
         {shoppingCart.map((item,i)=>{
             const{ brand, image_url, product_name, product_price, sale_discount, product_id, item_quantity } = item;
             return <li className = 'cartItem' id={product_id} key={i}>
-                <img src='https://via.placeholder.com/80'/>
+                <img src={image_url}/>
                 <div className='productCardContent'>
                     <button 
                     type = 'submit' 
@@ -90,11 +90,11 @@ class ShoppingCart extends Component{
                     <h1>{product_name}</h1>
                     <p>{brand}</p>
                     <div className='bottomCardContent'>
-                        <div className ='quantityBtnGroup'>
+                        {/* <div className ='quantityBtnGroup'>
                             <button type='submit'>-</button>
                             <input type='text' value={item_quantity} readOnly/>
                             <button type='submit'>+</button>
-                        </div>
+                        </div> */}
                         <p><b>${product_price}</b></p>
                     </div>
                 </div>   

@@ -31,6 +31,7 @@ class ProductPage extends Component{
         const brandName = this.props.match.params.brand;
         axios.get(`http://localhost:3000/product/${productId}/${brandName}`)
         .then(res=>{
+            console.log(res)
             this.setState({currentProduct:res.data})
         })
     }
@@ -104,18 +105,21 @@ class ProductPage extends Component{
         if(this.state.currentProduct.length === 0){
             return null;
         }
-        const filteredProduct = this.state.currentProduct.filter(item=>{
-           return item.product_type === 'Phone'
-        })
-        const filterAccessory = this.state.currentProduct.filter(item=>{
-            return item.product_type === 'Accessory'
-         })
+       const product = this.state.currentProduct.filter(item=>{
+            const productId = this.props.match.params.id;
+            return item.product_id == productId;
+           })
+        // const filteredProduct = this.state.currentProduct.filter(item=>{
+        //    return item.product_type === 'Phone'
+        // })
+        // const filterAccessory = this.state.currentProduct.filter(item=>{
+        //     return item.product_type === 'Accessory'
+        //  })
         const productReviews = this.state.currentProduct.filter(item=>{
             return item.review_id !== null;
         })
             return(
                 <div id = 'productPage'>
-                {console.log(filterAccessory)}
                     <button onClick={this.backHistory} id='search-header'><FontAwesomeIcon icon={faChevronLeft}/> Back</button>
                     <Modal isOpen={this.state.modal} toggle={this.toggle} id='cartModal' >
                     <p style={{display:'flex', justifyContent:'center', fontSize:'6rem', marginTop:'2rem', color:'green'}}><FontAwesomeIcon icon={faCheckCircle}  /></p>
@@ -144,7 +148,8 @@ class ProductPage extends Component{
                         </div>
                     </Modal>
                     <Product 
-                        product = {filteredProduct[0] || filterAccessory[0]}
+                        // product = {filteredProduct[0] || filterAccessory[0]}
+                        product = {product[0]}
                         reviews = {productReviews.length !== 0?productReviews:[0] }
                         addToShoppingCart = {this.addToShoppingCart}
                         currentAccount = {this.props.currentAccount}

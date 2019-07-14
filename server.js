@@ -13,7 +13,7 @@ const db = Knex({
     }
   });
 const app = express();
-const port = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 app.use(cors());
@@ -417,4 +417,4 @@ app.post('/postreview', (req,res)=>{
     res.json(review)
   })
 })
-app.listen(port, ()=> console.log('server started successfully'))
+app.listen(PORT, ()=> console.log('server started successfully'))

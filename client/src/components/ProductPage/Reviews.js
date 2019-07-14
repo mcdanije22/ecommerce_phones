@@ -3,10 +3,10 @@ import './reviews.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {  faPlus } from '@fortawesome/free-solid-svg-icons';
 
-const Reviews = ({reviews}) =>{
+const Reviews = ({reviews, reviewToggle}) =>{
     return(
         <div id='reviews' >
-            <h1><b>Reviews</b><button><FontAwesomeIcon icon={faPlus}/></button></h1>
+            <h1><b>Reviews</b><button type='submit' onClick={reviewToggle} style={{marginLeft:'.5rem', fontSize:'1.2rem'}}><FontAwesomeIcon icon={faPlus}/></button></h1>
             <hr/>
             <ul id='reviewList'>
             {reviews.map((item,i)=>{

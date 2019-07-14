@@ -20,8 +20,9 @@ class ProductPage extends Component{
             reviewModal:false,
             errorModal: false,
             modalLogin: false,
+            errorMessageReview:false,
             reviewer:'',
-            reivew:'',
+            review:'',
             reviewScore:''
         }
     }
@@ -31,7 +32,7 @@ class ProductPage extends Component{
         axios.get(`http://localhost:3000/product/${productId}/${brandName}`)
         .then(res=>{
             this.setState({currentProduct:res.data})
-})
+        })
     }
     backHistory= () =>{
         this.props.history.goBack();
@@ -66,7 +67,8 @@ class ProductPage extends Component{
       }
       reviewToggle = () => {
         this.setState(prevState => ({
-          reviewModal: !prevState.reviewModal          
+          reviewModal: !prevState.reviewModal,
+          errorMessageReview:false          
         }));
       }
       getInput = (e) =>{
@@ -75,7 +77,10 @@ class ProductPage extends Component{
       onReviewSubmit=()=>{
           const productId = this.props.match.params.id;
           const { reviewer, reviewScore, review } = this.state;
-          console.log(reviewer, reviewScore, review)
+          if(reviewer == '' || reviewScore == '' || review == ''){
+            alert('Fill in all fields')
+          }
+          else if(reviewScore > 0 && reviewScore < 6){
           axios.post('http://localhost:3000/postreview',{
               reviewer,
               review,
@@ -84,8 +89,14 @@ class ProductPage extends Component{
           })
           .then(data=>{
             console.log(data)
+            const reviewList = [...this.state.currentProduct, ...data.data]
+            console.log(reviewList)
+            this.setState({currentProduct:reviewList})
           })
-          this.reviewToggle()
+          this.reviewToggle();
+        }else{
+            this.setState({errorMessageReview:true})
+        }
       }
 
     render(){
@@ -122,6 +133,7 @@ class ProductPage extends Component{
                            <form>
                                <input type='text' placeholder='Name' name='reviewer' onChange={this.getInput} style={{paddingLeft:'1rem',border:'none',backgroundColor:'transparent',borderBottom:'1px black solid',margin:'.5rem 0'}}></input>
                                <input  type="number" name="reviewScore" placeholder='Review score (1 to 5)' min="1" max="5"  onChange={this.getInput}  style={{paddingLeft:'1rem',border:'1px black solid', margin:'1rem 0'}}></input>
+                               <p style={{marginBottom:'0rem',fontSize:'1rem',color:'red', display:this.state.errorMessageReview?'':'none'}}>Enter review score between 1 and 5</p>
                                <textarea type='text' placeholder='review' name='review' onChange={this.getInput} style={{paddingLeft:'1rem',marginTop:'1rem',width:'300px', height:'200px', border:'1px solid black'}}></textarea>
                            </form>
                         </ModalBody>
@@ -141,6 +153,7 @@ class ProductPage extends Component{
                    {productReviews.length !== 0?
                    <Reviews
                         reviews = {productReviews}
+                        reviewToggle={this.reviewToggle}
                     />
                     : 
                     <div id = 'noReviews'>

@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
 import './App.css';
-import {Button, Container, Row, Col} from 'reactstrap';
-import axios from 'axios';
 import { Route, Switch } from 'react-router-dom'
 import NavBar from './components/NavBar/NavBar';
 import Home from './components/Home/Home';
@@ -30,7 +28,7 @@ class App extends Component{
         <div id='main'>
           <Switch>
             <Route path ='/login' component={SignIn} />
-            <Route exact path='/' component={Home} />
+            <Route exact path='https://smartlab-ecommerce.herokuapp.com/' component={Home} />
             <Route path='/account' component={AccountPage} />
             <Route path='/orders/:customerid' component={Orders} />
             <Route path='/specificorder/:customerid/:orderid' component={SpecificOrder} />

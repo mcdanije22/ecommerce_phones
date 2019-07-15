@@ -17,13 +17,6 @@ const PORT = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 app.use(cors());
-
-app.get('/', (req,res)=>{
-  db.select('*').from('products')
-  .then(data=>{
-    res.send(data);
-  })
-});
 app.get('/search/:search', (req,res)=>{
   const search = req.params.search;
   if(search == 'deals'){

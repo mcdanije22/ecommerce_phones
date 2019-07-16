@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-// const Knex = require('Knex');
+const Knex = require('Knex');
 
 // const db = Knex({
 //     client: 'pg',
@@ -12,6 +12,15 @@ const cors = require('cors');
 //       database : 'ecommerce'
 //     }
 //   });
+
+  const db = Knex({
+    client: 'pg',
+    connection: {
+     connectionString: process.env.DATABASE_URL,
+     ssl:true,
+    }
+  });
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 

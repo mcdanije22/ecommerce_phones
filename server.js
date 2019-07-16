@@ -2,7 +2,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const Knex = require('Knex');
-const path = require("path")
 
 const db = Knex({
     client: 'pg',
@@ -16,7 +15,6 @@ const db = Knex({
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(express.static(path.join(__dirname, "client", "build")))
 
 
 app.use(bodyParser.json());
@@ -415,7 +413,5 @@ app.post('/postreview', (req,res)=>{
   })
 })
 
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "client", "build", "index.html"));
-});
+
 app.listen(PORT, ()=> console.log('server started successfully'))

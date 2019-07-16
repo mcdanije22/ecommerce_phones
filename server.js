@@ -3,28 +3,27 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const Knex = require('Knex');
 
-// const db = Knex({
-//     client: 'pg',
-//     connection: {
-//       host : '127.0.0.1',
-//       user : 'joshmcdaniel',
-//       password : '',
-//       database : 'ecommerce'
-//     }
-//   });
-
-  const db = Knex({
+const db = Knex({
     client: 'pg',
     connection: {
-     connectionString: process.env.DATABASE_URL,
-     ssl:true,
+      host : '127.0.0.1',
+      user : 'joshmcdaniel',
+      password : '',
+      database : 'ecommerce'
     }
   });
+
+  // const db = Knex({
+  //   client: 'pg',
+  //   connection: {
+  //    connectionString: process.env.DATABASE_URL,
+  //    ssl:true,
+  //   }
+  // });
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-//test
 
 app.use(bodyParser.json());
 app.use(cors());

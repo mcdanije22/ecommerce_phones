@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
   },
   "keywords": [],
   "author": "",
@@ -18,5 +19,12 @@
     "express": "^4.16.4",
     "knex": "^0.16.5",
     "pg": "^7.10.0"
-  }
+  },
+  "devDependencies": {
+    "knex": "^0.16.5"
+  },
+  "engines": {
+    "node": "10.15.0"
+},
+  "proxy": "http://localhost:8000"
 }

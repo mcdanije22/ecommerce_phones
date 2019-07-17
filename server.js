@@ -20,8 +20,6 @@ const db = knex({
   //    ssl:true,
   //   }
   // });
-
-  //test
   
 const app = express();
 const PORT = process.env.PORT || 3000;

@@ -3,23 +3,23 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const knex = require('knex');
 
-const db = knex({
+// const db = knex({
+//     client: 'pg',
+//     connection: {
+//       host : '127.0.0.1',
+//       user : 'joshmcdaniel',
+//       password : '',
+//       database : 'ecommerce'
+//     }
+//   });
+
+  const db = Knex({
     client: 'pg',
     connection: {
-      host : '127.0.0.1',
-      user : 'joshmcdaniel',
-      password : '',
-      database : 'ecommerce'
+     connectionString: process.env.DATABASE_URL,
+     ssl:true,
     }
   });
-
-  // const db = Knex({
-  //   client: 'pg',
-  //   connection: {
-  //    connectionString: process.env.DATABASE_URL,
-  //    ssl:true,
-  //   }
-  // });
   
 const app = express();
 const PORT = process.env.PORT || 3000;

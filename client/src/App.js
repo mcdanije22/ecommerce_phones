@@ -28,7 +28,7 @@ class App extends Component{
         <div id='main'>
           <Switch>
             <Route path ='/login' component={SignIn} />
-            <Route exact path='/' component={Home} />
+            {/* <Route exact path='/' component={Home} /> */}
             <Route path='/account' component={AccountPage} />
             <Route path='/orders/:customerid' component={Orders} />
             <Route path='/specificorder/:customerid/:orderid' component={SpecificOrder} />

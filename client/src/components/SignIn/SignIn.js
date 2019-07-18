@@ -27,7 +27,8 @@ class SignIn extends Component{
         if(email === '' || password === ''){
             alert('fill in all fields')
         }else{
-        axios.post('http://localhost:3000/signin',{
+        axios.post('https://ecommerce-phonelab.herokuapp.com/signin',{
+        // axios.post('http://localhost:3000/signin',{
             email,
             password
         })

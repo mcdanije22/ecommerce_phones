@@ -23,7 +23,7 @@ class AddressBook extends Component{
     }
     componentDidMount(){
         const customerid=this.props.location.state.customerid
-        axios.get(`http://localhost:3000/address/${customerid}`)
+        axios.get(`https://ecommerce-phonelab.herokuapp.com/address/${customerid}`)
         .then(data=>{
             this.setState({addressBook:data.data},()=>{
                 console.log(this.state.addressBook)
@@ -64,7 +64,7 @@ onSubmitNewAddress=()=>{
     }
     else{
    
- axios.post(`http://localhost:3000/addaddress`, {
+ axios.post(`https://ecommerce-phonelab.herokuapp.com/addaddress`, {
         customer_id: this.props.location.state.customerid,
         address_name,
         street,
@@ -113,7 +113,7 @@ onSubmitNewAddress=()=>{
     this.setState({addressBook:editedAdressList})
     this.props.getAccountAddresses(editedAdressList)
     console.log(editedAdressList)
-    axios.put(`http://localhost:3000/editaddress`, {
+    axios.put(`https://ecommerce-phonelab.herokuapp.com/editaddress`, {
         customer_id: this.state.selectedAddress.customer_id,
         address_name: this.state.selectedAddress.address_name,
         street:street || this.state.selectedAddress.street,
@@ -203,7 +203,7 @@ onSubmitNewAddress=()=>{
                                 <Button className='listButton' 
                                     style={{border:'1px #dc3545  solid', backgroundColor:'transparent', color:'#dc3545'}}
                                     onClick={()=>{                                 
-                                        axios.delete(`http://localhost:3000/deleteaddress/${address_id}`)
+                                        axios.delete(`https://ecommerce-phonelab.herokuapp.com/deleteaddress/${address_id}`)
                                         .then(this.setState({addressBook:addressBook.filter(item => item.address_id!== address_id)}))
                                         .then(this.props.getAccountAddresses(addressBook.filter(item => item.address_id !== address_id)))
                                 }}>Delete</Button>

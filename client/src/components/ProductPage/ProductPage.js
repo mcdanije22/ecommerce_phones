@@ -29,7 +29,7 @@ class ProductPage extends Component{
     componentDidMount(){
         const productId = this.props.match.params.id; //from link 
         const brandName = this.props.match.params.brand;
-        axios.get(`http://localhost:3000/product/${productId}/${brandName}`)
+        axios.get(`https://ecommerce-phonelab.herokuapp.com/${productId}/${brandName}`)
         .then(res=>{
             console.log(res)
             this.setState({currentProduct:res.data})
@@ -41,7 +41,7 @@ class ProductPage extends Component{
 
     addToShoppingCart= (e) =>{
         const shoppingCart = this.props.shoppingCart;
-        axios.post('http://localhost:3000/addcart',{
+        axios.post('https://ecommerce-phonelab.herokuapp.com/addcart',{
             customer_id:this.props.currentAccount.customer_id,
             product_id:e.target.id  
         })
@@ -82,7 +82,7 @@ class ProductPage extends Component{
             alert('Fill in all fields')
           }
           else if(reviewScore > 0 && reviewScore < 6){
-          axios.post('http://localhost:3000/postreview',{
+          axios.post('https://ecommerce-phonelab.herokuapp.com/postreview',{
               reviewer,
               review,
               review_score:reviewScore,

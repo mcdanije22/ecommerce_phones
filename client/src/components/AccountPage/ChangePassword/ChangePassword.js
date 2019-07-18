@@ -30,7 +30,7 @@ class ChangePassword extends Component{
           }else if(newPassword.length < 8){
               alert('password must be atleast 8 characters long')
           }else{
-            axios.put('http://localhost:3000/editpassword',{
+            axios.put('https://ecommerce-phonelab.herokuapp.com/editpassword',{
                 newPassword,
                 customer_id
             })

@@ -15,7 +15,7 @@ class Orders extends Component {
     }
     componentDidMount(){
         const customerid=this.props.location.state.customerid
-        axios.get(`http://localhost:3000/orders/${customerid}`)
+        axios.get(`https://ecommerce-phonelab.herokuapp.com/orders/${customerid}`)
         .then(data=>{
             this.setState({orders:data.data},()=>{
                 console.log(this.state.orders)

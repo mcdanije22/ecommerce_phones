@@ -18,7 +18,7 @@ class SearchPage extends Component{
     }
     componentWillMount(){
         const searchParam = this.props.match.params.search; //from link 
-        axios.get(`http://localhost:3000/search/${searchParam}`)
+        axios.get(`https://ecommerce-phonelab.herokuapp.com/search/${searchParam}`)
         .then(res=>{
             this.setState({searchResults:res.data})
           })

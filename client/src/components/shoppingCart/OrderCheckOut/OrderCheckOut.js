@@ -76,7 +76,7 @@ onSubmitNewAddress=()=>{
         alert('please enter valid zipcode')
     }
     else{
-    axios.post(`http://localhost:3000/addaddress`, {
+    axios.post(`https://ecommerce-phonelab.herokuapp.com/addaddress`, {
         customer_id: this.props.currentAccount.customer_id,
         address_name,
         street,
@@ -130,7 +130,7 @@ onSubmitNewCard=()=>{
         this.setState({cvc:''})
     }
     else{
-    axios.post(`http://localhost:3000/addcard`, {
+    axios.post(`https://ecommerce-phonelab.herokuapp.com/addcard`, {
         customer_id: this.props.currentAccount.customer_id,
         card_name,
         card_number,
@@ -207,7 +207,7 @@ isCheckedWalet=(e)=>{
     }else{
         this.setState({activeScreen:'review'},()=>{
             console.log(this.state.activeScreen)
-            axios.get(`http://localhost:3000/orderaccountinfo/${orderAddress}/${orderPayment}/${customerid}`)
+            axios.get(`https://ecommerce-phonelab.herokuapp.com/orderaccountinfo/${orderAddress}/${orderPayment}/${customerid}`)
             .then(res=>{
                 this.setState({orderInfo:res.data[0]},()=>{
                     console.log(this.state.orderInfo)
@@ -225,7 +225,7 @@ placeOrder=()=>{
         cartProductIds.push(item.product_id)
     })
     console.log(cartProductIds)
-    axios.post('http://localhost:3000/placeorder',{
+    axios.post('https://ecommerce-phonelab.herokuapp.com/placeorder',{
         customer_id,
         card_id,
         address_id,

@@ -15,7 +15,7 @@ class SpecificOrder extends Component{
     componentDidMount(){
         const { customerid, orderid } =this.props.match.params;
         console.log(customerid, orderid)
-        axios.get(`http://localhost:3000/specificorder/${customerid}/${orderid}`)
+        axios.get(`https://ecommerce-phonelab.herokuapp.com/specificorder/${customerid}/${orderid}`)
         .then(data=>{
             // const itemList = [];
             // data.data.map(item=>{
@@ -31,7 +31,6 @@ class SpecificOrder extends Component{
     }
     render(){
         let { date_order_placed, street, city, zipcode, state, card_number, total } = this.state.orderInfo;
-        // const { product_name } = this.state.items;
         const { items } = this.state;
         if(date_order_placed){
             date_order_placed = date_order_placed.slice(0,10)
@@ -39,10 +38,6 @@ class SpecificOrder extends Component{
         if(card_number){
             card_number = card_number.slice(12,16)       
         }
-        // if(product_name){
-        //     const itemList = [];
-
-        // } 
         return(
             <div id='specific-order'>
             <button onClick={this.backHistory} id='search-header'><FontAwesomeIcon icon={faChevronLeft}/> Back</button>

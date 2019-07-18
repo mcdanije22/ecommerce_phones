@@ -22,7 +22,7 @@ class Wallet extends Component{
     componentDidMount(){
         const customerid=this.props.location.state.customerid
         console.log(customerid)
-        axios.get(`http://localhost:3000/wallet/${customerid}`)
+        axios.get(`https://ecommerce-phonelab.herokuapp.com/wallet/${customerid}`)
         .then(data=>{
             this.setState({walletList:data.data},()=>{
                 console.log(this.state.walletList)
@@ -76,7 +76,7 @@ onSubmitNewCard=()=>{
         this.setState({cvc:''})
     }
     else{
-    axios.post(`http://localhost:3000/addcard`, {
+    axios.post(`https://ecommerce-phonelab.herokuapp.com/addcard`, {
         customer_id: this.props.location.state.customerid,
         card_name,
         card_number,
@@ -116,7 +116,7 @@ onSubmitNewCard=()=>{
         this.setState({walletList:editedWalletList})
         this.props.getAccountCards(editedWalletList)
         console.log(editedWalletList)
-        axios.put(`http://localhost:3000/editcard`, {
+        axios.put(`https://ecommerce-phonelab.herokuapp.com/editcard`, {
             customer_id: this.state.selectedCard.customer_id,
             card_name:this.state.selectedCard.card_name,
             card_number:card_number || this.state.selectedCard.card_number,
@@ -226,7 +226,7 @@ onSubmitNewCard=()=>{
                                 className='listButton' 
                                 style={{border:'1px #dc3545  solid', backgroundColor:'transparent', color:'#dc3545'}} 
                                     onClick={()=>{      
-                                        axios.delete(`http://localhost:3000/deletecard/${card_id}`)
+                                        axios.delete(`https://ecommerce-phonelab.herokuapp.com/deletecard/${card_id}`)
                                         .then(this.setState({walletList:walletList.filter(item => item.card_id !== card_id)}))
                                         .then(this.props.getAccountCards(walletList.filter(item => item.card_id !== card_id)))
                                 }}>Delete</Button>

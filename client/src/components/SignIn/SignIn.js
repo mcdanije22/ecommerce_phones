@@ -28,7 +28,6 @@ class SignIn extends Component{
             alert('fill in all fields')
         }else{
         axios.post('https://ecommerce-phonelab.herokuapp.com/signin',{
-        // axios.post('http://localhost:3000/signin',{
             email,
             password
         })
@@ -38,12 +37,12 @@ class SignIn extends Component{
             }else{
             console.log(data.data[0].customer_id)
             this.props.getAccount(data.data[0]); 
-            axios.get(`http://localhost:3000/address/${data.data[0].customer_id}`)
+            axios.get(`https://ecommerce-phonelab.herokuapp.com/address/${data.data[0].customer_id}`)
             .then(data=>{
                 console.log(data.data)
                 this.props.getAccountAddresses(data.data)
             }) 
-            axios.get(`http://localhost:3000/wallet/${data.data[0].customer_id}`)
+            axios.get(`https://ecommerce-phonelab.herokuapp.com/wallet/${data.data[0].customer_id}`)
             .then(data=>{
                 console.log(data.data)
                 this.props.getAccountCards(data.data)
@@ -59,7 +58,7 @@ accountRegister = () =>{
     }else if(password.length < 8){
         alert('password must be atleast 8 characters long')
     }else{
-        axios.post('http://localhost:3000/register',{
+        axios.post('https://ecommerce-phonelab.herokuapp.com/register',{
             email,
             password,
             first_name,

@@ -17,7 +17,7 @@ class ShoppingCart extends Component{
     }
     componentDidMount(){
         const customerid = this.props.currentAccount.customer_id;
-        axios.get(`http://localhost:3000/cart/${customerid}`)
+        axios.get(`https://ecommerce-phonelab.herokuapp.com/cart/${customerid}`)
         .then(res=>{
             this.setState({currentShoppingCart:res.data},()=>{
             })
@@ -33,7 +33,7 @@ class ShoppingCart extends Component{
 
     clearCart=()=>{
         const customerid = this.props.currentAccount.customer_id;
-        axios.delete(`http://localhost:3000/cart/delete/clear/${customerid}`)
+        axios.delete(`https://ecommerce-phonelab.herokuapp.com/cart/delete/clear/${customerid}`)
         .then(
             this.setState({currentShoppingCart:[]},()=>{
                 this.props.getShoppingCart([])
@@ -76,7 +76,7 @@ class ShoppingCart extends Component{
                     type = 'submit' 
                     className='cartDelete'
                     onClick={()=>{
-                        axios.delete(`http://localhost:3000/cart/delete/${product_id}/${customerid}`)
+                        axios.delete(`https://ecommerce-phonelab.herokuapp.com/cart/delete/${product_id}/${customerid}`)
                         .then(
                            this.setState({currentShoppingCart:this.state.currentShoppingCart.filter(item=>item.product_id !== product_id)},()=>{
                             this.getTotal();

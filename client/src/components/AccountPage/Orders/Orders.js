@@ -31,12 +31,12 @@ class Orders extends Component {
             <ul id='orderList'>
             {
                 orders.map((order,i)=>{
-                const { order_id, product_name, total, img_url, customer_id } = order;
+                const { order_id, product_name, total, image_url, customer_id } = order;
                 return(
                         <Link key={i} to={`/specificorder/${customer_id}/${order_id}`}>
                         <li  className='order' >
                         <div className='listContent'>
-                        <img src='https://via.placeholder.com/80' />
+                        <img src={image_url} />
                             <p>{product_name}</p>
                            <h6><FontAwesomeIcon icon={faChevronRight} className='accountIconsRight'/></h6> 
                         </div>

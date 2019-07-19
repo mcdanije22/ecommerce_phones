@@ -69,8 +69,8 @@ app.get('/product/:id/:brand', (req,res)=>{
   .leftJoin('reviews', 'products.product_id', 'reviews.product')
   // .leftJoin('customers', 'reviews.customer_id', 'customers.customer_id')
   .where('products.product_id', id)
-  .orWhere('products.brand', brand)
-  .andWhere('products.product_type', 'Accessory')
+  // .orWhere('products.brand', brand)
+  // .andWhere('products.product_type', 'Accessory')
   .then(data=>{
     console.log(data)
     res.send(data)

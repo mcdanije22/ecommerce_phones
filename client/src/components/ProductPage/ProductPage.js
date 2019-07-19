@@ -29,7 +29,7 @@ class ProductPage extends Component{
     componentDidMount(){
         const productId = this.props.match.params.id; //from link 
         const brandName = this.props.match.params.brand;
-        axios.get(`https://ecommerce-phonelab.herokuapp.com/${productId}/${brandName}`)
+        axios.get(`https://ecommerce-phonelab.herokuapp.com/product/${productId}/${brandName}`)
         .then(res=>{
             console.log(res)
             this.setState({currentProduct:res.data})

@@ -2,8 +2,9 @@
     display: flex;
     min-height: 50vh;
     flex-direction: column;
-    background-color:#FCFCFC;
+    /* background-color:#FCFCFC; */
   }
   Footer{
     flex: 1;
   }
+ 

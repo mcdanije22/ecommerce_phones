@@ -59,10 +59,10 @@ class SearchPage extends Component{
             })}
 
             </ul>
-            <div id='search-buttons' style={{display: searchResultAmounts ===0? 'none': 'flex'}}>
+            {/* <div id='search-buttons' style={{display: searchResultAmounts ===0? 'none': 'flex'}}>
                 <Button type= 'submit' className='searchButton'><FontAwesomeIcon icon={faChevronLeft}/> Previous</Button>
                 <Button type= 'submit' className='searchButton'>Next <FontAwesomeIcon icon={faChevronRight}/></Button>
-            </div>
+            </div> */}
         </div>
     );
     }

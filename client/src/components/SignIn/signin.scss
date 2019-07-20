@@ -1,13 +1,22 @@
+$desktop:1114px;
+@mixin desktop {
+    @media (min-width: #{$desktop}) {
+      @content;
+    }
+} 
 #logPage{
-    text-align: center;
     margin-top:1rem;
     #contentBox{
-       
         #signIn{
           padding:4rem 2rem;
           display:flex;
           flex-direction: column;
           text-align:left;
+          @include desktop{
+            padding:4rem 20rem; 
+            height:50rem;
+            margin-top:4rem;
+          }
           p{
               font-size:1rem;
               margin:.5rem 0 0 0;

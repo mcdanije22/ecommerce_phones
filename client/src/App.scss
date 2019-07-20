@@ -1,0 +1,22 @@
+$desktop:1114px;
+@mixin desktop {
+    @media (min-width: #{$desktop}) {
+      @content;
+    }
+} 
+#main {
+    display: flex;
+    min-height: 50vh;
+    flex-direction: column;
+    /* background-color:#FCFCFC; */
+    a {
+      text-decoration: none;
+      }
+    @include desktop{
+      padding:0 12rem; 
+    }
+  }
+  Footer{
+    flex: 1;
+  }
+ 

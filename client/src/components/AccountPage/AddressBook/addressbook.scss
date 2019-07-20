@@ -1,3 +1,9 @@
+$desktop:1114px;
+@mixin desktop {
+    @media (min-width: #{$desktop}) {
+      @content;
+    }
+} 
 #addressBook{
     padding:1rem;
     h2{
@@ -12,6 +18,11 @@
     padding:1rem;
     margin-top:1rem;
     box-shadow: 6px 6px 20px -8px #c4c2c2;
+    @include desktop{
+    padding:4rem;
+    width:50rem;
+    margin:2rem auto;
+    }
     p{
         margin:0;
         }

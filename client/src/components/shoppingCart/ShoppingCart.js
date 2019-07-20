@@ -98,7 +98,9 @@ class ShoppingCart extends Component{
                         <p><b>${product_price}</b></p>
                     </div>
                 </div>   
+                <hr/>
             </li>
+            
         })}
         
         </ul>

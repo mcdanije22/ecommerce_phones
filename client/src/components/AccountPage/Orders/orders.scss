@@ -1,3 +1,9 @@
+$desktop:1114px;
+@mixin desktop {
+    @media (min-width: #{$desktop}) {
+      @content;
+    }
+} 
 #orders{
     padding:1rem;
     #orderList{
@@ -6,17 +12,29 @@
            color:black;
            .listContent{
             display:flex;
-           margin:1rem 0;
+            margin:1rem 0;
            img{
             width: 180px;
             height: 180px;
            }
            }
            p{
-               margin:1.5rem 0 0 1rem;
+               margin:2rem 0 0 1rem;
+               font-size:2rem;
+               @include desktop{
+                   margin: 0;
+                margin-top:2rem;
+                font-size:2rem;
+            }
            }
+           p:hover{
+            text-decoration: none;
+        }
           h6{
             margin:1.5rem 0 0 10rem;
+            @include desktop{
+                margin-left:90%;
+            }
             }
         }
     }

@@ -23,7 +23,8 @@ class SignIn extends Component{
     }
 
     accountLogIn = () =>{
-        const {email, password}=this.state;
+        let {email, password}=this.state;
+        email = email.toLowerCase();
         if(email === '' || password === ''){
             alert('fill in all fields')
         }else{
@@ -52,7 +53,8 @@ class SignIn extends Component{
         }
     }
 accountRegister = () =>{
-    const { email, password, first_name, last_name } = this.state;
+    let { email, password, first_name, last_name } = this.state;
+    email = email.toLowerCase();
     if(email === '' || password === '' || first_name === '' || last_name === ''){
         alert('fill in all fields')
     }else if(password.length < 8){

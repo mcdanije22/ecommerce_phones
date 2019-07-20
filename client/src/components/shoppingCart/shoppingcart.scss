@@ -1,4 +1,13 @@
+$desktop:1114px;
+@mixin desktop {
+    @media (min-width: #{$desktop}) {
+      @content;
+    }
+} 
 #shoppingCart{
+    @include desktop{
+        padding:0 8rem;
+    }
     #backBtn{
         margin:1rem 0 0 1rem;
     }
@@ -20,16 +29,12 @@
         flex-direction: column;
         align-items: center;
         .cartItem{
-            display: flex;
-            align-content: center;
-            border: 1px black solid;
-            border-radius: 5px;
-            height:120px;
-            width:300px;
             list-style: none;
-            margin-top:1rem;
-            box-shadow: 6px 6px 20px -8px #c4c2c2;
-            overflow: hidden;
+            hr{
+                width:90%;
+                text-align: center;
+                margin: 1rem auto;
+            }
             img{
                 float:left;
                 margin-right:1rem;

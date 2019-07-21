@@ -1,9 +1,20 @@
+$desktop:1114px;
+@mixin desktop {
+    @media (min-width: #{$desktop}) {
+      @content;
+    }
+} 
 #AccountPage{
     font-size:1.5rem;
-    
+    @include desktop{
+    font-size:2.5rem;
+    }
     li{
         color:black;
         list-style: none;
+        @include desktop{
+            padding:2rem;
+        }
     }
     h3{
         margin:1rem;

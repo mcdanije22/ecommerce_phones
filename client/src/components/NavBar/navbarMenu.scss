@@ -1,9 +1,18 @@
+$desktop:1114px;
+@mixin desktop {
+    @media (min-width: #{$desktop}) {
+      @content;
+    }
+} 
 #nav-menu{
     background-color:white;
     height: 100vh;
     width:80%;
     z-index:999;
     position: fixed;
+    @include desktop{
+        width:20%;
+    }
         #menu-exit{
             font-size:2rem;
             margin-left:20rem;

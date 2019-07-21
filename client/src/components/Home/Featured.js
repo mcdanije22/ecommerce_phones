@@ -5,7 +5,7 @@ import './home.scss';
   const Featured = () =>{
       return(
         <div id='top-img'>
-         <Link to={'/product/4/apple'}><img src='https://www.rogers.com/cms/rogers/page-specific/wireless/iphone-2018/images/M_XR_Banner.jpg' /></Link> 
+         <Link to={'/product/4/apple'}><img src='https://cdn.shopify.com/s/files/1/0810/8331/files/category_banner_ipxs_xr.jpg?4939419680647679162' /></Link> 
         </div>
       )
   };

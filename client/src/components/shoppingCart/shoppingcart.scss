@@ -26,8 +26,6 @@ $desktop:1114px;
     }
     #cartList{
         display:flex;
-        flex-direction: column;
-        align-items: center;
         .cartItem{
             list-style: none;
             hr{
@@ -44,7 +42,6 @@ $desktop:1114px;
             }
             .productCardContent{
                 .cartDelete{
-                    float: right;
                     border:none;
                     background: transparent;
                     margin-left:10.5rem;

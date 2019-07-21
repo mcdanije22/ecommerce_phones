@@ -38,7 +38,7 @@ class Orders extends Component {
                         <div className='listContent'>
                         <img src={image_url} />
                             <p>{product_name}</p>
-                           <h6><FontAwesomeIcon icon={faChevronRight} className='accountIconsRight'/></h6> 
+                           {/* <h6><FontAwesomeIcon icon={faChevronRight} className='accountIconsRight'/></h6>  */}
                         </div>
                             <hr/>
                         </li>

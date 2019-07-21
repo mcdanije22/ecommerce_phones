@@ -87,8 +87,10 @@ class ShoppingCart extends Component{
                      id={product_id}>
                         <FontAwesomeIcon icon={faTimes}/> 
                     </button>
-                    <h1>{product_name}</h1>
-                    <p>{brand}</p>
+                    <div className='cartItemText'>
+                        <h1>{product_name}</h1>
+                        <p>{brand}</p>
+                    </div>
                     <div className='bottomCardContent'>
                         {/* <div className ='quantityBtnGroup'>
                             <button type='submit'>-</button>

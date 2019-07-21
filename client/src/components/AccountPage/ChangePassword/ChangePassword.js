@@ -17,7 +17,6 @@ class ChangePassword extends Component{
     }
     getInput = (e) =>{
         this.setState({[e.target.name] : e.target.value},()=>{
-            console.log(this.state.currentPassword)
         })  
       }
       changePassword=()=>{
@@ -51,7 +50,6 @@ class ChangePassword extends Component{
           }
       }
     render(){
-        console.log(this.props.location.state)
     return(
         <div id ='changePassword'>
             <div id='content'>

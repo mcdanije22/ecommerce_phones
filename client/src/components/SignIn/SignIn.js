@@ -36,16 +36,13 @@ class SignIn extends Component{
             if(data.data.length === 0 ){
                 this.wrongLogin();
             }else{
-            console.log(data.data[0].customer_id)
             this.props.getAccount(data.data[0]); 
             axios.get(`https://ecommerce-phonelab.herokuapp.com/address/${data.data[0].customer_id}`)
             .then(data=>{
-                console.log(data.data)
                 this.props.getAccountAddresses(data.data)
             }) 
             axios.get(`https://ecommerce-phonelab.herokuapp.com/wallet/${data.data[0].customer_id}`)
             .then(data=>{
-                console.log(data.data)
                 this.props.getAccountCards(data.data)
             })             
             this.backHistory();            
@@ -67,14 +64,11 @@ accountRegister = () =>{
             last_name
         })
         .then(data=>{
-            console.log(data)           
             this.backHistory();            
         })
         .catch(error=>{ 
-            console.log(error.response.status)
             if(error.response.status === 500){
                 this.setState({registrationFailed:true})
-                console.log('test')
             }
         })
     }

@@ -18,7 +18,6 @@ class Orders extends Component {
         axios.get(`https://ecommerce-phonelab.herokuapp.com/orders/${customerid}`)
         .then(data=>{
             this.setState({orders:data.data},()=>{
-                console.log(this.state.orders)
             })
         })
     }

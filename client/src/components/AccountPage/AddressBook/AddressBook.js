@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Button, Modal, ModalBody, ModalFooter } from 'reactstrap';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import {  accountAddresses } from '../../../actions/loginAction';
@@ -26,7 +26,6 @@ class AddressBook extends Component{
         axios.get(`https://ecommerce-phonelab.herokuapp.com/address/${customerid}`)
         .then(data=>{
             this.setState({addressBook:data.data},()=>{
-                console.log(this.state.addressBook)
             })
         })
     }
@@ -83,11 +82,9 @@ onSubmitNewAddress=()=>{
             state,
             zipcode  
         });
-        console.log(newAddress)
         const newAddressBook = [...currentAddressList, newAddress];
         this.setState({addressBook:newAddressBook})
         this.props.getAccountAddresses(newAddressBook)
-        console.log(newAddressBook)
     })
     .catch(error=>{
         console.log(error)
@@ -112,7 +109,6 @@ onSubmitNewAddress=()=>{
     editedAdressList[id] = editedAddress;
     this.setState({addressBook:editedAdressList})
     this.props.getAccountAddresses(editedAdressList)
-    console.log(editedAdressList)
     axios.put(`https://ecommerce-phonelab.herokuapp.com/editaddress`, {
         customer_id: this.state.selectedAddress.customer_id,
         address_name: this.state.selectedAddress.address_name,
@@ -196,7 +192,6 @@ onSubmitNewAddress=()=>{
                                         customer_id  
                                     });
                                     this.setState({selectedAddress:currentAddres},()=>{
-                                        console.log(this.state.selectedAddress)
                                     })
                                     this.editToggle();
                                 }}>Edit</Button>

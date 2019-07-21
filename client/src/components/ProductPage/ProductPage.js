@@ -31,7 +31,6 @@ class ProductPage extends Component{
         const brandName = this.props.match.params.brand;
         axios.get(`https://ecommerce-phonelab.herokuapp.com/product/${productId}/${brandName}`)
         .then(res=>{
-            console.log(res)
             this.setState({currentProduct:res.data})
         })
     }
@@ -89,9 +88,7 @@ class ProductPage extends Component{
               product_id:productId
           })
           .then(data=>{
-            console.log(data)
             const reviewList = [...this.state.currentProduct, ...data.data]
-            console.log(reviewList)
             this.setState({currentProduct:reviewList})
           })
           this.reviewToggle();

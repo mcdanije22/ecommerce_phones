@@ -14,7 +14,6 @@ class SpecificOrder extends Component{
     }
     componentDidMount(){
         const { customerid, orderid } =this.props.match.params;
-        console.log(customerid, orderid)
         axios.get(`https://ecommerce-phonelab.herokuapp.com/specificorder/${customerid}/${orderid}`)
         .then(data=>{
             // const itemList = [];
@@ -22,7 +21,6 @@ class SpecificOrder extends Component{
             //     itemList.push()
             // })
             this.setState({orderInfo:data.data[0], items:data.data},()=>{
-                console.log(this.state.orderInfo)
             })
         })
     }

@@ -33,7 +33,6 @@ class SearchPage extends Component{
         const searchTerm = this.props.match.params.search;
         
         const {searchResults} = this.state;
-        console.log(this.props) //from link
     return(
         <div id='searchPage'>
             <button onClick={this.backHistory} id='search-header'><FontAwesomeIcon icon={faChevronLeft}/> Back</button>
@@ -57,12 +56,7 @@ class SearchPage extends Component{
                 </Link>
                 );
             })}
-
             </ul>
-            {/* <div id='search-buttons' style={{display: searchResultAmounts ===0? 'none': 'flex'}}>
-                <Button type= 'submit' className='searchButton'><FontAwesomeIcon icon={faChevronLeft}/> Previous</Button>
-                <Button type= 'submit' className='searchButton'>Next <FontAwesomeIcon icon={faChevronRight}/></Button>
-            </div> */}
         </div>
     );
     }

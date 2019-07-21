@@ -20,12 +20,14 @@ $desktop:1114px;
         display: flex;
         justify-content: space-between; 
         button{
-            margin:1rem 1rem 0 0;
-            text-decoration: underline;
+        margin:1rem 1rem 0 0;
+        text-decoration: underline;
         }
     }
     #cartList{
         display:flex;
+        flex-direction: column;
+        
         .cartItem{
             list-style: none;
             hr{
@@ -37,25 +39,35 @@ $desktop:1114px;
                 float:left;
                 margin-right:1rem;
                 padding:1rem;
-                width:30%;
-                height:auto;
+                width: 180px;
+                height: 180px;
             }
             .productCardContent{
+                .cartItemText{
+                    color:black;
+                }
                 .cartDelete{
-                    border:none;
-                    background: transparent;
-                    margin-left:10.5rem;
+                    width:25%;
+                    background-color:transparent;
+                    color:red;
+                    border-radius: 5rem;
+                    border:1px red solid;
+                    
+                    @include desktop{
+                        width:10%;
+                    }
                 }
                 h1{
-                    font-size:1rem;
-                    margin-top:1rem;
+                    font-size:1.5rem;
+                    margin-top:.8rem;
                     margin-bottom:0;
+
                 }
             }
         .bottomCardContent{
+            clear:left; 
             display:flex;
             .quantityBtnGroup{
-                display: flex;
                 font-size:1rem;
                 height:1.5rem;
                 margin-right:2.2rem;

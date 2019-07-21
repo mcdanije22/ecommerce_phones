@@ -4,6 +4,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Button } from 'reactstrap';
 import { faTimes,faChevronLeft  } from '@fortawesome/free-solid-svg-icons';
 
 
@@ -21,7 +22,6 @@ class ShoppingCart extends Component{
         .then(res=>{
             this.setState({currentShoppingCart:res.data},()=>{
             })
-            console.log('test',this.state.currentShoppingCart)
             if(this.state.currentShoppingCart.length > 0){
                 this.getTotal();
             }
@@ -44,13 +44,11 @@ class ShoppingCart extends Component{
     getTotal=()=>{
         if(this.state.currentShoppingCart.length !== 0){
        const total = this.state.currentShoppingCart.map(item=>parseInt(item.product_price)).reduce((total, item)=>total+item);
-       console.log(total);
        if(total !== this.state.cartTotal){
         this.setState({cartTotal:total})
             }
         }
     }
-  
    render(){
     const customerid = this.props.currentAccount.customer_id;
     const shoppingCart = this.state.currentShoppingCart;
@@ -72,7 +70,12 @@ class ShoppingCart extends Component{
             return <li className = 'cartItem' id={product_id} key={i}>
                 <img src={image_url}/>
                 <div className='productCardContent'>
-                    <button 
+                    <div className='cartItemText'>
+                        <h1>{product_name}</h1>
+                        <p>{brand}</p>
+                        <p><b>${product_price}</b></p>
+                    </div>
+                    <Button 
                     type = 'submit' 
                     className='cartDelete'
                     onClick={()=>{
@@ -85,20 +88,8 @@ class ShoppingCart extends Component{
                         }
                     }
                      id={product_id}>
-                        <FontAwesomeIcon icon={faTimes}/> 
-                    </button>
-                    <div className='cartItemText'>
-                        <h1>{product_name}</h1>
-                        <p>{brand}</p>
-                    </div>
-                    <div className='bottomCardContent'>
-                        {/* <div className ='quantityBtnGroup'>
-                            <button type='submit'>-</button>
-                            <input type='text' value={item_quantity} readOnly/>
-                            <button type='submit'>+</button>
-                        </div> */}
-                        <p><b>${product_price}</b></p>
-                    </div>
+                     Delete
+                    </Button>
                 </div>   
                 <hr/>
             </li>

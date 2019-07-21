@@ -16,12 +16,9 @@ class AccountPage extends Component{
         getAccount('')
         getAccountAddresses('')
         getAccountCards('')
-        console.log(this.props.currentAccount)
     }
     render(){
-        console.log(this.props)
         const {first_name, last_name, customer_id} = this.props.currentAccount;
-        console.log(first_name)
         return(
             <div id='AccountPage'>
                 <h3>My Account</h3>

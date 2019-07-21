@@ -61,7 +61,6 @@ class OrderCheckOut extends Component{
       }
       getInput=(e)=>{
         this.setState({[e.target.name]:e.target.value},()=>{
-            console.log(this.state.orderAddress)
         }) 
      }
 // current
@@ -97,9 +96,7 @@ onSubmitNewAddress=()=>{
             zipcode  
         });
         const newAddressBook = [...this.props.accountAddresses, newAddress]
-        console.log(newAddressBook)
         this.props.getAccountAddresses(newAddressBook)
-        console.log(this.props.accountAddresses)    
     })
     .catch(error=>{
         console.log(error)
@@ -111,7 +108,6 @@ onSubmitNewCard=()=>{
     let { card_name, card_number, exp_date, cvc  } = this.state;
     card_number = parseInt(card_number)
     cvc = parseInt(cvc)
-    console.log(Number.isInteger(card_number))
     const numberCheck = Number.isInteger(card_number);
     const cvcCheck = Number.isInteger(cvc);
     const cardNumberLength = card_number.toString().length;
@@ -138,7 +134,6 @@ onSubmitNewCard=()=>{
         cvc 
     })
     .then(data=>{
-        console.log(data)
         const newCard = Object.assign({},{
             customer_id: this.props.currentAccount.customer_id,
             card_id:data.data[0].card_id,
@@ -147,10 +142,8 @@ onSubmitNewCard=()=>{
             exp_date,
             cvc 
         });
-        console.log(newCard)
         const newWalletList = [...this.props.accountCards, newCard];
         this.props.getAccountCards(newWalletList)
-        console.log(newWalletList)
     })
     .catch(error=>{
         console.log(error)
@@ -160,14 +153,12 @@ onSubmitNewCard=()=>{
 }
 
 isChecked=(e)=>{
-    console.log(e.target.checked)
     if(e.target.checked){
         if(this.state.orderAddress !== ''){
             alert('select only one address')
             e.target.checked =false;
             }else{
         this.setState({orderAddress:e.target.id},()=>{
-            console.log(this.state.orderAddress)
             })
         }
     }else if(!e.target.checked){
@@ -179,20 +170,16 @@ addAddressToOrder=(e)=>{
         alert('please select a shipping address')
     }else{
         this.setState({activeScreen:'payment'},()=>{
-            console.log(this.state.activeScreen)
         })
-      console.log(this.state.orderAddress)
     }
 }
 isCheckedWalet=(e)=>{
-    console.log(e.target.checked)
     if(e.target.checked){
         if(this.state.orderPayment !== ''){
             alert('select only one payment option')
             e.target.checked = false;
             }else{
         this.setState({orderPayment:e.target.id},()=>{
-            console.log(this.state.orderPayment)
             })
         }
     }else if(!e.target.checked){
@@ -206,11 +193,9 @@ isCheckedWalet=(e)=>{
         alert('please select a payment option')
     }else{
         this.setState({activeScreen:'review'},()=>{
-            console.log(this.state.activeScreen)
             axios.get(`https://ecommerce-phonelab.herokuapp.com/orderaccountinfo/${orderAddress}/${orderPayment}/${customerid}`)
             .then(res=>{
                 this.setState({orderInfo:res.data[0]},()=>{
-                    console.log(this.state.orderInfo)
                 })
               })
         })
@@ -224,7 +209,6 @@ placeOrder=()=>{
     this.props.location.state.currentShoppingCart.map(item=>{
         cartProductIds.push(item.product_id)
     })
-    console.log(cartProductIds)
     axios.post('https://ecommerce-phonelab.herokuapp.com/placeorder',{
         customer_id,
         card_id,
@@ -236,7 +220,6 @@ placeOrder=()=>{
         if(data.status=200){
            this.setState({activeScreen:'successfulorder'})
         }
-        console.log(data)
     })
 }
 
@@ -252,11 +235,9 @@ getTaxes=()=>{
     const total = this.props.location.state.cartTotal;
     const cartTax = total * 0.08;
     this.setState({cartTax:cartTax},()=>{
-        console.log(this.state.cartTax) 
     })
 }
     render(){
-        console.log(this.props)
         const{ accountAddresses, accountCards } = this.props;
         const { activeScreen } = this.state;
         let { address_name, street, secondary, city, state, zipcode, card_name, card_number, cvc, exp_date } = this.state.orderInfo;

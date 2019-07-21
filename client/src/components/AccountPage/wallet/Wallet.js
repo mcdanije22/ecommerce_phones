@@ -21,11 +21,9 @@ class Wallet extends Component{
     }
     componentDidMount(){
         const customerid=this.props.location.state.customerid
-        console.log(customerid)
         axios.get(`https://ecommerce-phonelab.herokuapp.com/wallet/${customerid}`)
         .then(data=>{
             this.setState({walletList:data.data},()=>{
-                console.log(this.state.walletList)
             })
         })
     }
@@ -57,7 +55,6 @@ onSubmitNewCard=()=>{
     const currentWalletList = this.state.walletList;
     card_number = parseInt(card_number)
     cvc = parseInt(cvc)
-    console.log(Number.isInteger(card_number))
     const numberCheck = Number.isInteger(card_number);
     const cvcCheck = Number.isInteger(cvc);
     const cardNumberLength = card_number.toString().length;
@@ -91,11 +88,9 @@ onSubmitNewCard=()=>{
             exp_date,
             cvc 
         });
-        console.log(newCard)
         const newWalletList = [...currentWalletList, newCard];
         this.setState({walletList:newWalletList})
         this.props.getAccountCards(newWalletList)
-        console.log(newWalletList)
     })
     .catch(error=>{
         console.log(error)
@@ -115,7 +110,6 @@ onSubmitNewCard=()=>{
         editedWalletList[id] = editedCard;
         this.setState({walletList:editedWalletList})
         this.props.getAccountCards(editedWalletList)
-        console.log(editedWalletList)
         axios.put(`https://ecommerce-phonelab.herokuapp.com/editcard`, {
             customer_id: this.state.selectedCard.customer_id,
             card_name:this.state.selectedCard.card_name,
@@ -130,12 +124,9 @@ onSubmitNewCard=()=>{
     }
     onSubmiteditCard=()=>{
     let { card_name, card_number, exp_date, cvc  } = this.state;
-    console.log(card_number, cvc)
     const id = this.state.selectedCard.id;
-    console.log(id)
     const cardNumberLength = card_number.toString().length;
     const cardCvcLength = cvc.toString().length;
-    console.log(cardCvcLength)
     if(card_number !== ''){
         card_number = parseInt(card_number)
         const numberCheck = Number.isInteger(card_number);
@@ -218,7 +209,6 @@ onSubmitNewCard=()=>{
                                         customer_id  
                                     });
                                     this.setState({selectedCard:currentCard},()=>{
-                                        console.log(this.state.selectedCard)
                                     })
                                     this.editToggle();
                                 }}>Edit</Button>

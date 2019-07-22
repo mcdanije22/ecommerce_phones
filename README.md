@@ -11,9 +11,9 @@ A web application that lets customers shop and purchase smartphone and smartphon
 # **What I Learned**
 - Building a full stack application from the start to finish
 - Working with Node js and Express js to create and manage a server
-- Building a RESTFUL api service
+- Building a RESTFUL API service
 - Managing a SQL based relational database, PostgreSQL 
-- Authencation and valadation
+- Authentication and validation
 
 
 # **Live Application**

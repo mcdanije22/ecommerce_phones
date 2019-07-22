@@ -393,7 +393,7 @@ getTaxes=()=>{
                         <ModalBody >
                         <h3>Add Payment</h3>
                         <form>
-                                <input type='text' className='inputAddressAdd' placeholder='Card Nickname' name='card_name' value={this.state.card_name} onChange={this.getInput}/>
+                                <input type='text' className='inputAddressAdd' placeholder='Name on Card' name='card_name' value={this.state.card_name} onChange={this.getInput}/>
                                 <input type='text' className='inputAddressAdd' placeholder='Card #' name='card_number' value={this.state.card_number} onChange={this.getInput}/>
                                 <input type='text' className='inputAddressAdd' placeholder='MM/YY ' name='exp_date' value={this.state.exp_date} onChange={this.getInput}/>
                                 <input type='text' className='inputAddressAdd' placeholder='CVC' name='cvc' value={this.state.cvc} onChange={this.getInput}/>

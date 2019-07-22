@@ -1,5 +1,11 @@
+$desktop:1114px;
+@mixin desktop {
+    @media (min-width: #{$desktop}) {
+      @content;
+    }
+} 
 #footer{
-    height: 42vh;
+    height: 45vh;
     background-color:  #252F3C;
     // position: absolute;
     // bottom: 0;
@@ -17,6 +23,13 @@
             align-items: center;
             color:white;
             margin-top:2.5rem;
+            @include desktop{
+            margin-top:6rem;
+            }
+            a{
+                color:white;
+                 text-decoration:none;
+            }
                 #row-one, #row-two, #row-three{
                     list-style: none;
                     margin:1rem;

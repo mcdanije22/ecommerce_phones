@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import './navbar.scss';
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars,faUserCircle, faShoppingCart,faAdjust } from '@fortawesome/free-solid-svg-icons';
+import { faBars,faUserCircle, faShoppingCart,faHome } from '@fortawesome/free-solid-svg-icons';
 import SearchBar from './SearchBar/SearchBar';
 import NavbarMenu from './NavbarMenu';
 import { setSearchField, clearSearchField } from '../../actions/searchAction'
@@ -34,7 +34,7 @@ class NavBar extends Component{
             <div id = 'navbar-wrapper'>
                 <div id='top-row-navbar'>
                     <div id= 'navbar-icon-group1'>
-                        <Link to={'/'} ><FontAwesomeIcon id='navbar-logo' icon={faAdjust} /></Link> 
+                        {/* <Link to={'/'} ><FontAwesomeIcon id='navbar-logo' icon={faHome} /></Link>  */}
                         {/* <p>PhoneOutlet</p> */}
                         <FontAwesomeIcon id='navbar-menu' icon={faBars} onClick={this.toggleNavbarMenu}/>
                     </div>

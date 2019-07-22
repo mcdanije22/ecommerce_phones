@@ -46,7 +46,7 @@ class AddressBook extends Component{
             })
         );
       }
-    getInput=(e)=>{
+    getInput= (e) =>{
        this.setState({[e.target.name]:e.target.value}) 
     }
 

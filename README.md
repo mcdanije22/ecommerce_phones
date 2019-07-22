@@ -1,9 +1,9 @@
 # **Ecommerce site - PhoneLab**
-A web application that lets customers shop and purchase smartphone and smartphone accessories. Customers will create accounts, manage addresses and payment options, edit their shopping carts, complete orders and manage their account. Use email:test and password: abc as a test account. 
+A web application that lets customers shop and purchase smartphone and smartphone accessories. Customers will create accounts, manage addresses and payment options, edit their shopping carts, complete orders and manage their account. Use email:test and password: abc as a test account. Mobile-first design patterns. 
 
 # **Built With**
 - HTML, CSS/SASS
-- React js
+- React js / Redux
 - Node js/Express js
 - Postgresql 
 - Responsive Design
